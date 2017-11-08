@@ -1,19 +1,19 @@
 public class WahlkreisErgebnis {
-    private Partei parte;
+    private Partei partei;
     private int anzahlErststimmen, zweitstimmen;
 
-    public WahlkreisErgebnis(Partei parte, int anzahlErststimmen, int zweitstimmen) {
-        this.parte = parte;
+    public WahlkreisErgebnis(Partei partei, int anzahlErststimmen, int zweitstimmen) {
+        this.partei = partei;
         this.anzahlErststimmen = anzahlErststimmen;
         this.zweitstimmen = zweitstimmen;
     }
 
-    public Partei getParte() {
-        return parte;
+    public Partei getPartei() {
+        return partei;
     }
 
-    public void setParte(Partei parte) {
-        this.parte = parte;
+    public void setPartei(Partei partei) {
+        this.partei = partei;
     }
 
     public int getAnzahlErststimmen() {
