@@ -1,9 +1,15 @@
 public class Bewerber {
-    private String titel, nachname, vorname;
+    private String titel, nachname, vorname, namenszusatz, geschlecht, beruf;
     int jahrgang;
     Wahlkreis wahlkreis;
-    Bundesland bundesland;
     private Partei partei;
+
+    private static int counter;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
 
     public Partei getPartei() {
         return partei;
@@ -53,21 +59,40 @@ public class Bewerber {
         this.wahlkreis = wahlkreis;
     }
 
-    public Bundesland getBundesland() {
-        return bundesland;
+    public String getNamenszusatz() {
+        return namenszusatz;
     }
 
-    public void setBundesland(Bundesland bundesland) {
-        this.bundesland = bundesland;
+    public void setNamenszusatz(String namenszusatz) {
+        this.namenszusatz = namenszusatz;
     }
 
-    public Bewerber(String titel, String nachname, String vorname, int jahrgang, Wahlkreis wahlkreis, Bundesland bundesland, Partei partei) {
+    public String getGeschlecht() {
+        return geschlecht;
+    }
+
+    public void setGeschlecht(String geschlecht) {
+        this.geschlecht = geschlecht;
+    }
+
+    public String getBeruf() {
+        return beruf;
+    }
+
+    public void setBeruf(String beruf) {
+        this.beruf = beruf;
+    }
+
+    public Bewerber(String titel, String nachname, String vorname, String namenszusatz, String geschlecht, String beruf, int jahrgang, Wahlkreis wahlkreis, Partei partei) {
+        this.namenszusatz = namenszusatz;
+        this.geschlecht = geschlecht;
+        this.beruf = beruf;
         this.partei = partei;
         this.titel = titel;
         this.nachname = nachname;
         this.vorname = vorname;
         this.jahrgang = jahrgang;
         this.wahlkreis = wahlkreis;
-        this.bundesland = bundesland;
+        this.id = counter++;
     }
 }

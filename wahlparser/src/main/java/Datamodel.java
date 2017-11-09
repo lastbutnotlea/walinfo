@@ -7,7 +7,7 @@ public class Datamodel {
 
     public Map<Wahljahr, Set<Bewerber>> bewerber = new HashMap<>();
 
-    public Set<Partei> parteien = new HashSet<>();
+    public Map<Wahljahr, Set<Partei>> parteien = new HashMap<>();
 
     public Wahljahr wahl2013, wahl2017;
 
@@ -20,14 +20,16 @@ public class Datamodel {
         wahl2013 = new Wahljahr(calendar.getTime());
         wahlkreise.put(wahl2013, new HashSet<>());
         bewerber.put(wahl2013, new HashSet<>());
+        parteien.put(wahl2013, new HashSet<>());
 
         calendar.set(2017, 9, 24);
         wahl2017 = new Wahljahr(calendar.getTime());
         wahlkreise.put(wahl2017, new HashSet<>());
         bewerber.put(wahl2017, new HashSet<>());
+        parteien.put(wahl2017, new HashSet<>());
     }
 
-    public Bundesland getBundesland(String name) {
+    public Bundesland   getBundesland(String name) {
         for (Bundesland land : laender) {
             if (land.getName().equals(name)) {
                 return land;
@@ -37,7 +39,7 @@ public class Datamodel {
     }
 
     public Bundesland getBundeslandByKuerzel(String name) {
-        if (name == null) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
         for (Bundesland land : laender) {
@@ -48,28 +50,33 @@ public class Datamodel {
         throw new RuntimeException(name);
     }
 
-    public Partei getCreatePartei(String name) {
-        if (name.equals("Übrige")) {
+    public Partei getCreatePartei(String name, String kurzAngabe, Wahljahr jahr) {
+        if (name.equals("Übrige") || name.isEmpty() || (kurzAngabe != null && kurzAngabe.startsWith("EB: "))) {
             return null;
         }
-        for (Partei partei : parteien) {
+        for (Partei partei : parteien.get(jahr)) {
             if (partei.getName().equals(name)) {
                 return partei;
             }
         }
 
         String kurz = parteienKurzschreibweise.get(name);
-        if (kurz == null) {
-            throw new RuntimeException(name);
+        if (kurzAngabe != null) {
+            kurz = kurzAngabe;
+        } else if (kurz == null) {
+            System.err.println(name);
         }
         Partei partei = new Partei(name, kurz);
 
-        parteien.add(partei);
+        parteien.get(jahr).add(partei);
         return partei;
     }
 
-    public Partei getByKuerzel(String kurz) {
-        for (Partei partei : parteien) {
+    public Partei getByKuerzel(String kurz, Wahljahr jahr) {
+        if (kurz.startsWith("EB: ")) {
+            return null;
+        }
+        for (Partei partei : parteien.get(jahr)) {
             if (partei.getKurzschreibweise().equals(kurz)) {
                 return partei;
             }
@@ -85,7 +92,7 @@ public class Datamodel {
         }
         if (anzahl == 1) {
             Partei neu = new Partei(name, kurz);
-            parteien.add(neu);
+            parteien.get(jahr).add(neu);
             System.out.println("Zusätzlich angelegte Partei: " + name);
             return neu;
         }
@@ -94,7 +101,7 @@ public class Datamodel {
 
     public Wahlkreis getWahlkreis(Wahljahr jahr, int i) {
         for (Wahlkreis kreis : wahlkreise.get(jahr)) {
-            if (kreis.getId() == i) {
+            if (kreis.getNummer() == i) {
                 return kreis;
             }
         }

@@ -3,10 +3,22 @@ import java.util.Set;
 
 public class Wahlkreis {
     private int id;
+    private int nummer;
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    private static int counter;
     private String name;
     private Bundesland land;
 
-    private int wahlberechtigte, waehler, gueltigeStimmenErst, ungueltigeStimmenErst, gueltigeStimmenZweit, ungueltigeStimmenZweit;
+    private int wahlberechtigte,
+            waehler,
+            gueltigeStimmenErst,
+            ungueltigeStimmenErst,
+            gueltigeStimmenZweit,
+            ungueltigeStimmenZweit;
 
     private Set<WahlkreisErgebnis> ergebnisse = new HashSet<>();
 
@@ -50,8 +62,8 @@ public class Wahlkreis {
         this.ungueltigeStimmenZweit = ungueltigeStimmenZweit;
     }
 
-    public Wahlkreis(int id, String name, Bundesland land, int wahlberechtigte, int waehler, int gueltigeStimmenErst, int ungueltigeStimmenErst, int gueltigeStimmenZweit, int ungueltigeStimmenZweit) {
-        this.id = id;
+    public Wahlkreis(int nummer, String name, Bundesland land, int wahlberechtigte, int waehler, int gueltigeStimmenErst, int ungueltigeStimmenErst, int gueltigeStimmenZweit, int ungueltigeStimmenZweit) {
+        this.nummer = nummer;
         this.name = name;
         this.land = land;
         this.wahlberechtigte = wahlberechtigte;
@@ -60,14 +72,11 @@ public class Wahlkreis {
         this.ungueltigeStimmenErst = ungueltigeStimmenErst;
         this.gueltigeStimmenZweit = gueltigeStimmenZweit;
         this.ungueltigeStimmenZweit = ungueltigeStimmenZweit;
+        this.id = counter++;
     }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

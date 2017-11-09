@@ -21,8 +21,13 @@ public class Wahljahr {
     }
 
     private SimpleDateFormat format = new SimpleDateFormat("yy");
+    private SimpleDateFormat format2 = new SimpleDateFormat("yyyy");
 
     String getKurzschreibweise() {
         return format.format(jahr);
+    }
+
+    String getKurzschreibweiseLang() {
+        return format2.format(jahr);
     }
 }

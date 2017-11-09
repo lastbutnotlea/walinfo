@@ -30,14 +30,24 @@ public class Partei {
     }
 
     public void addLandeslisteEintrag(Bundesland land, Bewerber bewerber, int listenPlatz) {
+        if (land == null) {
+            throw new NullPointerException();
+        }
         if (landeslisten.get(land) == null) {
             landeslisten.put(land, new Landesliste());
+        }
+        if (landeslisten.get(land).getEintraege().containsKey(listenPlatz)) {
+            throw new RuntimeException(listenPlatz + " schon vorhanden");
         }
         landeslisten.get(land).getEintraege().put(listenPlatz, bewerber);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public void setName(String name) {
