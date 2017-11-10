@@ -2,14 +2,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Wahlkreis {
-    private int id;
     private int nummer;
 
     public int getNummer() {
         return nummer;
     }
 
-    private static int counter;
     private String name;
     private Bundesland land;
 
@@ -72,11 +70,6 @@ public class Wahlkreis {
         this.ungueltigeStimmenErst = ungueltigeStimmenErst;
         this.gueltigeStimmenZweit = gueltigeStimmenZweit;
         this.ungueltigeStimmenZweit = ungueltigeStimmenZweit;
-        this.id = counter++;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {

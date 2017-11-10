@@ -33,7 +33,7 @@ CREATE TABLE Kandidaten (
   beruf VARCHAR(127),
   geschlecht VARCHAR(1),
   partei_id SMALLINT REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer),
   wahljahr SMALLINT
 );
 

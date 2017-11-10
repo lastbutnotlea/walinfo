@@ -78,7 +78,7 @@ public class StimmGenerator {
                     out.print("|");
                     out.print(bewerber != null ? bewerber.getId() : "null");
                     out.print("|");
-                    out.println(kreis.getId());
+                    out.println(kreis.getNummer());
                 }
             }
         }

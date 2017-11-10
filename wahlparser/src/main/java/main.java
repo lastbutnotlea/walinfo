@@ -77,13 +77,24 @@ public class main {
         sqlFileStream.println();
 
         // Wahlkreise
-        for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
-            for (Wahlkreis kreis : data.wahlkreise.get(jahr)) {
-                sqlFileStream.println("INSERT INTO Wahlkreise (id, nummer, name, anzahl_wahlberechtigte, bundesland, wahljahr) VALUES (" +
-                        kreis.getId() + ", " + kreis.getNummer() + ", '" + kreis.getName() + "', " + kreis.getWahlberechtigte() + ", '" +
-                        kreis.getLand().getKurzschreibweise() + "', " + jahr.getKurzschreibweiseLang() + ");");
+            for (Wahlkreis kreis : data.wahlkreise.get(data.wahl2017)) {
+                sqlFileStream.println("INSERT INTO Wahlkreise (nummer, name, bundesland) VALUES (" +
+                        kreis.getNummer() + ", '" + kreis.getName() + "', '" +
+                        kreis.getLand().getKurzschreibweise() + "');");
+                for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
+                    int anzahl = 0;
+                    for (Wahlkreis k : data.wahlkreise.get(jahr)) {
+                        if (k.getNummer() == kreis.getNummer()) {
+                            anzahl = k.getWahlberechtigte();
+                        }
+                    }
+                    if (anzahl == 0) {
+                        throw  new RuntimeException();
+                    }
+                    sqlFileStream.println("INSERT INTO Wahlberechtigte (wahlkreis_id, wahljahr, anzahl_wahlberechtigte) VALUES (" +
+                            kreis.getNummer() + ", " + jahr.getKurzschreibweiseLang() + ", " + anzahl + ");");
+                }
             }
-        }
 
         sqlFileStream.println();
 
@@ -97,7 +108,7 @@ public class main {
                         (bewe.getBeruf() != null && !bewe.getBeruf().isEmpty() ? "'" + bewe.getBeruf() + "'" : null) + ", " +
                         (bewe.getGeschlecht() != null ? "'" + bewe.getGeschlecht() + "'" : null) +
                         ", " + (bewe.getPartei() != null ? bewe.getPartei().getNumber() : null) + ", " +
-                        (bewe.getWahlkreis() != null ? bewe.getWahlkreis().getId() : null)
+                        (bewe.getWahlkreis() != null ? bewe.getWahlkreis().getNummer() : null)
                         + ", " + jahr.getKurzschreibweiseLang() + ");");
 
                 for (Partei partei : data.parteien.get(jahr)) {
@@ -124,7 +135,7 @@ public class main {
                         anzahl++;
                     } else {
                         sqlFileStream.println("INSERT INTO Zweitstimmenergebnisse (partei_id, wahlkreis_id, anzahl) VALUES (" +
-                                ergebnis.getPartei().getNumber() + ", " + kreis.getId() + ", " + ergebnis.getZweitstimmen() + ");");
+                                ergebnis.getPartei().getNumber() + ", " + kreis.getNummer() + ", " + ergebnis.getZweitstimmen() + ");");
                     }
                 }
             }
@@ -137,7 +148,7 @@ public class main {
                     for (Bewerber bewe : data.bewerber.get(jahr)) {
                         if (bewe.getWahlkreis() == kreis && bewe.getPartei() == ergebnis.getPartei()) {
                             sqlFileStream.println("INSERT INTO Erststimmenergebnisse (kandidaten_id, wahlkreis_id, anzahl) VALUES (" +
-                                bewe.getId() + ", " + kreis.getId() + ", " + ergebnis.getAnzahlErststimmen() + ");");
+                                bewe.getId() + ", " + kreis.getNummer() + ", " + ergebnis.getAnzahlErststimmen() + ");");
                         }
                     }
                 }
