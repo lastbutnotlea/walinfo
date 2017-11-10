@@ -1,14 +1,15 @@
-with unendlichkeit(nummer) AS (
+with leereTabelle(nummer) AS (
   SELECT * from generate_series(1, (select max(anzahl) from erststimmenergebnisse))
 )
-    SELECT e.wahlkreis_id, e.kandidaten_id
-    FROM erststimmenergebnisse e, unendlichkeit u
+  INSERT INTO erststimmen(kandidaten_id, wahlkreis_id, gueltig)
+    SELECT e.kandidaten_id , e.wahlkreis_id, 'J'
+    FROM erststimmenergebnisse e, leereTabelle u
     WHERE u.nummer <= e.anzahl
   ;
 
-with unendlichkeit(nummer) AS (
+with leereTabelle(nummer) AS (
     SELECT * from generate_series(1, (select max(anzahl) from zweitstimmenergebnisse))
 )
 SELECT e.wahlkreis_id, e.partei_id
-  FROM zweitstimmenergebnisse e, unendlichkeit u
+  FROM zweitstimmenergebnisse e, leereTabelle u
   WHERE u.nummer <= e.anzahl;

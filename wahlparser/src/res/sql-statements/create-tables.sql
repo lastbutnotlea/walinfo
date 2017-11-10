@@ -44,14 +44,14 @@ CREATE TABLE Listenplaetze (
 );
 
 CREATE TABLE Erststimmen (
-  kandidaten_id SMALLINT REFERENCES Kandidaten(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
+  kandidaten_id SMALLINT,-- REFERENCES Kandidaten(id),
+  wahlkreis_id SMALLINT,-- REFERENCES Wahlkreise(nummer),
   gueltig VARCHAR(1)
 );
 
 CREATE TABLE Zweitstimmen (
   partei_id SMALLINT REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer),
   gueltig VARCHAR(1)
 );
 
