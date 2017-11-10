@@ -43,10 +43,15 @@ CREATE TABLE Listenplaetze (
   listenplatz SMALLINT
 );
 
-CREATE TABLE Wahlzettel (
-  partei_id SMALLINT,-- REFERENCES Parteien(id),
-  kandidaten_id SMALLINT,-- REFERENCES Kandidaten(id),
-  wahlkreis_id SMALLINT,-- REFERENCES Wahlkreise(id),
+CREATE TABLE Erststimmen (
+  kandidaten_id SMALLINT REFERENCES Kandidaten(id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
+  gueltig VARCHAR(1)
+);
+
+CREATE TABLE Zweitstimmen (
+  partei_id SMALLINT REFERENCES Parteien(id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
   gueltig VARCHAR(1)
 );
 
