@@ -11,12 +11,20 @@ public class Wahlkreis {
     private String name;
     private Bundesland land;
 
-    private int wahlberechtigte,
-            waehler,
-            gueltigeStimmenErst,
-            ungueltigeStimmenErst,
-            gueltigeStimmenZweit,
-            ungueltigeStimmenZweit;
+    public int getWahlberechtigte17() {
+        return wahlberechtigte17;
+    }
+
+    public int getWahlberechtigte13() {
+        return wahlberechtigte13;
+    }
+
+    private int wahlberechtigte17,wahlberechtigte13;
+//            waehler,
+//            gueltigeStimmenErst,
+//            ungueltigeStimmenErst,
+//            gueltigeStimmenZweit,
+//            ungueltigeStimmenZweit;
 
     private Set<WahlkreisErgebnis> ergebnisse = new HashSet<>();
 
@@ -28,48 +36,13 @@ public class Wahlkreis {
         this.ergebnisse = ergebnisse;
     }
 
-    public int getGueltigeStimmenErst() {
-        return gueltigeStimmenErst;
-    }
 
-    public void setGueltigeStimmenErst(int gueltigeStimmenErst) {
-        this.gueltigeStimmenErst = gueltigeStimmenErst;
-    }
-
-    public int getUngueltigeStimmenErst() {
-        return ungueltigeStimmenErst;
-    }
-
-    public void setUngueltigeStimmenErst(int ungueltigeStimmenErst) {
-        this.ungueltigeStimmenErst = ungueltigeStimmenErst;
-    }
-
-    public int getGueltigeStimmenZweit() {
-        return gueltigeStimmenZweit;
-    }
-
-    public void setGueltigeStimmenZweit(int gueltigeStimmenZweit) {
-        this.gueltigeStimmenZweit = gueltigeStimmenZweit;
-    }
-
-    public int getUngueltigeStimmenZweit() {
-        return ungueltigeStimmenZweit;
-    }
-
-    public void setUngueltigeStimmenZweit(int ungueltigeStimmenZweit) {
-        this.ungueltigeStimmenZweit = ungueltigeStimmenZweit;
-    }
-
-    public Wahlkreis(int nummer, String name, Bundesland land, int wahlberechtigte, int waehler, int gueltigeStimmenErst, int ungueltigeStimmenErst, int gueltigeStimmenZweit, int ungueltigeStimmenZweit) {
+    public Wahlkreis(int nummer, String name, Bundesland land, int wahlberechtigte17, int wahlberechtigte13) {
         this.nummer = nummer;
         this.name = name;
         this.land = land;
-        this.wahlberechtigte = wahlberechtigte;
-        this.waehler = waehler;
-        this.gueltigeStimmenErst = gueltigeStimmenErst;
-        this.ungueltigeStimmenErst = ungueltigeStimmenErst;
-        this.gueltigeStimmenZweit = gueltigeStimmenZweit;
-        this.ungueltigeStimmenZweit = ungueltigeStimmenZweit;
+        this.wahlberechtigte17 = wahlberechtigte17;
+        this.wahlberechtigte13 = wahlberechtigte13;
     }
 
     public String getName() {
@@ -88,19 +61,5 @@ public class Wahlkreis {
         this.land = land;
     }
 
-    public int getWahlberechtigte() {
-        return wahlberechtigte;
-    }
 
-    public void setWahlberechtigte(int wahlberechtigte) {
-        this.wahlberechtigte = wahlberechtigte;
-    }
-
-    public int getWaehler() {
-        return waehler;
-    }
-
-    public void setWaehler(int waehler) {
-        this.waehler = waehler;
-    }
 }

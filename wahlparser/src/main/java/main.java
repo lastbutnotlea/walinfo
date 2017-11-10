@@ -6,6 +6,9 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class main {
@@ -19,7 +22,7 @@ public class main {
         // Parse Parteien Kurzschreibweisen
         parseKurzschreibweisenParteien(data);
 
-        parseWahldaten(data);
+        parseWahldatenJson(data);
 
         // Parse Bewerber 2017
         parseBewerber2017(data);
@@ -46,13 +49,6 @@ public class main {
 
         System.out.println("Done with inserts\n\nStarting with Wahlzettel");
 
-//        StimmGenerator generator = new StimmGenerator(data);
-//        try {
-//             generator.writeInsertStatements(new File("wahlparser/src/res/sql-statements/insert-wahlzettel.sql"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         System.out.println("Done");
     }
 
@@ -77,24 +73,16 @@ public class main {
         sqlFileStream.println();
 
         // Wahlkreise
-            for (Wahlkreis kreis : data.wahlkreise.get(data.wahl2017)) {
-                sqlFileStream.println("INSERT INTO Wahlkreise (nummer, name, bundesland) VALUES (" +
-                        kreis.getNummer() + ", '" + kreis.getName() + "', '" +
-                        kreis.getLand().getKurzschreibweise() + "');");
-                for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
-                    int anzahl = 0;
-                    for (Wahlkreis k : data.wahlkreise.get(jahr)) {
-                        if (k.getNummer() == kreis.getNummer()) {
-                            anzahl = k.getWahlberechtigte();
-                        }
-                    }
-                    if (anzahl == 0) {
-                        throw  new RuntimeException();
-                    }
-                    sqlFileStream.println("INSERT INTO Wahlberechtigte (wahlkreis_id, wahljahr, anzahl_wahlberechtigte) VALUES (" +
-                            kreis.getNummer() + ", " + jahr.getKurzschreibweiseLang() + ", " + anzahl + ");");
-                }
-            }
+        for (Wahlkreis kreis : data.wahlkreise) {
+            sqlFileStream.println("INSERT INTO Wahlkreise (nummer, name, bundesland) VALUES (" +
+                    kreis.getNummer() + ", '" + kreis.getName() + "', '" +
+                    kreis.getLand().getKurzschreibweise() + "');");
+
+            sqlFileStream.println("INSERT INTO Wahlberechtigte (wahlkreis_id, wahljahr, anzahl_wahlberechtigte) VALUES (" +
+                    kreis.getNummer() + ", " + 2017 + ", " + kreis.getWahlberechtigte17() + ");");
+            sqlFileStream.println("INSERT INTO Wahlberechtigte (wahlkreis_id, wahljahr, anzahl_wahlberechtigte) VALUES (" +
+                    kreis.getNummer() + ", " + 2013 + ", " + kreis.getWahlberechtigte13() + ");");
+        }
 
         sqlFileStream.println();
 
@@ -127,28 +115,55 @@ public class main {
         sqlFileStream.println();
 
         // Zweitstimmenergebnisse
-        int anzahl = 0;
-        for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
-            for (Wahlkreis kreis : data.wahlkreise.get(jahr)) {
-                for (WahlkreisErgebnis ergebnis : kreis.getErgebnisse()) {
-                    if (ergebnis.getPartei() == null) {
-                        anzahl++;
-                    } else {
+        for (Wahlkreis kreis : data.wahlkreise) {
+            for (WahlkreisErgebnis ergebnis : kreis.getErgebnisse()) {
+                if (ergebnis.getPartei() == null) {
+                    if (ergebnis.getZweitstimmen() > 0) {
                         sqlFileStream.println("INSERT INTO Zweitstimmenergebnisse (partei_id, wahlkreis_id, anzahl) VALUES (" +
-                                ergebnis.getPartei().getNumber() + ", " + kreis.getNummer() + ", " + ergebnis.getZweitstimmen() + ");");
+                                data.uebrigePartei.getNumber() + ", " + kreis.getNummer() + ", " + ergebnis.getZweitstimmen() + ");");
                     }
+                } else {
+                    sqlFileStream.println("INSERT INTO Zweitstimmenergebnisse (partei_id, wahlkreis_id, anzahl) VALUES (" +
+                            ergebnis.getPartei().getNumber() + ", " + kreis.getNummer() + ", " + ergebnis.getZweitstimmen() + ");");
                 }
             }
         }
 
         // Erststimmenergebnis
-        for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
-            for (Wahlkreis kreis : data.wahlkreise.get(jahr)) {
-                for (WahlkreisErgebnis ergebnis : kreis.getErgebnisse()) {
-                    for (Bewerber bewe : data.bewerber.get(jahr)) {
+        for (Wahlkreis kreis : data.wahlkreise) {
+            for (WahlkreisErgebnis ergebnis : kreis.getErgebnisse()) {
+                if (ergebnis.getPartei() == null) {
+                    if (ergebnis.getAnzahlErststimmen() == 0) {
+                        continue;
+                    }
+                    List<Bewerber> alleParteilosen = new ArrayList<>();
+                    Map<Bewerber, Integer> alleParteilosenStimmen = new HashMap<>();
+                    for (Bewerber bewerber : data.bewerber.get(ergebnis.getJahr())) {
+                        if (bewerber.getWahlkreis() == kreis && bewerber.getPartei() == null) {
+                            alleParteilosen.add(bewerber);
+                            alleParteilosenStimmen.put(bewerber, 0);
+                        }
+                    }
+                    if (alleParteilosen.isEmpty()) {
+                        throw new RuntimeException();
+                    }
+                    int stimmen = ergebnis.getAnzahlErststimmen();
+                    while (stimmen > 0) {
+                        for (Bewerber bewe : alleParteilosen) {
+                            int anzahl = alleParteilosenStimmen.get(bewe);
+                            alleParteilosenStimmen.put(bewe, anzahl + 1);
+                            stimmen--;
+                        }
+                    }
+                    for (Bewerber bewe : alleParteilosen) {
+                        sqlFileStream.println("INSERT INTO Erststimmenergebnisse (kandidaten_id, wahlkreis_id, anzahl) VALUES (" +
+                                bewe.getId() + ", " + kreis.getNummer() + ", " + alleParteilosenStimmen.get(bewe) + ");");
+                    }
+                } else {
+                    for (Bewerber bewe : data.bewerber.get(ergebnis.getPartei().getJahr())) {
                         if (bewe.getWahlkreis() == kreis && bewe.getPartei() == ergebnis.getPartei()) {
                             sqlFileStream.println("INSERT INTO Erststimmenergebnisse (kandidaten_id, wahlkreis_id, anzahl) VALUES (" +
-                                bewe.getId() + ", " + kreis.getNummer() + ", " + ergebnis.getAnzahlErststimmen() + ");");
+                                    bewe.getId() + ", " + kreis.getNummer() + ", " + ergebnis.getAnzahlErststimmen() + ");");
                         }
                     }
                 }
@@ -156,24 +171,24 @@ public class main {
         }
     }
 
-    private static void checkWahlkreise2013(Datamodel data) {
-        try (Reader reader = new FileReader(new File("wahlparser/src/res/Wahldaten/Wahlkreise.csv"))) {
-            CSVParser parser = new CSVParser(reader, CSVFormat.newFormat(',').withFirstRecordAsHeader());
-
-            for (CSVRecord record : parser) {
-                Integer wahlkreisnummer = getInt(record.get("Wahlkreisnummer"));
-                String wahlkreisname = record.get("Wahlkreisname");
-                String bundesland = record.get("Bundesland");
-
-                Wahlkreis kreis = data.getWahlkreis(data.wahl2013, wahlkreisnummer);
-
-                kreis.setLand(data.getBundesland(bundesland));
-                kreis.setName(wahlkreisname);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private static void checkWahlkreise2013(Datamodel data) {
+//        try (Reader reader = new FileReader(new File("wahlparser/src/res/Wahldaten/Wahlkreise.csv"))) {
+//            CSVParser parser = new CSVParser(reader, CSVFormat.newFormat(',').withFirstRecordAsHeader());
+//
+//            for (CSVRecord record : parser) {
+//                Integer wahlkreisnummer = getInt(record.get("Wahlkreisnummer"));
+//                String wahlkreisname = record.get("Wahlkreisname");
+//                String bundesland = record.get("Bundesland");
+//
+//                Wahlkreis kreis = data.getWahlkreis(wahlkreisnummer);
+//
+//                kreis.setLand(data.getBundesland(bundesland));
+//                kreis.setName(wahlkreisname);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private static void parseBundeslaender(Datamodel data) {
         try (Reader reader = new FileReader(new File("wahlparser/src/res/bundeslaender.csv"))) {
@@ -206,34 +221,39 @@ public class main {
     }
 
     private static void parseWahldaten(Datamodel data) {
+        try (Reader reader = new FileReader(new File("wahlparser/src/res/parteien_liste.csv"))) {
+            CSVParser parser = new CSVParser(reader, CSVFormat.newFormat(';'));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void parseWahldatenJson(Datamodel data) {
         try (FileReader fileReader = new FileReader(new File("wahlparser/src/res/complete.json"))) {
 
             JsonObject mainObject = Json.createReader(fileReader).readObject();
 
             JsonObject wahlkreiseJson = mainObject.getJsonObject("wahlkreise");
-            for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
-                for (int i = 1; i <= 299; i++) {
-                    JsonObject wahlkreisJson = wahlkreiseJson.getJsonObject(Integer.toString(i));
-                    Wahlkreis wahlkreis = new Wahlkreis(
-                            i,
-                            wahlkreisJson.getString("Name"),
-                            data.getBundesland(wahlkreisJson.getString("Bundesland")),
-                            wahlkreisJson.getInt("Wahlberechtigte_" + jahr.getKurzschreibweise()),
-                            wahlkreisJson.getInt("Waehler_" + jahr.getKurzschreibweise()),
-                            wahlkreisJson.getInt("Gueltige_" + jahr.getKurzschreibweise() + "_Erst"),
-                            wahlkreisJson.getInt("Ungueltige_" + jahr.getKurzschreibweise() + "_Erst"),
-                            wahlkreisJson.getInt("Gueltige_" + jahr.getKurzschreibweise() + "_Erst"),
-                            wahlkreisJson.getInt("Ungueltige_" + jahr.getKurzschreibweise() + "_Erst")
-                    );
-                    data.wahlkreise.get(jahr).add(wahlkreis);
+            for (int i = 1; i <= 299; i++) {
+                JsonObject wahlkreisJson = wahlkreiseJson.getJsonObject(Integer.toString(i));
+                Wahlkreis wahlkreis = new Wahlkreis(
+                        i,
+                        wahlkreisJson.getString("Name"),
+                        data.getBundesland(wahlkreisJson.getString("Bundesland")),
+                        wahlkreisJson.getInt("Wahlberechtigte_17"),
+                        wahlkreisJson.getInt("Wahlberechtigte_13")
+                );
+                data.wahlkreise.add(wahlkreis);
 
-                    JsonArray ergebnisse = wahlkreisJson.getJsonArray("ParteiErgebnisse");
-                    for (int j = 0; j < ergebnisse.size(); j++) {
-                        JsonObject ergebnisJson = ergebnisse.getJsonObject(j);
-                        String parteiName = ergebnisJson.getString("Partei");
+                JsonArray ergebnisse = wahlkreisJson.getJsonArray("ParteiErgebnisse");
+                for (int j = 0; j < ergebnisse.size(); j++) {
+                    JsonObject ergebnisJson = ergebnisse.getJsonObject(j);
+                    String parteiName = ergebnisJson.getString("Partei");
+                    for (Wahljahr jahr : new Wahljahr[] {data.wahl2013, data.wahl2017}) {
                         wahlkreis.getErgebnisse().add(new WahlkreisErgebnis(data.getCreatePartei(parteiName, null, jahr),
                                 ergebnisJson.getInt("Erststimme_" + jahr.getKurzschreibweise()),
-                                ergebnisJson.getInt("Zweitstimme_" + jahr.getKurzschreibweise())));
+                                ergebnisJson.getInt("Zweitstimme_" + jahr.getKurzschreibweise()), jahr));
                     }
                 }
             }
@@ -265,10 +285,10 @@ public class main {
                 }
 
                 Bewerber bewerber = new Bewerber(titel, nachname, vorname, null, null, null, jahrgang,
-                        wahlkreis != null ? data.getWahlkreis(data.wahl2013, wahlkreis) : null,
+                        wahlkreis != null ? data.getWahlkreis(wahlkreis) : null,
                         partei);
 
-                if (landKurz != null) {
+                if (landKurz != null && partei != null) {
                     Bundesland land = data.getBundeslandByKuerzel(landKurz);
                     partei.addLandeslisteEintrag(land, bewerber, listenEintrag);
                 }
@@ -301,17 +321,17 @@ public class main {
 
                 Partei partei = null;
                 if (!parteiBez.isEmpty()) {
-                    partei = data.getCreatePartei(parteiBez, parteiKurz, data.wahl2017);
+                    partei = data.getPartei(parteiBez, parteiKurz, data.wahl2017);
                 }
 
                 // Neuen Bewerber anlegen
                 Bewerber bewerber = new Bewerber(titel, nachname, vorname, namenszusatz, geschlecht, beruf, jahrgang,
-                        wahlkreis != null ? data.getWahlkreis(data.wahl2017, wahlkreis) : null,
+                        wahlkreis != null ? data.getWahlkreis(wahlkreis) : null,
                         partei);
 
                 // Dieser Bewerber steht auf einer Landesliste
                 if (!parteiListe.isEmpty()) {
-                    Partei landesPartei = data.getCreatePartei(parteiListe, record.get("Liste_ParteiKurzBez"), data.wahl2017);
+                    Partei landesPartei = data.getPartei(parteiListe, record.get("Liste_ParteiKurzBez"), data.wahl2017);
                     landesPartei.addLandeslisteEintrag(data.getBundeslandByKuerzel(landKurz), bewerber, listenEintrag);
                 }
 

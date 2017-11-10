@@ -7,11 +7,17 @@ public class Partei {
     private static int counter = 0;
 
     private Map<Bundesland, Landesliste> landeslisten = new HashMap<>();
+    Wahljahr jahr;
 
-    public Partei(String name, String kurzschreibweise) {
+    public Wahljahr getJahr() {
+        return jahr;
+    }
+
+    public Partei(String name, String kurzschreibweise, Wahljahr jahr) {
         this.name = name;
         this.kurzschreibweise = kurzschreibweise;
         this.number = counter++;
+        this.jahr = jahr;
     }
 
     public String getKurzschreibweise() {
