@@ -12,11 +12,14 @@ CREATE TABLE Parteien (
 );
 
 CREATE TABLE Wahlkreise (
-  id SMALLINT PRIMARY KEY ,
-  nummer SMALLINT,
+  nummer SMALLINT PRIMARY KEY,
   name VARCHAR(127),
+  bundesland VARCHAR(2) REFERENCES Bundeslaender(kuerzel)
+);
+
+CREATE TABLE Wahlberechtigte (
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer),
   anzahl_wahlberechtigte INT,
-  bundesland VARCHAR(2) REFERENCES Bundeslaender(kuerzel),
   wahljahr SMALLINT
 );
 
@@ -41,23 +44,22 @@ CREATE TABLE Listenplaetze (
 );
 
 CREATE TABLE Wahlzettel (
-  id INT PRIMARY KEY,
-  partei_id SMALLINT REFERENCES Parteien(id),
-  kandidaten_id SMALLINT REFERENCES Kandidaten(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id)
-  --gueltig VARCHAR(1)
+  partei_id SMALLINT,-- REFERENCES Parteien(id),
+  kandidaten_id SMALLINT,-- REFERENCES Kandidaten(id),
+  wahlkreis_id SMALLINT,-- REFERENCES Wahlkreise(id),
+  gueltig VARCHAR(1)
 );
 
 CREATE TABLE Erststimmenergebnisse (
   kandidaten_id SMALLINT REFERENCES Kandidaten(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer),
   anzahl INT,
   PRIMARY KEY (wahlkreis_id, kandidaten_id)
 );
 
 CREATE TABLE Zweitstimmenergebnisse (
   partei_id SMALLINT REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer),
   anzahl INT,
   PRIMARY KEY (wahlkreis_id, partei_id)
 );
@@ -65,7 +67,5 @@ CREATE TABLE Zweitstimmenergebnisse (
 CREATE TABLE Wahltoken (
   token VARCHAR(127) PRIMARY KEY,
   benutzt VARCHAR(1),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id)
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer)
 );
-
-CREATE SEQUENCE Wahlzettel_SEQ;

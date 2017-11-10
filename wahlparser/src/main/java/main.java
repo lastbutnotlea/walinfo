@@ -27,7 +27,7 @@ public class main {
         // Parse Bewerber 2013
         parseBewerber2013(data);
 
-        checkWahlkreise2013(data);
+        // checkWahlkreise2013(data); ist falsch
 
         System.out.println("SQL:\n");
         PrintStream sqlFileStream;
@@ -46,12 +46,12 @@ public class main {
 
         System.out.println("Done with inserts\n\nStarting with Wahlzettel");
 
-        StimmGenerator generator = new StimmGenerator(data);
-        try {
-            generator.writeInsertStatements(new File("wahlparser/src/res/sql-statements/insert-wahlzettel.sql"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        StimmGenerator generator = new StimmGenerator(data);
+//        try {
+//             generator.writeInsertStatements(new File("wahlparser/src/res/sql-statements/insert-wahlzettel.sql"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         System.out.println("Done");
     }
