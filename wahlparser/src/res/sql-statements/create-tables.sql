@@ -50,8 +50,8 @@ CREATE TABLE Erststimmen (
 );
 
 CREATE TABLE Zweitstimmen (
-  partei_id SMALLINT REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer),
+  partei_id SMALLINT, --REFERENCES Parteien(id),
+  wahlkreis_id SMALLINT, -- REFERENCES Wahlkreise(nummer),
   gueltig VARCHAR(1)
 );
 
