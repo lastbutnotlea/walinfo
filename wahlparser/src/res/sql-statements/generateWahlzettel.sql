@@ -1,8 +1,9 @@
+-- generate Wahlzettel
 with placeholder1(nummer) AS (
   SELECT * from generate_series(1, (select max(anzahl) from erststimmenergebnisse))
 )
-  INSERT INTO erststimmen(kandidaten_id, wahlkreis_id, gueltig)
-    SELECT e.kandidaten_id , e.wahlkreis_id, 'J'
+  INSERT INTO erststimmen(kandidaten_id, wahlkreis_id)
+    SELECT e.kandidaten_id , e.wahlkreis_id
     FROM erststimmenergebnisse e, placeholder1 p1
     WHERE p1.nummer <= e.anzahl
 ;
@@ -10,13 +11,14 @@ with placeholder1(nummer) AS (
 with placeholder2(nummer) AS (
     SELECT * from generate_series(1, (select max(anzahl) from zweitstimmenergebnisse))
 )
-  INSERT INTO zweitstimmen(partei_id, wahlkreis_id, gueltig)
-    SELECT e.partei_id, e.wahlkreis_id, 'J'
+  INSERT INTO zweitstimmen(partei_id, wahlkreis_id)
+    SELECT e.partei_id, e.wahlkreis_id
     FROM zweitstimmenergebnisse e, placeholder2 p2
     WHERE p2.nummer <= e.anzahl
 ;
 
--- afterwards
+-- add foreign keys
+/*
 ALTER TABLE erststimmen
     ADD FOREIGN KEY (kandidaten_id) REFERENCES kandidaten(id);
 
@@ -28,3 +30,4 @@ ALTER TABLE zweitstimmen
 
 ALTER TABLE zweitstimmen
   ADD FOREIGN KEY (wahlkreis_id) REFERENCES wahlkreise(nummer);
+*/
