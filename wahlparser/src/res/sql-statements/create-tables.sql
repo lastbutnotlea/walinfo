@@ -96,3 +96,20 @@ INSERT INTO Dt_Bevölkerung (bundesland, wahljahr, anzahl) VALUES
   ('BB', 2017, 2391746), ('BY', 2017, 11362245),
   ('ST', 2017, 2145671), ('BW', 2017, 9365001),
   ('BE', 2017, 2975745), ('SL', 2017, 899748);
+
+CREATE OR REPLACE VIEW GEWAEHLTE_ERSTKANDIDATEN (wahljahr, kandidat_id) AS (
+  WITH maximaleStimmenWahlkreis (wahljahr, id, maximal) AS (
+      select w.wahljahr, w.id, max(e.anzahl)
+      FROM erststimmenergebnisse e, wahlkreise w
+      WHERE e.wahlkreis_id = w.id
+      GROUP BY w.wahljahr, w.id
+  )
+    SELECT w.wahljahr, k.id
+    FROM erststimmenergebnisse e, kandidaten k, wahlkreise w, maximaleStimmenWahlkreis m
+    WHERE e.kandidaten_id = k.id
+          AND e.wahlkreis_id = w.id
+          AND m.maximal = e.anzahl
+          AND m.id = w.id
+          AND k.wahljahr = m.wahljahr
+          AND w.wahljahr = m.wahljahr
+)
