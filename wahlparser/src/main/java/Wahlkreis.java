@@ -2,7 +2,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Wahlkreis {
-    private int nummer;
+    private int nummer, id;
+    private static int counter = 0;
 
     public int getNummer() {
         return nummer;
@@ -10,21 +11,28 @@ public class Wahlkreis {
 
     private String name;
     private Bundesland land;
+    private Wahljahr jahr;
 
-    public int getWahlberechtigte17() {
-        return wahlberechtigte17;
+    public int getWahlberechtigte() {
+        return wahlberechtigte;
     }
 
-    public int getWahlberechtigte13() {
-        return wahlberechtigte13;
+
+    private int wahlberechtigte;
+    private int ungueltigeStimmenErst;
+    private int ungueltigeStimmenZweit;
+
+    public int getUngueltigeStimmenErst() {
+        return ungueltigeStimmenErst;
     }
 
-    private int wahlberechtigte17,wahlberechtigte13;
-//            waehler,
-//            gueltigeStimmenErst,
-//            ungueltigeStimmenErst,
-//            gueltigeStimmenZweit,
-//            ungueltigeStimmenZweit;
+    public int getUngueltigeStimmenZweit() {
+        return ungueltigeStimmenZweit;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     private Set<WahlkreisErgebnis> ergebnisse = new HashSet<>();
 
@@ -32,34 +40,27 @@ public class Wahlkreis {
         return ergebnisse;
     }
 
-    public void setErgebnisse(Set<WahlkreisErgebnis> ergebnisse) {
-        this.ergebnisse = ergebnisse;
-    }
 
-
-    public Wahlkreis(int nummer, String name, Bundesland land, int wahlberechtigte17, int wahlberechtigte13) {
+    public Wahlkreis(int nummer, String name, Bundesland land, Wahljahr jahr, int wahlberechtigte, int ungueltigeStimmenErst, int ungueltigeStimmenZweit) {
         this.nummer = nummer;
         this.name = name;
         this.land = land;
-        this.wahlberechtigte17 = wahlberechtigte17;
-        this.wahlberechtigte13 = wahlberechtigte13;
+        this.jahr = jahr;
+        this.wahlberechtigte = wahlberechtigte;
+        this.ungueltigeStimmenErst = ungueltigeStimmenErst;
+        this.ungueltigeStimmenZweit = ungueltigeStimmenZweit;
+        this.id = counter++;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Bundesland getLand() {
         return land;
     }
 
-    public void setLand(Bundesland land) {
-        this.land = land;
+    public Wahljahr getJahr() {
+        return jahr;
     }
-
-
 }

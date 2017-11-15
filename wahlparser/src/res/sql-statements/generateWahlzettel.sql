@@ -4,8 +4,10 @@ with placeholder1(nummer) AS (
 )
   INSERT INTO erststimmen(kandidaten_id, wahlkreis_id)
     SELECT e.kandidaten_id , e.wahlkreis_id
-    FROM erststimmenergebnisse e, placeholder1 p1
+    FROM erststimmenergebnisse e, placeholder1 p1, wahlkreise w
     WHERE p1.nummer <= e.anzahl
+      and w.id = e.wahlkreis_id
+      and w.wahljahr = 2017;
 ;
 
 with placeholder2(nummer) AS (
@@ -13,8 +15,10 @@ with placeholder2(nummer) AS (
 )
   INSERT INTO zweitstimmen(partei_id, wahlkreis_id)
     SELECT e.partei_id, e.wahlkreis_id
-    FROM zweitstimmenergebnisse e, placeholder2 p2
+    FROM zweitstimmenergebnisse e, placeholder2 p2, wahlkreise w
     WHERE p2.nummer <= e.anzahl
+      and w.id = e.wahlkreis_id
+      and w.wahljahr = 2017;
 ;
 
 -- add foreign keys

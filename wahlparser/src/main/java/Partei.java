@@ -1,23 +1,17 @@
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.Set;
 
 public class Partei {
 
     private static int counter = 0;
 
-    private Map<Bundesland, Landesliste> landeslisten = new HashMap<>();
-    Wahljahr jahr;
-
-    public Wahljahr getJahr() {
-        return jahr;
-    }
+    private Set<Landesliste> landeslisten = new HashSet<>();
 
     public Partei(String name, String kurzschreibweise, Wahljahr jahr) {
         this.name = name;
         this.kurzschreibweise = kurzschreibweise;
-        this.number = counter++;
         this.jahr = jahr;
+        this.number = counter++;
     }
 
     public String getKurzschreibweise() {
@@ -30,22 +24,34 @@ public class Partei {
 
     private String name, kurzschreibweise;
     private int number;
+    private Wahljahr jahr;
 
-    public Map<Bundesland, Landesliste> getLandeslisten() {
+    public Wahljahr getJahr() {
+        return jahr;
+    }
+
+    public Set<Landesliste> getLandeslisten() {
         return landeslisten;
     }
 
-    public void addLandeslisteEintrag(Bundesland land, Bewerber bewerber, int listenPlatz) {
+    public void addLandeslisteEintrag(Bundesland land, Bewerber bewerber, int listenPlatz, Wahljahr jahr) {
         if (land == null) {
             throw new NullPointerException();
         }
-        if (landeslisten.get(land) == null) {
-            landeslisten.put(land, new Landesliste());
+        Landesliste found = null;
+        for (Landesliste liste : landeslisten) {
+            if (liste.getLand() == land && liste.getJahr() == jahr) {
+                found = liste;
+            }
         }
-        if (landeslisten.get(land).getEintraege().containsKey(listenPlatz)) {
+        if (found == null) {
+            found = new Landesliste(jahr, land);
+            landeslisten.add(found);
+        }
+        if (found.getEintraege().containsKey(listenPlatz)) {
             throw new RuntimeException(listenPlatz + " schon vorhanden");
         }
-        landeslisten.get(land).getEintraege().put(listenPlatz, bewerber);
+        found.getEintraege().put(listenPlatz, bewerber);
     }
 
     public String getName() {

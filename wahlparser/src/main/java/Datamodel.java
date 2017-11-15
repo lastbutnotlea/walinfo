@@ -7,13 +7,15 @@ public class Datamodel {
 
     public Map<Wahljahr, Set<Bewerber>> bewerber = new HashMap<>();
 
-    public Map<Wahljahr, Set<Partei>> parteien = new HashMap<>();
-
+    public Set<Partei> parteien = new HashSet<>();
 
     public Wahljahr wahl2013, wahl2017;
 
-    public Partei uebrigePartei = new Partei("Übrige", "Übrige", wahl2013);
     public Map<String, String> parteienKurzschreibweise = new HashMap<>();
+
+    public Map<Integer, Integer> wahlkreisMapping = new HashMap<>();
+
+    // public Partei uebrigePartei = new Partei("Übrige", "Übrige", wahl2013);
 
     public Datamodel() {
         Calendar calendar = Calendar.getInstance();
@@ -21,14 +23,11 @@ public class Datamodel {
 
         wahl2013 = new Wahljahr(calendar.getTime());
         bewerber.put(wahl2013, new HashSet<>());
-        parteien.put(wahl2013, new HashSet<>());
 
         calendar.set(2017, 9, 24);
         wahl2017 = new Wahljahr(calendar.getTime());
         bewerber.put(wahl2017, new HashSet<>());
-        parteien.put(wahl2017, new HashSet<>());
 
-        parteien.get(wahl2013).add(uebrigePartei);
     }
 
     public Bundesland   getBundesland(String name) {
@@ -53,11 +52,14 @@ public class Datamodel {
     }
 
     public Partei getCreatePartei(String name, String kurzAngabe, Wahljahr jahr) {
-        if (name.equals("Übrige") || name.isEmpty() || (kurzAngabe != null && kurzAngabe.startsWith("EB: "))) {
+        if (name.equalsIgnoreCase("Übrige") || name.isEmpty() || (kurzAngabe != null && kurzAngabe.startsWith("EB: "))) {
             return null;
         }
-        for (Partei partei : parteien.get(jahr)) {
-            if (partei.getName().equals(name)) {
+        if (jahr == null) {
+            throw new NullPointerException(name);
+        }
+        for (Partei partei : parteien) {
+            if (partei.getName().equals(name) && partei.getJahr() == jahr) {
                 return partei;
             }
         }
@@ -66,11 +68,11 @@ public class Datamodel {
         if (kurzAngabe != null) {
             kurz = kurzAngabe;
         } else if (kurz == null) {
-            System.err.println(name);
+            System.err.println("Für folgende Partei ist kein Kürzel vorhanden: " + name);
         }
         Partei partei = new Partei(name, kurz, jahr);
 
-        parteien.get(jahr).add(partei);
+        parteien.add(partei);
         return partei;
     }
 
@@ -78,8 +80,8 @@ public class Datamodel {
         if (name.equals("Übrige") || name.isEmpty() || (kurzAngabe != null && kurzAngabe.startsWith("EB: "))) {
             return null;
         }
-        for (Partei partei : parteien.get(jahr)) {
-            if (partei.getName().equals(name)) {
+        for (Partei partei : parteien) {
+            if (partei.getName().equals(name) && partei.getJahr() == jahr) {
                 return partei;
             }
         }
@@ -90,17 +92,45 @@ public class Datamodel {
         if (kurz.startsWith("EB: ")) {
             return null;
         }
-        for (Partei partei : parteien.get(jahr)) {
-            if (partei.getKurzschreibweise().equals(kurz)) {
+        if (kurz.equalsIgnoreCase("VERNUNFT")) {
+            kurz = "PARTEI DER VERNUNFT";
+        }
+        for (Partei partei : parteien) {
+            if ((partei.getKurzschreibweise().equalsIgnoreCase(kurz)
+                    || partei.getKurzschreibweise().replaceAll(" ", "").equalsIgnoreCase(kurz))
+                    && partei.getJahr() == jahr) {
                 return partei;
             }
         }
         return null;
     }
 
-    public Wahlkreis getWahlkreis(int i) {
+    public Partei getCreateByKuerzel(String kurz, Wahljahr jahr) {
+        if (kurz.startsWith("EB: ") || kurz.equals("Übrige")) {
+            return null;
+        }
+        Partei partei = getByKuerzel(kurz, jahr);
+        if (partei == null) {
+            String name = null;
+            for (Map.Entry<String, String> entry : parteienKurzschreibweise.entrySet()) {
+                if (entry.getValue().equals(kurz)) {
+                    name = entry.getKey();
+                }
+            }
+            if (name == null) {
+                System.err.println("Konnte nichts zu " + kurz + " finden.");
+            } else {
+                partei = new Partei(name, kurz, jahr);
+                parteien.add(partei);
+            }
+
+        }
+        return partei;
+    }
+
+    public Wahlkreis getWahlkreis(int i, Wahljahr jahr) {
         for (Wahlkreis kreis : wahlkreise) {
-            if (kreis.getNummer() == i) {
+            if (kreis.getNummer() == i && kreis.getJahr() == jahr) {
                 return kreis;
             }
         }
