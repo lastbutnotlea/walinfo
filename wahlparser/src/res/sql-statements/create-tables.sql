@@ -72,3 +72,30 @@ CREATE TABLE Wahltoken (
   benutzt VARCHAR(1),
   wahlkreis_id SMALLINT REFERENCES Wahlkreise(nummer)
 );
+
+-- Deutsche Bevölkerung
+CREATE TABLE Dt_Bevölkerung (
+  bundesland VARCHAR(2), -- REFERENCES Bundeslaender(kuerzel),
+  wahljahr SMALLINT,
+  anzahl INT
+);
+
+INSERT INTO Dt_Bevölkerung (bundesland, wahljahr, anzahl) VALUES
+  -- 2013
+  ('SH', 2013, 2686085), ('NW', 2013, 15895182),
+  ('MV', 2013, 1585032), ('SN', 2013, 4005278),
+  ('HH', 2013, 1559655), ('HE', 2013, 5388350),
+  ('NI', 2013, 7354892), ('TH', 2013, 2154202),
+  ('HB', 2013, 575805), ('RP', 2013, 3672888),
+  ('BB', 2013, 2418267), ('BY', 2013, 11353264),
+  ('ST', 2013, 2247673), ('BW', 2013, 9482902),
+  ('BE', 2013, 3025288), ('SL', 2013, 919402),
+  -- 2017
+  ('SH', 2017, 2673803), ('NW', 2017, 15707569),
+  ('MV', 2017, 1548400), ('SN', 2017, 3914671),
+  ('HH', 2017, 1525090), ('HE', 2017, 5281198),
+  ('NI', 2017, 7278789), ('TH', 2017, 2077901),
+  ('HB', 2017, 568510), ('RP', 2017, 3661245),
+  ('BB', 2017, 2391746), ('BY', 2017, 11362245),
+  ('ST', 2017, 2145671), ('BW', 2017, 9365001),
+  ('BE', 2017, 2975745), ('SL', 2017, 899748);
