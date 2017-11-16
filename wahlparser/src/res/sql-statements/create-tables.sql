@@ -74,7 +74,8 @@ CREATE TABLE Wahltoken (
 CREATE TABLE Dt_Bevölkerung (
   bundesland VARCHAR(2), -- REFERENCES Bundeslaender(kuerzel),
   wahljahr SMALLINT,
-  anzahl INT
+  anzahl INT,
+  PRIMARY KEY (bundesland, wahljahr)
 );
 
 INSERT INTO Dt_Bevölkerung (bundesland, wahljahr, anzahl) VALUES
