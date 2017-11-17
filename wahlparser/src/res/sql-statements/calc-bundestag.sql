@@ -51,16 +51,18 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
       GROUP BY bundesland, wahljahr
   ),
 
-  -- anzahl der direktmandate pro partei und wahljahr bundesweit
-  anzahldirektmandate (id, wahljahr, anzahldirkan) AS (
+  -- anzahl der direktmandate pro partei und wahljahr pro bundesland
+    anzahldirektmandate_land (partei_id, bundesland, wahljahr, anzahldirkan) AS (
       SELECT
         p.id,
+        wk.bundesland,
         p.wahljahr,
         count(DISTINCT k.id)
-      FROM parteien p, erststimmenergebnisse e, kandidaten k
+      FROM parteien p, erststimmenergebnisse e, kandidaten k, wahlkreise wk
       WHERE p.id = k.partei_id
             AND k.id = e.kandidaten_id
             AND k.wahljahr = p.wahljahr
+            AND e.wahlkreis_id = wk.id
             AND e.anzahl = (
         SELECT max(anzahl)
         FROM erststimmenergebnisse e2, kandidaten k2
@@ -68,7 +70,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
               AND k.wahljahr = k2.wahljahr
               AND e.wahlkreis_id = e2.wahlkreis_id
       )
-      GROUP BY p.id, p.wahljahr
+      GROUP BY p.id, wk.bundesland, p.wahljahr
   ),
 
   -- parteien im bundestag = diejenigen parteien, die die 5% Hürde geschafft haben
@@ -87,9 +89,17 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
             AND p2.wahljahr = p.wahljahr
     )
     UNION
-    SELECT id, wahljahr
-    FROM anzahldirektmandate
-    WHERE anzahldirkan >= 3
+    SELECT
+      partei_id,
+      wahljahr
+    FROM (SELECT
+            partei_id,
+            wahljahr,
+            sum(anzahldirkan) AS sumdirkan
+          FROM anzahldirektmandate_land
+          GROUP BY partei_id, wahljahr
+         ) AS temp
+    WHERE sumdirkan >= 3
   ),
 
   -- anzahl zweitstimmen pro partei und bundesland
@@ -148,17 +158,17 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
             ROW_NUMBER()
             OVER (PARTITION BY
               bundesland, wahljahr
-              ORDER BY aktuelles_ergebnis DESC) AS Row_ID
+              ORDER BY aktuelles_ergebnis DESC) AS anzahl_reihen
           FROM sitzepropartei_aux
         ) AS aux
-      WHERE Row_ID <= (SELECT sitze
-                       FROM sitzeproland sl
-                       WHERE aux.bundesland = sl.bundesland
-                             AND aux.wahljahr = sl.wahljahr)
+      WHERE anzahl_reihen <= (SELECT sitze
+                              FROM sitzeproland sl
+                              WHERE aux.bundesland = sl.bundesland
+                                    AND aux.wahljahr = sl.wahljahr)
       ORDER BY wahljahr ),
 
   -- verteilung der sitzkontigente auf parteien (1. unterverteilung)
-    sitzepropartei (bundesland, partei_id, sitze, wahljahr) AS (
+    sitzepropartei_land (bundesland, partei_id, sitze, wahljahr) AS (
       SELECT
         bundesland,
         partei_id,
@@ -168,26 +178,151 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
       GROUP BY bundesland, wahljahr, partei_id
   ),
 
-  -- mindestsitzzahl pro partei
-  -- TODO ich glaube wir brauchen das doch nach ländern aufgeschlüsselt...
-    mindestsitzzahl (partei_id, minsitzzahl, wahljahr) AS (
-      SELECT partei_id,
-        (case when sum(spp.sitze) > ad.anzahldirkan then sum(spp.sitze)
-          else ad.anzahldirkan end),
+  -- mindestsitzzahl pro partei auf landesebene
+    mindestsitzzahl_land (partei_id, bundesland, minsitzzahl, wahljahr) AS (
+      SELECT
+        spp.partei_id,
+        spp.bundesland,
+        greatest(sitze, (
+          SELECT anzahldirkan
+          FROM anzahldirektmandate_land dir
+          WHERE dir.partei_id = spp.partei_id
+                AND dir.bundesland = spp.bundesland
+        )),
         spp.wahljahr
-      FROM sitzepropartei spp, anzahldirektmandate ad
-      WHERE spp.partei_id = ad.id
-      GROUP BY partei_id, spp.wahljahr, ad.anzahldirkan
-  )
+      FROM sitzepropartei_land spp
+  ),
+
+  -- mindestsitzzahl pro partei auf bundesebene
+    mindestsitzzahl (partei_id, minsitzzahl, wahljahr) AS (
+      SELECT
+        partei_id,
+        sum(minsitzzahl),
+        wahljahr
+      FROM mindestsitzzahl_land
+      GROUP BY partei_id, wahljahr
+  ),
+
+  -- höchstzahlverfahren ausgleichsmandate (2. oberverteilung)
+  -- erstelle höchstzahltabelle
+    ausgleichsmandate_aux (partei_id, faktor, anzahl, aktuelles_ergebnis, wahljahr) AS (
+    (
+      SELECT
+        partei_id,
+        0.5,
+        sum(stimmen),
+        cast(sum(stimmen) AS NUMERIC) / 0.5,
+        wahljahr
+      FROM zweitstimmen_btparteien
+      GROUP BY partei_id, wahljahr
+    )
+    UNION ALL
+    (
+      SELECT
+        partei_id,
+        faktor + 1,
+        anzahl,
+        anzahl / (faktor + 1),
+        wahljahr
+      FROM ausgleichsmandate_aux
+      -- reicht auch das max an mindestsitzzahlen???
+      WHERE faktor < 600
+    )
+  ),
+
+  -- höchstzahlverfahren ausgleichsmandate (2. oberverteilung)
+  -- wähle von jeder partei die größten x einträge, sodass x der mindestsitzzahl entspricht
+    ausgleichsmandate_aux2 (partei_id, faktor, anzahl, aktuelles_ergebnis, wahljahr) AS (
+      SELECT
+        partei_id,
+        faktor,
+        anzahl,
+        aktuelles_ergebnis,
+        wahljahr
+      FROM
+        (
+          SELECT
+            *,
+            ROW_NUMBER()
+            OVER (PARTITION BY
+              wahljahr, partei_id
+              ORDER BY aktuelles_ergebnis DESC) AS anzahl_reihen
+          FROM ausgleichsmandate_aux
+        ) AS aux
+      WHERE anzahl_reihen <= (SELECT minsitzzahl
+                              FROM mindestsitzzahl ms
+                              WHERE ms.partei_id = aux.partei_id
+                                    AND ms.wahljahr = aux.wahljahr)
+      ORDER BY wahljahr ),
+
+  -- höchstzahlverfahren ausgleichsmandate (2. oberverteilung)
+  -- suche für jedes wahljahr den kleinsten eintrag in der sortierten und
+  -- gefilterten höchstzahltabelle
+    ausgleichsmandate_aux3 (partei_id, min_ergebnis, wahljahr) AS (
+      SELECT
+        partei_id,
+        aktuelles_ergebnis,
+        wahljahr
+      FROM ausgleichsmandate_aux2 aa1
+      WHERE aktuelles_ergebnis = (
+        SELECT min(aktuelles_ergebnis)
+        FROM ausgleichsmandate_aux2 aa2
+        WHERE aa1.wahljahr = aa2.wahljahr
+      )
+  ),
+
+  -- höchstzahlverfahren ausgleichsmandate (2. oberverteilung)
+    mandate_pro_partei (partei_id, anzahl_mandate, wahljahr) AS (
+      SELECT
+        partei_id,
+        count(anzahl_reihen),
+        wahljahr
+      FROM
+        (
+          SELECT
+            *,
+            ROW_NUMBER()
+            OVER (PARTITION BY
+              partei_id, wahljahr
+              ORDER BY aktuelles_ergebnis DESC) AS anzahl_reihen
+          FROM ausgleichsmandate_aux
+        ) AS aux
+      WHERE aktuelles_ergebnis >= (
+        SELECT min_ergebnis
+        FROM ausgleichsmandate_aux3 aa3
+        WHERE aa3.wahljahr = aux.wahljahr
+      )
+      GROUP BY partei_id, wahljahr
+      ORDER BY wahljahr )
 
 
+--------------------------------------
+-- alles ab hier hab ich erstmal nur zum testen geutzt
+
+
+-- gibt die Gesamtanzahl an Mandaten pro Partei bundesweit aus
+-- AKTUELLER STAND
+SELECT *
+FROM mandate_pro_partei;
+
+-- gibt die Mindestanzahl an Mandaten pro Partei bundesweit aus
+/*
+SELECT mindestsitzzahl.*, parteien.name
+FROM mindestsitzzahl, parteien
+  WHERE mindestsitzzahl.partei_id = parteien.id
+ORDER BY wahljahr;
+*/
+
+-- gibt die vorläufige anzahl an Sitzen pro Partei pro Land an
+/*
 SELECT
-  bundesland,
-  partei_id,
-  name,
-  sitze,
-  sitzepropartei.wahljahr
-FROM sitzepropartei, parteien
-WHERE sitzepropartei.partei_id = parteien.id
+bundesland,
+partei_id,
+name,
+sitze,
+sitzepropartei_land.wahljahr
+FROM sitzepropartei_land, parteien
+WHERE sitzepropartei_land.partei_id = parteien.id
 ORDER BY wahljahr, bundesland;
+*/
 
