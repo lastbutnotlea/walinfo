@@ -37,6 +37,7 @@ CREATE TABLE Kandidaten (
 CREATE TABLE Listenplaetze (
   kandidaten_id SMALLINT REFERENCES Kandidaten(id) PRIMARY KEY,
   bundesland VARCHAR(2) REFERENCES Bundeslaender(kuerzel),
+  partei_id SMALLINT REFERENCES Parteien(id),
   listenplatz SMALLINT
 );
 

@@ -103,8 +103,8 @@ public class main {
                     for (Landesliste liste : partei.getLandeslisten()) {
                         for (Map.Entry<Integer, Bewerber> entry2 : liste.getEintraege().entrySet()) {
                             if (entry2.getValue() == bewe) {
-                                sqlFileStream.println("INSERT INTO Listenplaetze (kandidaten_id, bundesland, listenplatz) VALUES (" +
-                                        bewe.getId() + ", '" + liste.getLand().getKurzschreibweise() + "', " + entry2.getKey() + ");");
+                                sqlFileStream.println("INSERT INTO Listenplaetze (kandidaten_id, partei_id, bundesland, listenplatz) VALUES (" +
+                                        bewe.getId() + ", " + partei.getNumber() + ", '" + liste.getLand().getKurzschreibweise() + "', " + entry2.getKey() + ");");
                             }
                         }
                     }
