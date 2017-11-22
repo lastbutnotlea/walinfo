@@ -72,14 +72,14 @@ CREATE TABLE Wahltoken (
 );
 
 -- Deutsche Bevölkerung
-CREATE TABLE Dt_Bevölkerung (
+CREATE TABLE Dt_Bevoelkerung (
   bundesland VARCHAR(2), -- REFERENCES Bundeslaender(kuerzel),
   wahljahr   SMALLINT,
   anzahl     INT,
   PRIMARY KEY (bundesland, wahljahr)
 );
 
-INSERT INTO Dt_Bevölkerung (bundesland, wahljahr, anzahl) VALUES
+INSERT INTO Dt_Bevoelkerung (bundesland, wahljahr, anzahl) VALUES
   -- 2013
   ('SH', 2013, 2686085), ('NW', 2013, 15895182),
   ('MV', 2013, 1585032), ('SN', 2013, 4005278),

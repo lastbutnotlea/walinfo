@@ -484,11 +484,9 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
       )
   )
 --------------------------------------
-SELECT * from bundestag;
 
-SELECT *
-FROM bundestag, kandidaten
-WHERE bundestag.kandidat_id = kandidaten.id
-  AND bundestag.wahljahr = 2017
-ORDER BY kandidaten.name;
+SELECT k.id, bt.partei_id, bundesland, bt.wahljahr, k.name, k.vorname
+FROM bundestag bt, kandidaten k
+WHERE bt.kandidat_id = k.id
+ORDER BY bt.wahljahr, k.name;
 
