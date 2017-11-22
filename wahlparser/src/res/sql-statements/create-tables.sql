@@ -207,3 +207,5 @@ CREATE OR REPLACE VIEW gewaehlte_erstkandidaten_schnell (wahljahr, kandidat_id) 
         AND k.wahljahr = m.wahljahr
         AND w.wahljahr = m.wahljahr
 );
+
+select * from zweitstimmenergebnisse_view;
