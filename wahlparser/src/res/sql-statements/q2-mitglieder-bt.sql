@@ -483,6 +483,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
               AND aux.partei_id = mandate_pro_partei.partei_id
       )
   )
+
 --------------------------------------
 
 SELECT k.id, bt.partei_id, bundesland, bt.wahljahr, k.name, k.vorname
