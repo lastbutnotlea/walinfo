@@ -18,8 +18,12 @@ with placeholder2(nummer) AS (
     FROM zweitstimmenergebnisse e, placeholder2 p2, wahlkreise w
     WHERE p2.nummer <= e.anzahl
       and w.id = e.wahlkreis_id
-      and w.wahljahr = 2017;
+      and w.wahljahr = 2017
 ;
+
+delete from zweitstimmen;
+
+select count(*) from zweitstimmen;
 
 -- add foreign keys
 /*
