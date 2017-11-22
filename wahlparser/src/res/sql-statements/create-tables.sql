@@ -99,6 +99,21 @@ INSERT INTO Dt_Bevölkerung (bundesland, wahljahr, anzahl) VALUES
   ('ST', 2017, 2145671), ('BW', 2017, 9365001),
   ('BE', 2017, 2975745), ('SL', 2017, 899748);
 
+-- speichert, ob die SQL Statements auf den aggregierte Daten oder auf den
+-- Einzelstimmen (Rohdaten) ausgeführt werden sollen
+-- 0 ~ verwende aggregierte Daten
+-- 1 ~ verwende Einzelstimmen
+CREATE TABLE global_config (
+  verwende_einzelstimmen SMALLINT
+);
+
+-- nur ein Tupel einfügen!!!
+INSERT INTO global_config VALUES (0);
+
+CREATE OR REPLACE VIEW erststimmenergebnisse_view AS (
+    SELECT * from erststimmenergebnisse
+);
+
 CREATE OR REPLACE VIEW gewaehlte_erstkandidaten (wahljahr, kandidat_id) AS (
   WITH maximaleStimmenWahlkreis (wahljahr, id, maximal) AS (
       SELECT
