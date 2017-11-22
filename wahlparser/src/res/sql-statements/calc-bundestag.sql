@@ -81,7 +81,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
         wk.bundesland,
         ge.wahljahr,
         count(*)
-      FROM Parteien p, kandidaten k, wahlkreise wk, gewaehlte_erstkandidaten ge
+      FROM Parteien p, kandidaten k, wahlkreise wk, gewaehlte_erstkandidaten_schnell ge
       WHERE ge.kandidat_id = k.id
             AND k.wahlkreis_id = wk.id
             AND k.partei_id = p.id
@@ -318,7 +318,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
         bundesland,
         ROW_NUMBER()
         OVER (PARTITION BY k.partei_id, w.bundesland)
-      FROM gewaehlte_erstkandidaten gk, kandidaten k, wahlkreise w
+      FROM gewaehlte_erstkandidaten_schnell gk, kandidaten k, wahlkreise w
       WHERE gk.kandidat_id = k.id
             AND w.id = k.wahlkreis_id
   ),
@@ -335,7 +335,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
       FROM listenplaetze l
       WHERE NOT EXISTS(
           SELECT *
-          FROM gewaehlte_erstkandidaten gk
+          FROM gewaehlte_erstkandidaten_schnell gk
           WHERE gk.kandidat_id = l.kandidaten_id
       )
   ),
