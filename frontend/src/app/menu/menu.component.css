@@ -1,0 +1,7 @@
+.menu-spaces * {
+  margin-right: 10px;
+}
+
+.example-fill-remaining-space {
+  flex: 1 1 auto;
+}
