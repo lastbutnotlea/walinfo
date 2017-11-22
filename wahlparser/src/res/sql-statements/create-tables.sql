@@ -1,81 +1,81 @@
 CREATE TABLE Bundeslaender (
   kuerzel VARCHAR(2) PRIMARY KEY,
-  name VARCHAR(22)
+  name    VARCHAR(22)
 );
 
 CREATE TABLE Parteien (
-  id SMALLINT PRIMARY KEY,
-  kuerzel VARCHAR(20),
-  name VARCHAR(93),
-  farbe VARCHAR(31),
+  id       SMALLINT PRIMARY KEY,
+  kuerzel  VARCHAR(20),
+  name     VARCHAR(93),
+  farbe    VARCHAR(31),
   wahljahr SMALLINT
 );
 
 CREATE TABLE Wahlkreise (
-  id SMALLINT PRIMARY KEY,
-  nummer SMALLINT,
-  name VARCHAR(82),
-  bundesland VARCHAR(2) REFERENCES Bundeslaender(kuerzel),
+  id                     SMALLINT PRIMARY KEY,
+  nummer                 SMALLINT,
+  name                   VARCHAR(82),
+  bundesland             VARCHAR(2) REFERENCES Bundeslaender (kuerzel),
   anzahl_wahlberechtigte INT,
-  wahljahr SMALLINT
+  wahljahr               SMALLINT
 );
 
 CREATE TABLE Kandidaten (
-  id SMALLINT PRIMARY KEY,
-  name VARCHAR(31),
-  vorname VARCHAR(54),
-  titel VARCHAR(15),
+  id           SMALLINT PRIMARY KEY,
+  name         VARCHAR(31),
+  vorname      VARCHAR(54),
+  titel        VARCHAR(15),
   namenszusatz VARCHAR(19),
-  geburtsjahr SMALLINT,
-  beruf VARCHAR(69),
-  geschlecht VARCHAR(1),
-  partei_id SMALLINT REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
-  wahljahr SMALLINT
+  geburtsjahr  SMALLINT,
+  beruf        VARCHAR(69),
+  geschlecht   VARCHAR(1),
+  partei_id    SMALLINT REFERENCES Parteien (id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise (id),
+  wahljahr     SMALLINT
 );
 
 CREATE TABLE Listenplaetze (
-  kandidaten_id SMALLINT REFERENCES Kandidaten(id) PRIMARY KEY,
-  bundesland VARCHAR(2) REFERENCES Bundeslaender(kuerzel),
-  partei_id SMALLINT REFERENCES Parteien(id),
-  listenplatz SMALLINT
+  kandidaten_id SMALLINT REFERENCES Kandidaten (id) PRIMARY KEY,
+  bundesland    VARCHAR(2) REFERENCES Bundeslaender (kuerzel),
+  partei_id     SMALLINT REFERENCES Parteien (id),
+  listenplatz   SMALLINT
 );
 
 CREATE TABLE Erststimmen (
-  kandidaten_id SMALLINT,-- REFERENCES Kandidaten(id),
-  wahlkreis_id SMALLINT-- REFERENCES Wahlkreise(nummer),
+  kandidaten_id SMALLINT, -- REFERENCES Kandidaten(id),
+  wahlkreis_id  SMALLINT-- REFERENCES Wahlkreise(nummer),
 );
 
 CREATE TABLE Zweitstimmen (
-  partei_id SMALLINT, --REFERENCES Parteien(id),
+  partei_id    SMALLINT, --REFERENCES Parteien(id),
   wahlkreis_id SMALLINT -- REFERENCES Wahlkreise(nummer),
 );
 
 CREATE TABLE Erststimmenergebnisse (
-  kandidaten_id SMALLINT REFERENCES Kandidaten(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
-  anzahl INT,
+  kandidaten_id SMALLINT REFERENCES Kandidaten (id),
+  wahlkreis_id  SMALLINT REFERENCES Wahlkreise (id),
+  anzahl        INT,
   UNIQUE (wahlkreis_id, kandidaten_id)
 );
 
 CREATE TABLE Zweitstimmenergebnisse (
-  partei_id SMALLINT REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id),
-  anzahl INT,
+  partei_id    SMALLINT REFERENCES Parteien (id),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise (id),
+  anzahl       INT,
   UNIQUE (wahlkreis_id, partei_id)
 );
 
 CREATE TABLE Wahltoken (
-  token VARCHAR(127) PRIMARY KEY,
-  benutzt VARCHAR(1),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise(id)
+  token        VARCHAR(127) PRIMARY KEY,
+  benutzt      VARCHAR(1),
+  wahlkreis_id SMALLINT REFERENCES Wahlkreise (id)
 );
 
 -- Deutsche Bevölkerung
 CREATE TABLE Dt_Bevölkerung (
   bundesland VARCHAR(2), -- REFERENCES Bundeslaender(kuerzel),
-  wahljahr SMALLINT,
-  anzahl INT,
+  wahljahr   SMALLINT,
+  anzahl     INT,
   PRIMARY KEY (bundesland, wahljahr)
 );
 
@@ -99,19 +99,24 @@ INSERT INTO Dt_Bevölkerung (bundesland, wahljahr, anzahl) VALUES
   ('ST', 2017, 2145671), ('BW', 2017, 9365001),
   ('BE', 2017, 2975745), ('SL', 2017, 899748);
 
-CREATE OR REPLACE VIEW GEWAEHLTE_ERSTKANDIDATEN (wahljahr, kandidat_id) AS (
+CREATE OR REPLACE VIEW gewaehlte_erstkandidaten (wahljahr, kandidat_id) AS (
   WITH maximaleStimmenWahlkreis (wahljahr, id, maximal) AS (
-      select w.wahljahr, w.id, max(e.anzahl)
+      SELECT
+        w.wahljahr,
+        w.id,
+        max(e.anzahl)
       FROM erststimmenergebnisse e, wahlkreise w
       WHERE e.wahlkreis_id = w.id
       GROUP BY w.wahljahr, w.id
   )
-    SELECT w.wahljahr, k.id
-    FROM erststimmenergebnisse e, kandidaten k, wahlkreise w, maximaleStimmenWahlkreis m
-    WHERE e.kandidaten_id = k.id
-          AND e.wahlkreis_id = w.id
-          AND m.maximal = e.anzahl
-          AND m.id = w.id
-          AND k.wahljahr = m.wahljahr
-          AND w.wahljahr = m.wahljahr
-)
+  SELECT
+    w.wahljahr,
+    k.id
+  FROM erststimmenergebnisse e, kandidaten k, wahlkreise w, maximaleStimmenWahlkreis m
+  WHERE e.kandidaten_id = k.id
+        AND e.wahlkreis_id = w.id
+        AND m.maximal = e.anzahl
+        AND m.id = w.id
+        AND k.wahljahr = m.wahljahr
+        AND w.wahljahr = m.wahljahr
+);
