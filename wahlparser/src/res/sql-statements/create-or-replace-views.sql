@@ -1,6 +1,7 @@
 -- View für die Erststimmenergebnisse, verwendet als Datenbasis
 -- abhängig von der config Tabelle entweder die aggregierten Stimmen
 -- oder die Einzelstimmen
+/*
 CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (
   -- falls wir aggregierte daten verwenden
   select e.*
@@ -26,6 +27,11 @@ CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, 
 
     GROUP BY e.kandidaten_id, e.wahlkreis_id
   )
+);
+*/
+
+CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (
+    SELECT * FROM erststimmenergebnisse
 );
 
 
