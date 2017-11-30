@@ -11,6 +11,7 @@ import jsonbuild.JsonBuilder;
 import jsonbuild.Sitze;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sqlbuild.Bundestag;
 
@@ -62,7 +63,7 @@ public class ApplicationRestController {
                 "      AND erst.kandidaten_id IS NOT NULL\n" +
                 "ORDER BY k.wahljahr, k.wahlkreis_id;");
 
-       // statement.execute("select count(*) from kandidaten");
+        // statement.execute("select count(*) from kandidaten");
 
         ResultSet result = statement.getResultSet();
 
@@ -83,21 +84,34 @@ public class ApplicationRestController {
         //return new Greeting(tupel);
     }
 
+    @RequestMapping(value = "/ex/bars")
+    public String getBarBySimplePathWithRequestParam(
+            @RequestParam("id") long id) {
+        return "Get a specific Bar with id=" + id;
+    }
+
     @RequestMapping("/bundestag/sitzverteilung")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ArrayList<Sitze> sitzverteilung() throws SQLException {
+    public ArrayList<Sitze> sitzverteilung(
+            @RequestParam("jahr") String jahr,
+            @RequestParam("modus") String modus) {
+            try {
+                Connection conn = DatabaseConnection.getConnection();
 
-        Connection conn = DatabaseConnection.getConnection();
-        Statement statement = conn.createStatement();
+                Statement statement = conn.createStatement();
+                String sitzverteilungQuery = Bundestag.getSitzverteilungQuery(Integer.parseInt(jahr), modus);
+                statement.execute(sitzverteilungQuery);
 
-        String sitzverteilungQuery = Bundestag.getSitzverteilungQuery(2013, "aggr");
+                ArrayList<Sitze> sitzverteilung = JsonBuilder.getSitzverteilungJson(statement.getResultSet());
 
-        statement.execute(sitzverteilungQuery);
+                conn.close();
 
-        ArrayList<Sitze> sitzverteilung = JsonBuilder.getSitzverteilungJson(statement.getResultSet());
+                return sitzverteilung;
+            }
+            catch(SQLException e) {
+                e.printStackTrace();
+            }
 
-        conn.close();
-
-        return sitzverteilung;
+            return null;
     }
 }
