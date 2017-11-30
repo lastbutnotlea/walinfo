@@ -324,10 +324,10 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
 --------------------------------------
 
 SELECT
-  mpp.partei_id,
   p.kuerzel,
+  p.name,
   mpp.anzahl_mandate,
-  mpp.anzahl_mandate / ges_mandate as anteil,
+  -- mpp.anzahl_mandate / ges_mandate as anteil,
   mpp.wahljahr
 FROM mandate_pro_partei mpp, gesamtanzahl_mandate gm, parteien p
 WHERE mpp.partei_id = p.id

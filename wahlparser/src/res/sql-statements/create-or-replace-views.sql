@@ -1,7 +1,7 @@
 -- View für die Erststimmenergebnisse, verwendet als Datenbasis
 -- abhängig von der config Tabelle entweder die aggregierten Stimmen
 -- oder die Einzelstimmen
-/*
+
 CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (
   -- falls wir aggregierte daten verwenden
   select e.*
@@ -21,19 +21,20 @@ CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, 
   UNION ALL
   -- Die Nicht aggregierten Daten sind für 2017
   (
-    SELECT e.kandidaten_id, e.wahlkreis_id, count(*)
+    SELECT e.kandidaten_id, e.wahlkreis_id, CAST(count(*) AS INTEGER)
     FROM erststimmen e, global_config
     WHERE global_config.verwende_einzelstimmen = 1
 
     GROUP BY e.kandidaten_id, e.wahlkreis_id
   )
 );
-*/
 
+
+/*
 CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (
-    SELECT * FROM erststimmenergebnisse
+    SELECT kandidaten_id, wahlkreis_id, anzahl FROM erststimmenergebnisse
 );
-
+*/
 
 -- View für die Zweitstimmenergebnisse, verwendet als Datenbasis
 -- abhängig von der config Tabelle entweder die aggregierten Stimmen

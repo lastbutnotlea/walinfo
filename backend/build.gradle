@@ -40,5 +40,5 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
     compile group: 'org.springframework', name: 'spring-jdbc', version: '5.0.1.RELEASE'
-
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.5.9.RELEASE'
 }
