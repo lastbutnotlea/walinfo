@@ -1,3 +1,26 @@
-<p>
-  bundestag works!
-</p>
+<h2>Der Bundestag</h2>
+
+<mat-card>
+  <mat-card-title>Sitzverteilung</mat-card-title>
+
+  <mat-card-content>
+    <google-chart [data]="pieChartData"></google-chart>
+  </mat-card-content>
+
+</mat-card>
+
+<br />
+
+<mat-card>
+  <mat-card-title>Mitglieder des Bundestags</mat-card-title>
+
+  <mat-card-content>
+    <mat-list dense>
+      <mat-list-item *ngFor="let kandidat of kandidaten">
+        <img matListAvatar src="assets/avatar.jpg" alt="...">
+        {{kandidat}}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+
+</mat-card>

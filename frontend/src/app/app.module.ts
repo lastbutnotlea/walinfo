@@ -10,6 +10,12 @@ import { BundestagComponent } from './bundestag/bundestag.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatCardModule} from '@angular/material/card';
+import {Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { BackendService } from './backend.service';
+import {MatListModule} from '@angular/material/list';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -24,9 +30,14 @@ import {MatButtonModule} from '@angular/material/button';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    Ng2GoogleChartsModule,
+    MatListModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
