@@ -82,14 +82,14 @@ public class ApplicationRestController {
     @CrossOrigin(origins = "http://localhost:4200")
     public Wahlbeteiligung wkWahlbeteiligung(
             @RequestParam("jahr") int jahr,
-            @RequestParam("wkid") int wkid,
+            @RequestParam("wknr") int wknr,
             @RequestParam("modus") String modus) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
             String wkWahlbeteiligungQuery = WahlkreiseSQL.getWkWahlbeteiligungQuery(
                     jahr,
-                    wkid,
+                    wknr,
                     modus);
             statement.execute(wkWahlbeteiligungQuery);
 
@@ -107,14 +107,14 @@ public class ApplicationRestController {
     @CrossOrigin(origins = "http://localhost:4200")
     public Abgeordneter wkDirektmandat(
             @RequestParam("jahr") int jahr,
-            @RequestParam("wkid") int wkid,
+            @RequestParam("wknr") int wknr,
             @RequestParam("modus") String modus) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
             String wkDirektmandatQuery = WahlkreiseSQL.getWkDirektmandatQuery(
                     jahr,
-                    wkid,
+                    wknr,
                     modus);
             statement.execute(wkDirektmandatQuery);
 

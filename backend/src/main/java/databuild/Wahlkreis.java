@@ -5,9 +5,9 @@ public class Wahlkreis {
     private final int id;
     private final int nummer;
     private final String name;
-    private final String bundesland;
+    private final Bundesland bundesland;
 
-    public Wahlkreis(int id, int nummer, String name, String bundesland) {
+    public Wahlkreis(int id, int nummer, String name, Bundesland bundesland) {
         this.id = id;
         this.nummer = nummer;
         this.name = name;
@@ -26,7 +26,7 @@ public class Wahlkreis {
         return name;
     }
 
-    public String getBundesland() {
+    public Bundesland getBundesland() {
         return bundesland;
     }
 }

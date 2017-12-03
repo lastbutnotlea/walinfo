@@ -53,11 +53,15 @@ public class DataBuilder {
         ArrayList<Wahlkreis> wahlkreise = new ArrayList<>();
 
         while (result.next()) {
+            Bundesland bundesland = new Bundesland(
+                    result.getString(4),
+                    result.getString(5)
+            );
             Wahlkreis wahlkreis = new Wahlkreis(
                     result.getInt(1),
                     result.getInt(2),
                     result.getString(3),
-                    result.getString(4)
+                    bundesland
             );
 
             wahlkreise.add(wahlkreis);
@@ -69,16 +73,9 @@ public class DataBuilder {
     public static Wahlbeteiligung getWahlbeteiligung(ResultSet result) throws SQLException {
         result.next();
 
-        Wahlkreis wahlkreis = new Wahlkreis(
-                result.getInt(1),
-                result.getInt(2),
-                result.getString(3),
-                result.getString(4)
-        );
         return new Wahlbeteiligung(
-                wahlkreis,
-                result.getInt(5),
-                result.getInt(6)
+                result.getInt(1),
+                result.getInt(2)
         );
     }
 

@@ -19,10 +19,6 @@ WITH waehler_pro_wahlkreis_erststimmen AS (
   )
 
 SELECT
-  wk.id,
-  wk.nummer,
-  wk.name,
-  wk.bundesland,
   greatest(werst.summe_erststimmen, wzweit.summe_zweitstimmen) as anzahl_waehler,
   wk.anzahl_wahlberechtigte
 FROM wahlkreise wk, waehler_pro_wahlkreis_erststimmen werst,

@@ -6,8 +6,17 @@ import static sqlbuild.Replace.getZweitstimmenTable;
 public class WahlkreiseSQL {
 
     public static String getWahlkreisQuery(int jahr) {
-        return "SELECT id, nummer, name, bundesland FROM wahlkreise " +
-                "WHERE wahljahr = " + jahr + ";";
+        return "SELECT   " +
+                "  wk.id,   " +
+                "  wk.nummer,   " +
+                "  wk.name,   " +
+                "  wk.bundesland,   " +
+                "  bl.name   " +
+                "FROM wahlkreise wk, bundeslaender bl   " +
+                "WHERE wk.bundesland = bl.kuerzel   " +
+                "AND wahljahr = " + jahr + " " +
+                "ORDER BY wk.nummer" +
+                ";";
     }
 
     public static String getWkWahlbeteiligungQuery(int jahr, int wkid, String modus) {
@@ -32,17 +41,13 @@ public class WahlkreiseSQL {
                 "  ) " +
                 " " +
                 "SELECT " +
-                "  wk.id, " +
-                "  wk.nummer, " +
-                "  wk.name, " +
-                "  wk.bundesland, " +
                 "  greatest(werst.summe_erststimmen, wzweit.summe_zweitstimmen) as anzahl_waehler, " +
                 "  wk.anzahl_wahlberechtigte " +
                 "FROM wahlkreise wk, waehler_pro_wahlkreis_erststimmen werst, " +
                 "  waehler_pro_wahlkreis_zweitstimmen wzweit " +
                 "WHERE wk.id = werst.wahlkreis_id " +
                 "      AND wk.id = wzweit.wahlkreis_id " +
-                "      AND wk.id = " + wkid + " " +
+                "      AND wk.nummer = " + wkid + " " +
                 "      AND wk.wahljahr = " + jahr +
                 ";";
     }
@@ -76,7 +81,7 @@ public class WahlkreiseSQL {
                 "      AND w.wahljahr = m.wahljahr  " +
                 "      AND k.wahlkreis_id = e.wahlkreis_id  " +
                 "      AND k.partei_id = p.id " +
-                "      AND w.id = " + wkid + " " +
+                "      AND w.nummer = " + wkid + " " +
                 "      AND k.wahljahr = " + jahr +
                 ";";
     }
