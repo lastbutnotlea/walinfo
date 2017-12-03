@@ -166,4 +166,56 @@ public class WahlkreiseSQL {
                 ;
     }
 
+    public static String getWkSiegerErststimmenQuery(int jahr, int wknr, String modus){
+        return "WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS ( " +
+                "    SELECT " +
+                "      w.wahljahr, " +
+                "      w.id, " +
+                "      max(e.anzahl) " +
+                "    FROM " + getErststimmenTable(modus) + " e, wahlkreise w " +
+                "    WHERE e.wahlkreis_id = w.id " +
+                "    GROUP BY w.wahljahr, w.id " +
+                ") " +
+                " " +
+                "SELECT " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe " +
+                "FROM parteien p, maximaleErststimmen max, " + getErststimmenTable(modus) + " e, kandidaten k " +
+                "WHERE p.id = k.partei_id " +
+                "      AND max.wahlkreis_id = e.wahlkreis_id " +
+                "      AND e.anzahl = max.maxErst " +
+                "      AND e.kandidaten_id = k.id " +
+                "      AND k.wahljahr = max.wahljahr " +
+                "      AND k.wahlkreis_id = e.wahlkreis_id " +
+                "      AND k.wahljahr = " + jahr + " " +
+                "      AND e.wahlkreis_id = " + wknr +
+                ";"
+                ;
+    }
+
+    public static String getWkSiegerZweitstimmenQuery(int jahr, int wknr, String modus) {
+        return "WITH maximaleZweitstimmen (wahljahr, wahlkreis_id, maxZweit) AS (  " +
+                "      SELECT  " +
+                "        w.wahljahr,  " +
+                "        w.id,  " +
+                "        max(z.anzahl)  " +
+                "      FROM " + getZweitstimmenTable(modus) + " z, wahlkreise w  " +
+                "      WHERE z.wahlkreis_id = w.id  " +
+                "      GROUP BY w.wahljahr, w.id  " +
+                "  )  " +
+                "  " +
+                "SELECT  " +
+                "  p.kuerzel,  " +
+                "  p.name,  " +
+                "  p.farbe  " +
+                "FROM parteien p, maximaleZweitstimmen max, " + getZweitstimmenTable(modus) + " z  " +
+                "WHERE p.id = z.partei_id  " +
+                "      AND max.wahlkreis_id = z.wahlkreis_id  " +
+                "      AND z.anzahl = max.maxZweit  " +
+                "      AND p.wahljahr = max.wahljahr" +
+                "      AND p.wahljahr = " + jahr + " " +
+                "      AND z.wahlkreis_id = " + wknr +
+                ";" ;
+    }
 }

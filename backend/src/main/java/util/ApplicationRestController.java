@@ -175,4 +175,77 @@ public class ApplicationRestController {
 
         return null;
     }
+
+    @RequestMapping("/wahlkreise/siegererststimmen")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Partei wkSiegerErststimmen (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkSiegerErststimmen = WahlkreiseSQL.getWkSiegerErststimmenQuery(
+                    jahr,
+                    wknr,
+                    modus);
+            statement.execute(wkSiegerErststimmen);
+
+            return DataBuilder.getPartei(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/wahlkreise/siegerzweitstimmen")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Partei wkSiegerZweitstimmen (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkSiegerZweitstimmen = WahlkreiseSQL.getWkSiegerZweitstimmenQuery(
+                    jahr,
+                    wknr,
+                    modus);
+            statement.execute(wkSiegerZweitstimmen);
+
+            return DataBuilder.getPartei(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/bundestag/ueberhangmandate")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<Ueberhangmandate> ueberhangmandate (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String ueberhangmandateQuery = BundestagSQL.getUeberhangmandateQuery(
+                    jahr,
+                    modus);
+            statement.execute(ueberhangmandateQuery);
+
+            return DataBuilder.getUeberhangmandate(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

@@ -139,4 +139,39 @@ public class DataBuilder {
         return stimmenVergleiche;
     }
 
+    public static Partei getPartei(ResultSet result) throws SQLException {
+        result.next();
+
+        return new Partei(
+                result.getString(1),
+                result.getString(2),
+                result.getString(3)
+        );
+    }
+
+    public static ArrayList<Ueberhangmandate> getUeberhangmandate(ResultSet result) throws SQLException {
+        ArrayList<Ueberhangmandate> ueberhangmandate = new ArrayList<>();
+
+        while(result.next()) {
+            Bundesland bundesland = new Bundesland(
+                    result.getString(1),
+                    result.getString(2)
+            );
+            Partei partei = new Partei(
+                    result.getString(3),
+                    result.getString(4),
+                    result.getString(5)
+            );
+            Ueberhangmandate ueberhangmandatepartei = new Ueberhangmandate(
+                    bundesland,
+                    partei,
+                    result.getInt(6)
+            );
+
+            ueberhangmandate.add(ueberhangmandatepartei);
+        }
+
+        return ueberhangmandate;
+    }
+
 }

@@ -37,6 +37,26 @@ public class BundestagSQL {
                 ";";
     }
 
+    public static String getUeberhangmandateQuery(int jahr, String modus) {
+        return getSitzverteilungViews(modus) +
+                "SELECT   " +
+                "  s.bundesland,   " +
+                "  b.name,   " +
+                "  p.kuerzel,   " +
+                "  p.name,   " +
+                "  p.farbe,   " +
+                "  mins.minsitzzahl - s.sitze AS ueberhandmandate   " +
+                "FROM sitzepropartei_land s, mindestsitzzahl_land mins, bundeslaender b, parteien p   " +
+                "WHERE s.bundesland = mins.bundesland   " +
+                "  AND s.partei_id = mins.partei_id   " +
+                "  AND s.wahljahr = mins.wahljahr   " +
+                "AND b.kuerzel = s.bundesland   " +
+                "AND p.id = s.partei_id " +
+                "AND s.wahljahr = " + jahr + " " +
+                ";"
+                ;
+    }
+
 
     private static String getSitzverteilungViews(String modus) {
         return
