@@ -1,6 +1,6 @@
 package sqlbuild;
 
-public class Bundestag {
+public class BundestagSQL {
 
     public static String getSitzverteilungQuery(int jahr, String modus) {
         return getSitzverteilungViews(modus) +

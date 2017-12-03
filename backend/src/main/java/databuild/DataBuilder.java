@@ -1,13 +1,12 @@
-package jsonbuild;
+package databuild;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class JsonBuilder {
+public class DataBuilder {
 
-    public static ArrayList<Sitze> getSitzverteilungJson(ResultSet result) throws SQLException {
+    public static ArrayList<Sitze> getSitzverteilungList(ResultSet result) throws SQLException {
         ArrayList<Sitze> sitzverteilung = new ArrayList<>();
 
         while(result.next()) {
@@ -24,7 +23,7 @@ public class JsonBuilder {
         return sitzverteilung;
     }
 
-    public static ArrayList<Abgeordneter> getMitgliederJson(ResultSet result) throws SQLException {
+    public static ArrayList<Abgeordneter> getMitgliederList(ResultSet result) throws SQLException {
         ArrayList<Abgeordneter> mitglieder = new ArrayList<>();
 
         while(result.next()) {
@@ -45,5 +44,19 @@ public class JsonBuilder {
 
         return mitglieder;
     }
+
+    public static ArrayList<Wahlkreis> getWahlkreisList(ResultSet result) throws SQLException {
+        ArrayList<Wahlkreis> wahlkreise = new ArrayList<>();
+
+        while(result.next()) {
+
+
+
+           // mitglieder.add(abgeordneter);
+        }
+
+        return wahlkreise;
+    }
+
 
 }

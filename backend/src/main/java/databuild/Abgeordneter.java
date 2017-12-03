@@ -1,4 +1,4 @@
-package jsonbuild;
+package databuild;
 
 public class Abgeordneter {
 
