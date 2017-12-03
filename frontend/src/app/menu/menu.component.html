@@ -1,12 +1,26 @@
-<mat-toolbar class="menu-spaces" role="header">
-  <span>Walinformationssystem</span>
-  <span class="fill-remaining-space"></span>
-
-  <mat-slide-toggle color="accent">Rohdaten</mat-slide-toggle>
-
-  <mat-slide-toggle color="accent">Letzte Wahl</mat-slide-toggle>
-
-  <a mat-raised-button routerLink="/home" routerLinkActive="active-btn">Start</a>
-  <a mat-raised-button routerLink="/btg" routerLinkActive="active-btn">Der Bundestag</a>
-
-</mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">Walinformationssystem</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <a routerLink="/home" class="nav-item nav-link" routerLinkActive="active">Start</a>
+      <a routerLink="/btg" class="nav-item nav-link" routerLinkActive="active">Der Bundestag</a>
+      <a routerLink="/wahlkreise" class="nav-item nav-link" routerLinkActive="active">Wahlkreise</a>
+    </div>
+    <form class="form-inline my-2 my-lg-0">
+      <select #jahrDropDown class="form-control" (change)="jahrChanged(jahrDropDown.value)">
+        <option>2017</option>
+        <option>2013</option>
+      </select>
+      <select #typeDropDown class="form-control" (change)="typeChanged(typeDropDown.value)">
+        <option value="aggr">Aggregierte Daten</option>
+        <option value="roh">Einzelstimmen</option>
+      </select>
+    </form>
+  </div>
+</nav>

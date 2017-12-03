@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BackendService} from '../backend.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private backendService: BackendService) { }
 
   ngOnInit() {
   }
 
+  typeChanged(value: String) {
+    this.backendService.changeDataType(value);
+  }
+
+  jahrChanged(value: String) {
+    this.backendService.changeYear(value);
+  }
 }
