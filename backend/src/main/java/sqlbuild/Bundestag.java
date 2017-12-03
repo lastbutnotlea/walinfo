@@ -24,10 +24,10 @@ public class Bundestag {
 
     public static String getBundestagQuery(int jahr, String modus) {
         return getBundestagsViews(modus) +
-                "SELECT k.titel, k.name, k.vorname, k.namenszusatz, k.geburtsjahr, p.kuerzel " +
+                "SELECT k.titel, k.name, k.vorname, k.namenszusatz, k.geburtsjahr, p.kuerzel, p.name " +
                 "FROM bundestag bt, kandidaten k, parteien p " +
                 "WHERE bt.kandidat_id = k.id " +
-                "  AND bt.partei_id = p.id; " +
+                "  AND bt.partei_id = p.id " +
                 "  AND bt.wahljahr = " + jahr +
                 ";";
     }
@@ -341,15 +341,16 @@ public class Bundestag {
     private static String getBundestagsViews(String modus) {
 
         return getSitzverteilungViews(modus) +
+                "," +
                 "direktkandidaten_bt_parteiland_counter (wahljahr, kandidat_id, partei_id, bundesland, counter) AS (" +
-                "      SELECT" +
+                "      SELECT " +
                 "        k.wahljahr," +
                 "        kandidat_id," +
                 "        partei_id," +
                 "        bundesland," +
                 "        ROW_NUMBER()" +
-                "        OVER (PARTITION BY k.partei_id, w.bundesland)" +
-                "      FROM gewaehlte_erstkandidaten_schnell gk, kandidaten k, wahlkreise w" +
+                "        OVER (PARTITION BY k.partei_id, w.bundesland) " +
+                "      FROM gewaehlte_erstkandidaten_schnell gk, kandidaten k, wahlkreise w " +
                 "      WHERE gk.kandidat_id = k.id" +
                 "            AND w.id = k.wahlkreis_id" +
                 "  )," +

@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import hello.Greeting;
+import jsonbuild.Abgeordneter;
 import jsonbuild.JsonBuilder;
 import jsonbuild.Sitze;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -84,34 +85,56 @@ public class ApplicationRestController {
         //return new Greeting(tupel);
     }
 
-    @RequestMapping(value = "/ex/bars")
-    public String getBarBySimplePathWithRequestParam(
-            @RequestParam("id") long id) {
-        return "Get a specific Bar with id=" + id;
-    }
-
     @RequestMapping("/bundestag/sitzverteilung")
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<Sitze> sitzverteilung(
             @RequestParam("jahr") String jahr,
             @RequestParam("modus") String modus) {
-            try {
-                Connection conn = DatabaseConnection.getConnection();
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            Statement statement = conn.createStatement();
 
-                Statement statement = conn.createStatement();
-                String sitzverteilungQuery = Bundestag.getSitzverteilungQuery(Integer.parseInt(jahr), modus);
-                statement.execute(sitzverteilungQuery);
+            String sitzverteilungQuery = Bundestag.getSitzverteilungQuery(Integer.parseInt(jahr), modus);
+            statement.execute(sitzverteilungQuery);
 
-                ArrayList<Sitze> sitzverteilung = JsonBuilder.getSitzverteilungJson(statement.getResultSet());
+            ArrayList<Sitze> sitzverteilung = JsonBuilder.getSitzverteilungJson(statement.getResultSet());
 
-                conn.close();
+            conn.close();
 
-                return sitzverteilung;
-            }
-            catch(SQLException e) {
-                e.printStackTrace();
-            }
+            return sitzverteilung;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-            return null;
+        return null;
     }
+
+    @RequestMapping("/bundestag/mitglieder")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<Abgeordneter> mitgliederBundestag(
+            @RequestParam("jahr") String jahr,
+            @RequestParam("modus") String modus) {
+
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            Statement statement = conn.createStatement();
+
+            String mitgliederQuery = Bundestag.getBundestagQuery(Integer.parseInt(jahr), modus);
+            System.out.println(mitgliederQuery);
+            statement.execute(mitgliederQuery);
+
+            ArrayList<Abgeordneter> mitglieder = JsonBuilder.getMitgliederJson(statement.getResultSet());
+
+            conn.close();
+
+            return mitglieder;
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }

@@ -486,7 +486,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
 
 --------------------------------------
 
-SELECT k.titel, k.name, k.vorname, k.namenszusatz, k.geburtsjahr, p.kuerzel
+SELECT k.titel, k.name, k.vorname, k.namenszusatz, k.geburtsjahr, p.kuerzel, p.name
 FROM bundestag bt, kandidaten k, parteien p
 WHERE bt.kandidat_id = k.id
   AND bt.partei_id = p.id;

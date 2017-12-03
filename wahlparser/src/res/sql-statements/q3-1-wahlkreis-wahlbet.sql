@@ -21,16 +21,21 @@ WITH waehler_pro_wahlkreis_erststimmen AS (
   )
 
 SELECT
-  wk.anzahl_wahlberechtigte,
-  CAST(werst.summe_erststimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC) AS wahlbeteiligung_erststimmen,
-  CAST(wzweit.summe_zweitstimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC) AS wahlbeteiligung_zweitstimmen,
-  wk.wahljahr,
-  CAST(werst.summe_erststimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC) -
-  CAST(wzweit.summe_zweitstimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC) as test
+  wk.id,
+  wk.name,
+  greatest(
+      CAST(werst.summe_erststimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC),
+      CAST(wzweit.summe_zweitstimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC)
+  ) as wahlbeteiligung,
+  wk.wahljahr
 FROM wahlkreise wk, waehler_pro_wahlkreis_erststimmen werst,
   waehler_pro_wahlkreis_zweitstimmen wzweit
 WHERE wk.id = werst.wahlkreis_id
       AND wk.id = wzweit.wahlkreis_id;
+
+
+
+------ TEST ------
 
 WITH wahlberechtigte_bundesweit AS (
     SELECT sum(anzahl_wahlberechtigte) as wahlberechtigte,
@@ -50,10 +55,3 @@ SELECT wb.wahlberechtigte, wz.zweitstimmen, wz.wahljahr,
 FROM wahlberechtigte_bundesweit wb, wahlbeteiligung_zweitstimmen wz
 WHERE wb.wahljahr = wz.wahljahr;
 
--- oh wow das ist gar nicht so trivial wie ich dachte. wie sollen wir die
--- wahlbeteiligung berechnen wenn wir nicht wissen welche erststimme zu
--- welcher zweitstimme gehört???
-
--- unterschiede zwischen wahlbeteiligung in den erststimmen und wahlbeteiligung
--- in den zweitstimmen marginal -> können wir das einfach mitteln und gut ist?
--- aber ist das dann wirklich die wahlbeteiligung?
