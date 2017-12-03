@@ -53,6 +53,8 @@ public class BundestagSQL {
                 "AND b.kuerzel = s.bundesland   " +
                 "AND p.id = s.partei_id " +
                 "AND s.wahljahr = " + jahr + " " +
+                "AND mins.minsitzzahl - s.sitze > 0 " +
+                "ORDER BY p.name, s.bundesland" +
                 ";"
                 ;
     }

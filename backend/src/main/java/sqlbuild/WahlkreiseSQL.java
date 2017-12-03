@@ -5,7 +5,7 @@ import static sqlbuild.Replace.getZweitstimmenTable;
 
 public class WahlkreiseSQL {
 
-    public static String getWahlkreisQuery(int jahr) {
+    public static String getWahlkreisQuery(int jahr, Integer nummer) {
         return "SELECT   " +
                 "  wk.id,   " +
                 "  wk.nummer,   " +
@@ -15,6 +15,7 @@ public class WahlkreiseSQL {
                 "FROM wahlkreise wk, bundeslaender bl   " +
                 "WHERE wk.bundesland = bl.kuerzel   " +
                 "AND wahljahr = " + jahr + " " +
+                (nummer != null ? "AND wk.nummer = " + nummer : "") +
                 "ORDER BY wk.nummer" +
                 ";";
     }

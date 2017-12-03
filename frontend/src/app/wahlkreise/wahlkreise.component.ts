@@ -12,6 +12,8 @@ export class WahlkreiseComponent implements OnInit {
 
   wahlkreise$: Observable<Wahlkreis[]>;
 
+  year: String;
+
   constructor(private backendService: BackendService) {
     backendService.updatePage.subscribe(res => {
       this.loadWahlkreise();
@@ -24,5 +26,6 @@ export class WahlkreiseComponent implements OnInit {
 
   loadWahlkreise() {
     this.wahlkreise$ = this.backendService.getWahlkreise();
+    this.year = this.backendService.year;
   }
 }

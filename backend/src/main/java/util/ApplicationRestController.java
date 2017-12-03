@@ -6,10 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import databuild.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sqlbuild.BundestagSQL;
 import sqlbuild.WahlkreiseSQL;
 
@@ -62,10 +59,18 @@ public class ApplicationRestController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<Wahlkreis> wahlkreise(
             @RequestParam("jahr") int jahr) {
+        return wahlkreise(jahr, null);
+    }
+
+    @RequestMapping("/wahlkreise/{nummer}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<Wahlkreis> wahlkreise(
+            @RequestParam("jahr") int jahr,
+            @PathVariable(value="nummer") Integer wahlkreisNr) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
-            String wahlkreisQuery = WahlkreiseSQL.getWahlkreisQuery(jahr);
+            String wahlkreisQuery = WahlkreiseSQL.getWahlkreisQuery(jahr, wahlkreisNr);
             statement.execute(wahlkreisQuery);
 
             return DataBuilder.getWahlkreisList(statement.getResultSet());
