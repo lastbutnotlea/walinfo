@@ -1,5 +1,9 @@
 package sqlbuild;
 
+import static sqlbuild.Replace.getErststimmenTable;
+import static sqlbuild.Replace.getGewaehlteErstkandidatenTable;
+import static sqlbuild.Replace.getZweitstimmenTable;
+
 public class BundestagSQL {
 
     public static String getSitzverteilungQuery(int jahr, String modus) {
@@ -495,29 +499,5 @@ public class BundestagSQL {
                 "              AND aux.partei_id = mandate_pro_partei.partei_id" +
                 "      )" +
                 "  )";
-    }
-
-
-    private static String getGewaehlteErstkandidatenTable(String modus) {
-        if(modus.equals("roh")) {
-            return "gewaehlte_erstkandidaten";
-        }
-        else return "gewaehlte_erstkandidaten_schnell";
-    }
-
-    private static String getErststimmenTable(String modus) {
-        if(modus.equals("roh")) {
-            return "erststimmenergebnisse_view";
-        }
-
-        else return "erststimmenergebnisse";
-    }
-
-    private static String getZweitstimmenTable(String modus) {
-        if(modus.equals("roh")) {
-            return "zweitstimmenergebnisse_view";
-        }
-
-        else return "zweitstimmenergebnisse";
     }
 }

@@ -1,5 +1,3 @@
--- später in q3-1!!
-
 WITH waehler_pro_wahlkreis_erststimmen AS (
     SELECT
       ee.wahlkreis_id,
@@ -22,17 +20,15 @@ WITH waehler_pro_wahlkreis_erststimmen AS (
 
 SELECT
   wk.id,
+  wk.nummer,
   wk.name,
-  greatest(
-      CAST(werst.summe_erststimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC),
-      CAST(wzweit.summe_zweitstimmen AS NUMERIC) / CAST(wk.anzahl_wahlberechtigte AS NUMERIC)
-  ) as wahlbeteiligung,
-  wk.wahljahr
+  wk.bundesland,
+  greatest(werst.summe_erststimmen, wzweit.summe_zweitstimmen) as anzahl_waehler,
+  wk.anzahl_wahlberechtigte
 FROM wahlkreise wk, waehler_pro_wahlkreis_erststimmen werst,
   waehler_pro_wahlkreis_zweitstimmen wzweit
 WHERE wk.id = werst.wahlkreis_id
       AND wk.id = wzweit.wahlkreis_id;
-
 
 
 ------ TEST ------

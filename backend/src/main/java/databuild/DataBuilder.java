@@ -9,7 +9,7 @@ public class DataBuilder {
     public static ArrayList<Sitze> getSitzverteilungList(ResultSet result) throws SQLException {
         ArrayList<Sitze> sitzverteilung = new ArrayList<>();
 
-        while(result.next()) {
+        while (result.next()) {
             Partei partei = new Partei(
                     result.getString(1),
                     result.getString(2));
@@ -26,7 +26,7 @@ public class DataBuilder {
     public static ArrayList<Abgeordneter> getMitgliederList(ResultSet result) throws SQLException {
         ArrayList<Abgeordneter> mitglieder = new ArrayList<>();
 
-        while(result.next()) {
+        while (result.next()) {
             Partei partei = new Partei(
                     result.getString(6),
                     result.getString(7));
@@ -48,15 +48,34 @@ public class DataBuilder {
     public static ArrayList<Wahlkreis> getWahlkreisList(ResultSet result) throws SQLException {
         ArrayList<Wahlkreis> wahlkreise = new ArrayList<>();
 
-        while(result.next()) {
+        while (result.next()) {
+            Wahlkreis wahlkreis = new Wahlkreis(
+                    result.getInt(1),
+                    result.getInt(2),
+                    result.getString(3),
+                    result.getString(4)
+            );
 
-
-
-           // mitglieder.add(abgeordneter);
+            wahlkreise.add(wahlkreis);
         }
 
         return wahlkreise;
     }
 
+    public static Wahlbeteiligung getWahlbeteiligung(ResultSet result) throws SQLException {
+        result.next();
+
+        Wahlkreis wahlkreis = new Wahlkreis(
+                result.getInt(1),
+                result.getInt(2),
+                result.getString(3),
+                result.getString(4)
+        );
+        return new Wahlbeteiligung(
+                wahlkreis,
+                result.getInt(5),
+                result.getInt(6)
+        );
+    }
 
 }
