@@ -116,7 +116,6 @@ public class ApplicationRestController {
                     jahr,
                     wkid,
                     modus);
-            System.out.println(wkDirektmandatQuery);
             statement.execute(wkDirektmandatQuery);
 
             return DataBuilder.getDirektmandat(statement.getResultSet());

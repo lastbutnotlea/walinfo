@@ -18,6 +18,7 @@ public class BundestagSQL {
                 "SELECT" +
                 "  p.kuerzel," +
                 "  p.name," +
+                "  p.farbe," +
                 "  mpp.anzahl_mandate " +
                 "FROM mandate_pro_partei mpp, gesamtanzahl_mandate gm, parteien p " +
                 "WHERE mpp.partei_id = p.id" +
@@ -28,7 +29,7 @@ public class BundestagSQL {
 
     public static String getBundestagQuery(int jahr, String modus) {
         return getBundestagsViews(modus) +
-                "SELECT k.titel, k.name, k.vorname, k.namenszusatz, k.geburtsjahr, p.kuerzel, p.name " +
+                "SELECT k.titel, k.name, k.vorname, k.namenszusatz, k.geburtsjahr, p.kuerzel, p.name, p.farbe " +
                 "FROM bundestag bt, kandidaten k, parteien p " +
                 "WHERE bt.kandidat_id = k.id " +
                 "  AND bt.partei_id = p.id " +

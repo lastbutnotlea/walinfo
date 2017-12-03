@@ -12,10 +12,12 @@ public class DataBuilder {
         while (result.next()) {
             Partei partei = new Partei(
                     result.getString(1),
-                    result.getString(2));
+                    result.getString(2),
+                    result.getString(3)
+            );
             Sitze sitze = new Sitze(
                     partei,
-                    result.getInt(3));
+                    result.getInt(4));
 
             sitzverteilung.add(sitze);
         }
@@ -29,7 +31,9 @@ public class DataBuilder {
         while (result.next()) {
             Partei partei = new Partei(
                     result.getString(6),
-                    result.getString(7));
+                    result.getString(7),
+                    result.getString(8)
+            );
             Abgeordneter abgeordneter = new Abgeordneter(
                     result.getString(1),
                     result.getString(2),
@@ -83,7 +87,8 @@ public class DataBuilder {
 
         Partei partei = new Partei(
                 result.getString(6),
-                result.getString(7)
+                result.getString(7),
+                result.getString(8)
         );
         return new Abgeordneter(
                 result.getString(1),

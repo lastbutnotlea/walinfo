@@ -326,6 +326,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
 SELECT
   p.kuerzel,
   p.name,
+  p.farbe,
   mpp.anzahl_mandate,
   -- mpp.anzahl_mandate / ges_mandate as anteil,
   mpp.wahljahr

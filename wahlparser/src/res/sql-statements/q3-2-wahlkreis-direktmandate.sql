@@ -15,7 +15,8 @@ SELECT
   k.namenszusatz,
   k.geburtsjahr,
   p.kuerzel,
-  p.name
+  p.name,
+  p.farbe
 FROM erststimmenergebnisse e, kandidaten k, wahlkreise w, maximaleStimmenWahlkreis m, parteien p
 WHERE e.kandidaten_id = k.id
       AND e.wahlkreis_id = w.id
