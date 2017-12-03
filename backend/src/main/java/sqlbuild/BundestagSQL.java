@@ -34,17 +34,6 @@ public class BundestagSQL {
 
 
     private static String getSitzverteilungViews(String modus) {
-
-        String erststimmenergebnisse = "erststimmenergebnisse";
-        if(modus.equals("roh")) {
-            erststimmenergebnisse = "erststimmenergebnisse_view";
-        }
-
-        String zweitstimmenergebnisse = "zweitstimmenergebnisse";
-        if(modus.equals("roh")) {
-            zweitstimmenergebnisse = "zweitstimmenergebnisse_view";
-        }
-
         return
                 "WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis, wahljahr) AS (" +
                 "  (" +
@@ -102,14 +91,14 @@ public class BundestagSQL {
                 "          wk.bundesland," +
                 "          p.wahljahr," +
                 "          count(DISTINCT k.id)" +
-                "        FROM parteien p, " + erststimmenergebnisse + " e, kandidaten k, wahlkreise wk" +
+                "        FROM parteien p, " + getErststimmenTable(modus) + " e, kandidaten k, wahlkreise wk" +
                 "        WHERE p.id = k.partei_id" +
                 "              AND k.id = e.kandidaten_id" +
                 "              AND k.wahljahr = p.wahljahr" +
                 "              AND e.wahlkreis_id = wk.id" +
                 "              AND e.anzahl = (" +
                 "          SELECT max(anzahl)" +
-                "          FROM " + erststimmenergebnisse + " e2, kandidaten k2" +
+                "          FROM " + getErststimmenTable(modus) + " e2, kandidaten k2" +
                 "          WHERE e2.kandidaten_id = k2.id" +
                 "                AND k.wahljahr = k2.wahljahr" +
                 "                AND e.wahlkreis_id = e2.wahlkreis_id" +
@@ -124,7 +113,7 @@ public class BundestagSQL {
                 "        wk.bundesland," +
                 "        ge.wahljahr," +
                 "        count(*)" +
-                "      FROM Parteien p, kandidaten k, wahlkreise wk, gewaehlte_erstkandidaten_schnell ge" +
+                "      FROM Parteien p, kandidaten k, wahlkreise wk, " + getGewaehlteErstkandidatenTable(modus) + " ge " +
                 "      WHERE ge.kandidat_id = k.id" +
                 "            AND k.wahlkreis_id = wk.id" +
                 "            AND k.partei_id = p.id" +
@@ -134,12 +123,12 @@ public class BundestagSQL {
                 "    SELECT" +
                 "      p.id," +
                 "      wahljahr" +
-                "    FROM parteien p, " + zweitstimmenergebnisse + " z" +
+                "    FROM parteien p, " + getZweitstimmenTable(modus) + " z" +
                 "    WHERE p.id = z.partei_id" +
                 "    GROUP BY p.id, wahljahr" +
                 "    HAVING sum(anzahl) >= 0.05 * (" +
                 "      SELECT sum(anzahl)" +
-                "      FROM " + zweitstimmenergebnisse + " z2, parteien p2" +
+                "      FROM " + getZweitstimmenTable(modus) + " z2, parteien p2" +
                 "      WHERE z2.partei_id = p2.id" +
                 "            AND p2.wahljahr = p.wahljahr" +
                 "    )" +
@@ -163,7 +152,7 @@ public class BundestagSQL {
                 "        sum(anzahl) AS stimmen," +
                 "        wk.bundesland," +
                 "        pbt.wahljahr" +
-                "      FROM parteienimbundestag pbt, " + zweitstimmenergebnisse + " z, wahlkreise wk" +
+                "      FROM parteienimbundestag pbt, " + getZweitstimmenTable(modus) + " z, wahlkreise wk" +
                 "      WHERE pbt.id = z.partei_id" +
                 "            AND z.wahlkreis_id = wk.id" +
                 "      GROUP BY pbt.id, pbt.wahljahr, wk.bundesland" +
@@ -350,7 +339,7 @@ public class BundestagSQL {
                 "        bundesland," +
                 "        ROW_NUMBER()" +
                 "        OVER (PARTITION BY k.partei_id, w.bundesland) " +
-                "      FROM gewaehlte_erstkandidaten_schnell gk, kandidaten k, wahlkreise w " +
+                "      FROM " + getGewaehlteErstkandidatenTable(modus) + " gk, kandidaten k, wahlkreise w " +
                 "      WHERE gk.kandidat_id = k.id" +
                 "            AND w.id = k.wahlkreis_id" +
                 "  )," +
@@ -366,7 +355,7 @@ public class BundestagSQL {
                 "      FROM listenplaetze l" +
                 "      WHERE NOT EXISTS(" +
                 "          SELECT *" +
-                "          FROM gewaehlte_erstkandidaten_schnell gk" +
+                "          FROM " + getGewaehlteErstkandidatenTable(modus) + " gk" +
                 "          WHERE gk.kandidat_id = l.kandidaten_id" +
                 "      )" +
                 "  )," +
@@ -508,4 +497,27 @@ public class BundestagSQL {
                 "  )";
     }
 
+
+    private static String getGewaehlteErstkandidatenTable(String modus) {
+        if(modus.equals("roh")) {
+            return "gewaehlte_erstkandidaten";
+        }
+        else return "gewaehlte_erstkandidaten_schnell";
+    }
+
+    private static String getErststimmenTable(String modus) {
+        if(modus.equals("roh")) {
+            return "erststimmenergebnisse_view";
+        }
+
+        else return "erststimmenergebnisse";
+    }
+
+    private static String getZweitstimmenTable(String modus) {
+        if(modus.equals("roh")) {
+            return "zweitstimmenergebnisse_view";
+        }
+
+        else return "zweitstimmenergebnisse";
+    }
 }

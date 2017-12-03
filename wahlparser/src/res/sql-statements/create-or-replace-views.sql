@@ -1,67 +1,42 @@
--- View für die Erststimmenergebnisse, verwendet als Datenbasis
--- abhängig von der config Tabelle entweder die aggregierten Stimmen
--- oder die Einzelstimmen
+-- View für die Rohdaten der Erstimmen
 
 CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (
-  -- falls wir aggregierte daten verwenden
-  select e.*
-  from erststimmenergebnisse e, global_config
-  where global_config.verwende_einzelstimmen = 0
 
-  -- falls nicht, nehmen wir die
-  UNION ALL
+  -- daten von 2013 liegen nur aggregiert vor
   (
     SELECT e.kandidaten_id, e.wahlkreis_id, e.anzahl
-    FROM erststimmenergebnisse e, global_config c, wahlkreise w
-    WHERE c.verwende_einzelstimmen = 1
-          AND e.wahlkreis_id = w.id
+    FROM erststimmenergebnisse e, wahlkreise w
+          WHERE e.wahlkreis_id = w.id
           AND w.wahljahr = 2013
   )
 
+  -- rohdaten von 2017
   UNION ALL
-  -- Die Nicht aggregierten Daten sind für 2017
   (
     SELECT e.kandidaten_id, e.wahlkreis_id, CAST(count(*) AS INTEGER)
-    FROM erststimmen e, global_config
-    WHERE global_config.verwende_einzelstimmen = 1
-
+    FROM erststimmen e
     GROUP BY e.kandidaten_id, e.wahlkreis_id
   )
 );
 
 
-/*
-CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (
-    SELECT kandidaten_id, wahlkreis_id, anzahl FROM erststimmenergebnisse
-);
-*/
+-- View für die Rohdaten der Zweitstimmen
 
--- View für die Zweitstimmenergebnisse, verwendet als Datenbasis
--- abhängig von der config Tabelle entweder die aggregierten Stimmen
--- oder die Einzelstimmen
 CREATE OR REPLACE VIEW zweitstimmenergebnisse_view(partei_id, wahlkreis_id, anzahl) AS (
-  -- falls wir aggregierte daten verwenden
-  select e.*
-  from zweitstimmenergebnisse e, global_config
-  where global_config.verwende_einzelstimmen = 0
 
-  -- falls nicht, nehmen wir die
-  UNION ALL
+  -- daten von 2013 liegen nur aggregiert vor
   (
     SELECT e.partei_id, e.wahlkreis_id, e.anzahl
-    FROM zweitstimmenergebnisse e, global_config c, wahlkreise w
-    WHERE c.verwende_einzelstimmen = 1
-          AND e.wahlkreis_id = w.id
+    FROM zweitstimmenergebnisse e, wahlkreise w
+          WHERE e.wahlkreis_id = w.id
           AND w.wahljahr = 2013
   )
 
+  -- rohdaten von 2017
   UNION ALL
-  -- Die Nicht aggregierten Daten sind für 2017
   (
     SELECT e.partei_id, e.wahlkreis_id, count(*)
-    FROM zweitstimmen e, global_config
-    WHERE global_config.verwende_einzelstimmen = 1
-
+    FROM zweitstimmen e
     GROUP BY e.partei_id, e.wahlkreis_id
   )
 );
@@ -116,7 +91,5 @@ CREATE OR REPLACE VIEW gewaehlte_erstkandidaten_schnell (wahljahr, kandidat_id) 
         AND w.wahljahr = m.wahljahr
 );
 
--- führt update auf global_config durch
-UPDATE global_config SET verwende_einzelstimmen = 0;
 
 

@@ -98,14 +98,3 @@ INSERT INTO Dt_Bevoelkerung (bundesland, wahljahr, anzahl) VALUES
   ('BB', 2017, 2391746), ('BY', 2017, 11362245),
   ('ST', 2017, 2145671), ('BW', 2017, 9365001),
   ('BE', 2017, 2975745), ('SL', 2017, 899748);
-
--- speichert, ob die SQL Statements auf den aggregierte Daten oder auf den
--- Einzelstimmen (Rohdaten) ausgeführt werden sollen
--- 0 ~ verwende aggregierte Daten
--- 1 ~ verwende Einzelstimmen
-CREATE TABLE global_config (
-  verwende_einzelstimmen SMALLINT
-);
-
--- nur ein Tupel einfügen!!!
-INSERT INTO global_config VALUES (0);
