@@ -27,7 +27,7 @@ WHERE wk.id = werst.wahlkreis_id
       AND wk.id = wzweit.wahlkreis_id;
 
 
------- TEST ------
+------ TEST -------
 
 WITH wahlberechtigte_bundesweit AS (
     SELECT sum(anzahl_wahlberechtigte) as wahlberechtigte,

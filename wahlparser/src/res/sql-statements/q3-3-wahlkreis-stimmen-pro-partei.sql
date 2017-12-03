@@ -14,8 +14,9 @@ WITH stimmen_gesamt AS (
 )
 
 SELECT
-  erst.wahlkreis_id,
   p.kuerzel,
+  p.name,
+  p.farbe,
   erst.anzahl + zweit.anzahl AS anzahl_absolut,
   CAST(erst.anzahl + zweit.anzahl AS NUMERIC) /
   (CAST((
@@ -23,15 +24,14 @@ SELECT
           FROM stimmen_gesamt sg
           WHERE sg.wahljahr = p.wahljahr
                 AND sg.wahlkreis_id = erst.wahlkreis_id
-        ) AS NUMERIC))       AS anzahl_relativ,
-
-  k.wahljahr
+        ) AS NUMERIC))       AS anzahl_relativ
 FROM erststimmenergebnisse erst, zweitstimmenergebnisse zweit,
-  parteien p, kandidaten k
+  parteien p, kandidaten k, wahlkreise wk
 WHERE erst.wahlkreis_id = zweit.wahlkreis_id
       AND erst.kandidaten_id = k.id
       AND zweit.partei_id = p.id
       AND k.partei_id = p.id
       AND zweit.partei_id IS NOT NULL
       AND erst.kandidaten_id IS NOT NULL
+      AND wk.id = erst.wahlkreis_id
 ORDER BY k.wahljahr, k.wahlkreis_id;

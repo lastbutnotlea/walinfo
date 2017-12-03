@@ -334,10 +334,4 @@ FROM mandate_pro_partei mpp, gesamtanzahl_mandate gm, parteien p
 WHERE mpp.partei_id = p.id
       AND mpp.wahljahr = gm.wahljahr;
 
--- notes
--- Ausführung mit gewaehlte_erstkandidaten_schnell dauert keine Sekunde
--- Ausführung mit gewaehlte_erstkandidaten dauert ca 13s
--- wenn ich die erststimmenergebnisse_view einfach nur mit erststimmenergebnisse
--- fülle no matter what dauert die Ausführung genau so lange
--- es liegt also nicht an der seltsam formulierten Fallunterscheidung mit
--- union all sondern an der view an sich
+

@@ -97,4 +97,25 @@ public class DataBuilder {
         );
     }
 
+    public static ArrayList<AnzahlStimmen> getStimmenProPartei(ResultSet result) throws SQLException {
+        ArrayList<AnzahlStimmen> stimmenProPartei = new ArrayList<>();
+
+        while(result.next()) {
+            Partei partei = new Partei(
+                    result.getString(1),
+                    result.getString(2),
+                    result.getString(3)
+            );
+            AnzahlStimmen anzahlStimmen = new AnzahlStimmen(
+                    partei,
+                    result.getInt(4),
+                    result.getFloat(5)
+            );
+
+            stimmenProPartei.add(anzahlStimmen);
+        }
+
+        return stimmenProPartei;
+    }
+
 }

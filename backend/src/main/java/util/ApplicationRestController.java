@@ -127,4 +127,29 @@ public class ApplicationRestController {
 
         return null;
     }
+
+    @RequestMapping("/wahlkreise/stimmenpropartei")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<AnzahlStimmen> wkStimmenProPartei (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkStimmenProParteiQuery = WahlkreiseSQL.getWkStimmenProParteiQuery(
+                    jahr,
+                    wknr,
+                    modus);
+            statement.execute(wkStimmenProParteiQuery);
+
+            return DataBuilder.getStimmenProPartei(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
