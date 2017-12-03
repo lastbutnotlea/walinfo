@@ -325,5 +325,7 @@ WHERE s.bundesland = mins.bundesland
   AND s.partei_id = mins.partei_id
   AND s.wahljahr = mins.wahljahr
 AND b.kuerzel = s.bundesland
-AND p.id = s.partei_id;
+AND p.id = s.partei_id
+AND mins.minsitzzahl - s.sitze > 0
+ORDER BY p.name, s.bundesland;
 

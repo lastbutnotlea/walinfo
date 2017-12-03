@@ -9,7 +9,8 @@
               [data]="pieChartData"
               [labels]="pieChartLabels"
               [chartType]="pieChartType"
-              [options]="pieChartOption"></canvas>
+              [options]="pieChartOption"
+              [colors]="pieChartColors"></canvas>
     </div>
 
 
@@ -49,12 +50,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let mitglied of mitgliederBundestag$ | async">
+              <tr *ngFor="let mitglied of mitgliederBundestagFiltered">
                 <td><img class="avatar-img" src="/assets/avatar.jpg"></td>
                 <td>{{mitglied.titel || ''}}
                   {{mitglied.namneszusatz || ''}}
                   {{mitglied.vorname + ' ' + mitglied.name}}</td>
                 <td>{{mitglied.partei.kuerzel}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-2">
+          <p><strong>Filter</strong></p>
+          <table class="table table-hover">
+            <tbody>
+              <tr *ngFor="let partei of parteien">
+                <td (click)="onClickPartei(partei)" style="cursor: pointer;">{{partei}}</td>
               </tr>
             </tbody>
           </table>

@@ -19,6 +19,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { ChartsModule } from 'ng2-charts';
 import { WahlkreiseComponent } from './wahlkreise/wahlkreise.component';
 import { WahlkreisDetailsComponent } from './wahlkreis-details/wahlkreis-details.component';
+import { WeitereAnalysenComponent } from './weitere-analysen/weitere-analysen.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { WahlkreisDetailsComponent } from './wahlkreis-details/wahlkreis-details
     HomeComponent,
     BundestagComponent,
     WahlkreiseComponent,
-    WahlkreisDetailsComponent
+    WahlkreisDetailsComponent,
+    WeitereAnalysenComponent
   ],
   imports: [
     BrowserModule,

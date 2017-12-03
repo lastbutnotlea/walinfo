@@ -1,3 +1,45 @@
-<p>
-  wahlkreis-details works! {{wahlkreisId}}
-</p>
+<div *ngIf="wahlkreis">
+  <br />
+  <h4> {{ wahlkreis.nummer }}: {{ wahlkreis.name }} ({{year}})</h4>
+
+  <br />
+  <p *ngIf="wahlbeteiligung" data-toggle="tooltip" data-placement="right" title="Anzahl der Wähler: {{wahlbeteiligung.anzahlWaehler | number}} Anzahl der Wahlberechtigte: {{wahlbeteiligung.anzahlWahlberechtigte | number}}">Wahlbeteiligung: {{(wahlbeteiligung.anzahlWaehler / wahlbeteiligung.anzahlWahlberechtigte) | percent}}</p>
+
+  <p *ngIf="direktkandidat">Folgender Direktkandiat hat gewonnen: {{direktkandidat.titel}} {{direktkandidat.namneszusatz}} {{direktkandidat.vorname}} {{direktkandidat.name}} ({{direktkandidat.partei.kuerzel}})</p>
+
+  <p *ngIf="parteiSieger">Folgender Partei hat mit den Zweitstimmen gewonnen: {{parteiSieger.name}} ({{parteiSieger.kuerzel}})</p>
+
+  <h5>Wahlergebnis für diesen Wahlkreis</h5>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Partei</th>
+      <th>Anzahl an Stimmen</th>
+      <th>Relative Anzahl</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let stimmenPartei of stimmenPartei$ | async">
+      <td>{{stimmenPartei.partei.name}}</td>
+      <td>{{stimmenPartei.anzahlAbsolut}}</td>
+      <td>{{stimmenPartei.anzahlRelativ | percent}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-info" role="alert" *ngIf="year !== '2017'">
+    Vergleich mit dem Vorjahr nur im Jahr 2017 möglich!
+  </div>
+  <div *ngIf="year === '2017'">
+    <h5>Vergleich mit dem Vorjahr</h5>
+    <div style="display: block" *ngIf="vergleichData">
+      <canvas baseChart
+              [datasets]="vergleichData"
+              [labels]="vergleichLabels"
+              [chartType]="vergleichChartType"
+              [legend]="vergleichLegend"></canvas>
+    </div>
+  </div>
+</div>
+
+

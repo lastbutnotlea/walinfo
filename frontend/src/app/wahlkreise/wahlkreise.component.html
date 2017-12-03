@@ -7,10 +7,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let wahlkreis of wahlkreise$ | async" routerLink="/wahlkreis/{{wahlkreis.id}}">
+    <tr *ngFor="let wahlkreis of wahlkreise$ | async"
+        routerLink="/wahlkreis/{{ year }}/{{ wahlkreis.nummer }}"
+        style="cursor: pointer;">
       <td>{{wahlkreis.nummer}}</td>
       <td>{{wahlkreis.name}}</td>
-      <td>{{wahlkreis.bundesland}}</td>
+      <td>{{wahlkreis.bundesland.name}}</td>
     </tr>
   </tbody>
 </table>

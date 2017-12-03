@@ -1,4 +1,5 @@
 export default class Partei {
-  public kuerzel: String;
-  public name: String;
+  public kuerzel: string;
+  public name: string;
+  farbe: string;
 }
