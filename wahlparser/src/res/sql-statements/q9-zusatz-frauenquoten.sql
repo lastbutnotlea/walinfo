@@ -1,7 +1,5 @@
--- Anteile Frauen/Männer im gesamten Bundestag und in einzelnen Wahlkreisen,
--- auch aufgeschlüsselt nach verschiedenen Altersgruppen
+-- Anteile Frauen/Männer in den einzelnen Wahlkreisen
 
--- bislang: Frauenquote/Männerquote unter den KandidatenInnen auf Wahlkreisebene
 SELECT
   w.wahljahr,
   w.id,
@@ -18,5 +16,3 @@ WHERE k.wahlkreis_id = w.id
 GROUP BY w.wahljahr, w.id, w.name, k.geschlecht
 ORDER BY w.id ASC;
 
-
--- VIELLEICHT NOCH IN MEHRERE ANFRAGEN AUFSPLITTEN???

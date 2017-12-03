@@ -5,7 +5,7 @@ WITH geschlechtKandidaten(wahljahr, geschlecht, anzahl) AS (
       gk.wahljahr,
       k.geschlecht,
       count(*)
-    FROM kandidaten k, gewaehlte_erstkandidaten gk
+    FROM kandidaten k, gewaehlte_erstkandidaten_schnell gk
     WHERE k.id = gk.kandidat_id
     GROUP BY k.geschlecht, gk.wahljahr
 )
