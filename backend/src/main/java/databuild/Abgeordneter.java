@@ -5,7 +5,7 @@ public class Abgeordneter {
     private final String titel;
     private final String name;
     private final String vorname;
-    private final String namneszusatz;
+    private final String namenszusatz;
     private final int geburtsjahr;
     private final Partei partei;
 
@@ -14,7 +14,7 @@ public class Abgeordneter {
         this.name = name;
         this.vorname = vorname;
         this.titel = titel;
-        this.namneszusatz = namneszusatz;
+        this.namenszusatz = namneszusatz;
         this.geburtsjahr = geburtsjahr;
         this.partei = partei;
     }
@@ -31,8 +31,8 @@ public class Abgeordneter {
         return titel;
     }
 
-    public String getNamneszusatz() {
-        return namneszusatz;
+    public String getNamenszusatz() {
+        return namenszusatz;
     }
 
     public int getGeburtsjahr() {

@@ -81,20 +81,45 @@ public class ApplicationRestController {
     @RequestMapping("/wahlkreise/wahlbeteiligung")
     @CrossOrigin(origins = "http://localhost:4200")
     public Wahlbeteiligung wkWahlbeteiligung(
-            @RequestParam("jahr") String jahr,
+            @RequestParam("jahr") int jahr,
             @RequestParam("wkid") int wkid,
             @RequestParam("modus") String modus) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
             String wkWahlbeteiligungQuery = WahlkreiseSQL.getWkWahlbeteiligungQuery(
-                    Integer.parseInt(jahr),
+                    jahr,
                     wkid,
                     modus);
-            System.out.println(wkWahlbeteiligungQuery);
             statement.execute(wkWahlbeteiligungQuery);
 
             return DataBuilder.getWahlbeteiligung(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/wahlkreise/direktmandat")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Abgeordneter wkDirektmandat(
+            @RequestParam("jahr") int jahr,
+            @RequestParam("wkid") int wkid,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkDirektmandatQuery = WahlkreiseSQL.getWkDirektmandatQuery(
+                    jahr,
+                    wkid,
+                    modus);
+            System.out.println(wkDirektmandatQuery);
+            statement.execute(wkDirektmandatQuery);
+
+            return DataBuilder.getDirektmandat(statement.getResultSet());
         }
 
         catch (SQLException e) {

@@ -78,4 +78,21 @@ public class DataBuilder {
         );
     }
 
+    public static Abgeordneter getDirektmandat(ResultSet result) throws SQLException {
+        result.next();
+
+        Partei partei = new Partei(
+                result.getString(6),
+                result.getString(7)
+        );
+        return new Abgeordneter(
+                result.getString(1),
+                result.getString(2),
+                result.getString(3),
+                result.getString(4),
+                result.getInt(5),
+                partei
+        );
+    }
+
 }
