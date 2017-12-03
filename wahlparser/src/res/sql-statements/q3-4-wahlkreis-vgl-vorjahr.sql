@@ -1,5 +1,5 @@
--- WAHLKREISMAPPING FEHLT!!!!!!
--- vielleicht so ID Nummer Nummer ID
+-- WAHLKREISMAPPING FEHLT NOCH!
+-- vielleicht so: ID Nummer Nummer ID
 
 WITH stimmen_partei AS (
     SELECT zweit.anzahl + erst.anzahl as gesamtstimmen,
@@ -16,11 +16,12 @@ WITH stimmen_partei AS (
           AND erst.kandidaten_id IS NOT NULL
 )
 
-SELECT p1.kuerzel,
-  w1.nummer,
+SELECT
+  p1.kuerzel,
+  p1.name,
+  p1.farbe,
   sp1.gesamtstimmen as stimmen_2013,
-  sp2.gesamtstimmen as stimmen_2017,
-  CAST(sp2.gesamtstimmen AS NUMERIC) / CAST(sp1.gesamtstimmen AS NUMERIC) as vergleich
+  sp2.gesamtstimmen as stimmen_2017
 FROM stimmen_partei sp1, stimmen_partei sp2, parteien p1, parteien p2,
   wahlkreise w1, wahlkreise w2
 WHERE sp1.wahlkreis_id = w1.id

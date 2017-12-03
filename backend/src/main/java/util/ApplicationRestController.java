@@ -152,4 +152,27 @@ public class ApplicationRestController {
 
         return null;
     }
+
+    @RequestMapping("/wahlkreise/vergleichvorjahr")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<StimmenVergleich> wkVergleichVorjahr (
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkVergleichVorjahrQuery = WahlkreiseSQL.getWkVergleichVorjahrQuery(
+                    wknr,
+                    modus);
+            statement.execute(wkVergleichVorjahrQuery);
+
+            return DataBuilder.getStimmenVergleiche(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

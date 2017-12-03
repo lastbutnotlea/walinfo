@@ -118,4 +118,25 @@ public class DataBuilder {
         return stimmenProPartei;
     }
 
+    public static ArrayList<StimmenVergleich> getStimmenVergleiche(ResultSet result) throws SQLException {
+        ArrayList<StimmenVergleich> stimmenVergleiche = new ArrayList<>();
+
+        while(result.next()) {
+            Partei partei = new Partei(
+                    result.getString(1),
+                    result.getString(2),
+                    result.getString(3)
+            );
+            StimmenVergleich stimmenVergleich = new StimmenVergleich(
+                    partei,
+                    result.getInt(4),
+                    result.getInt(5)
+            );
+
+            stimmenVergleiche.add(stimmenVergleich);
+        }
+
+        return stimmenVergleiche;
+    }
+
 }
