@@ -1,26 +1,66 @@
 <h2>Der Bundestag</h2>
 
-<mat-card>
-  <mat-card-title>Sitzverteilung</mat-card-title>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Sitzverteilung</h4>
 
-  <mat-card-content>
-    <google-chart [data]="pieChartData"></google-chart>
-  </mat-card-content>
+    <div *ngIf="sitzverteilung$ | async" style="display: block">
+      <canvas baseChart
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"
+              [options]="pieChartOption"></canvas>
+    </div>
 
-</mat-card>
 
-<br />
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Partei</th>
+        <th scope="col">Anzahl der Sitze im Bundestag</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let parteiMandat of sitzverteilung$ | async">
+        <td>{{parteiMandat.partei.name}}</td>
+        <td>{{parteiMandat.anzahlMandate}}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<mat-card>
-  <mat-card-title>Mitglieder des Bundestags</mat-card-title>
+  </div>
+</div>
 
-  <mat-card-content>
-    <mat-list dense>
-      <mat-list-item *ngFor="let kandidat of kandidaten">
-        <img matListAvatar src="assets/avatar.jpg" alt="...">
-        {{kandidat}}
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
+<br/>
 
-</mat-card>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Mitglieder des Bundestags</h4>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th>Partei</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let mitglied of mitgliederBundestag$ | async">
+                <td><img class="avatar-img" src="/assets/avatar.jpg"></td>
+                <td>{{mitglied.titel || ''}}
+                  {{mitglied.namneszusatz || ''}}
+                  {{mitglied.vorname + ' ' + mitglied.name}}</td>
+                <td>{{mitglied.partei.kuerzel}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -12,10 +12,13 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCardModule} from '@angular/material/card';
-import {Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { BackendService } from './backend.service';
 import {MatListModule} from '@angular/material/list';
 import {HttpClientModule} from '@angular/common/http';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { ChartsModule } from 'ng2-charts';
+import { WahlkreiseComponent } from './wahlkreise/wahlkreise.component';
+import { WahlkreisDetailsComponent } from './wahlkreis-details/wahlkreis-details.component';
 
 
 @NgModule({
@@ -23,7 +26,9 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     MenuComponent,
     HomeComponent,
-    BundestagComponent
+    BundestagComponent,
+    WahlkreiseComponent,
+    WahlkreisDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +38,10 @@ import {HttpClientModule} from '@angular/common/http';
     MatButtonModule,
     MatSlideToggleModule,
     MatCardModule,
-    Ng2GoogleChartsModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    MatGridListModule,
+    ChartsModule
   ],
   providers: [BackendService],
   bootstrap: [AppComponent]
