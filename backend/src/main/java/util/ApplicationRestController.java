@@ -66,11 +66,11 @@ public class ApplicationRestController {
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<Wahlkreis> wahlkreise(
             @RequestParam("jahr") int jahr,
-            @PathVariable(value="nummer") Integer wahlkreisNr) {
+            @PathVariable(value="nummer") Integer wknr) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
-            String wahlkreisQuery = WahlkreiseSQL.getWahlkreisQuery(jahr, wahlkreisNr);
+            String wahlkreisQuery = WahlkreiseSQL.getWahlkreisQuery(jahr, wknr);
             statement.execute(wahlkreisQuery);
 
             return DataBuilder.getWahlkreisList(statement.getResultSet());
