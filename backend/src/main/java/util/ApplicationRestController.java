@@ -1,6 +1,7 @@
 package util;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -312,5 +313,28 @@ public class ApplicationRestController {
         }
 
         return null;
+    }
+
+    @RequestMapping("/frauenbonus")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public double frauenbonus (
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String frauenbonusQuery = WahlanalysenSQL.getFrauenbonus(
+                    modus);
+            statement.execute(frauenbonusQuery);
+
+            ResultSet result = statement.getResultSet();
+            result.next();
+            return result.getDouble(1);
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0.0;
     }
 }

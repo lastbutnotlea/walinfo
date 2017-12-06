@@ -1,6 +1,6 @@
 --(Frauenquote gewählte Direktkandidaten) / (Frauenquote Direktkandidaten) 
 -- => Ist dieser Wert größer als 1 => „Frauenbonus“, sonst: „Männerbonus“
-WITH geschlechtKandidaten(wahljahr, geschlecht, anzahl) AS (
+WITH geschlechtGewaehlteKandidaten(wahljahr, geschlecht, anzahl) AS (
     SELECT
       gk.wahljahr,
       k.geschlecht,
@@ -16,28 +16,28 @@ SELECT
     /
     (
       SELECT SUM(anzahl)
-      FROM geschlechtKandidaten gk2
+      FROM geschlechtGewaehlteKandidaten gk2
       WHERE gk2.wahljahr = gk.wahljahr
             AND gk2.geschlecht is not null
     )
   )
-  / --as Frauenquote_Gewaehlt,
+  /
   (
     CAST((
            SELECT count(*)
-           FROM kandidaten kk
-           WHERE kk.geschlecht = 'w'
-                 AND kk.wahlkreis_id IS NOT NULL
-                 AND kk.wahljahr = gk.wahljahr
+           FROM kandidaten k
+           WHERE k.geschlecht = 'w'
+                 AND k.wahlkreis_id IS NOT NULL
+                 AND k.wahljahr = gk.wahljahr
          ) AS NUMERIC)
     /
     (
       SELECT count(*)
-      FROM kandidaten kk
-      WHERE kk.wahlkreis_id IS NOT NULL
-            AND kk.geschlecht is not null
-            AND kk.wahljahr = gk.wahljahr
+      FROM kandidaten k
+      WHERE k.wahlkreis_id IS NOT NULL
+            AND k.geschlecht is not null
+            AND k.wahljahr = gk.wahljahr
     )
-  ) AS CHANCE_FRAUEN_GEWAEHT_ZU_WERDEN
-FROM geschlechtKandidaten gk
+  ) AS CHANCE_FRAUEN_GEWAEHLT_ZU_WERDEN
+FROM geschlechtGewaehlteKandidaten gk
 WHERE geschlecht = 'w';
