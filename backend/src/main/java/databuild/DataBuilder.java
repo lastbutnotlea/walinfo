@@ -174,4 +174,38 @@ public class DataBuilder {
         return ueberhangmandate;
     }
 
+    public static ArrayList<KnappesErgebnis> getKnappeErgebnisse(ResultSet result) throws SQLException {
+        ArrayList<KnappesErgebnis> knappeErgebnisse = new ArrayList<>();
+
+        while(result.next()) {
+            Partei partei = new Partei(
+                    result.getString(6),
+                    result.getString(7),
+                    result.getString(8)
+            );
+            Abgeordneter abgeordneter = new Abgeordneter(
+                    result.getString(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4),
+                    result.getInt(5),
+                    partei
+            );
+            SiegerOderVerlierer siegerOderVerlierer;
+            if(result.getString(9).equals("s"))
+                siegerOderVerlierer = SiegerOderVerlierer.SIEGER;
+            else siegerOderVerlierer = SiegerOderVerlierer.VERLIERER;
+
+            KnappesErgebnis knappesErgebnis = new KnappesErgebnis(
+                    abgeordneter,
+                    siegerOderVerlierer,
+                    result.getInt(10)
+            );
+
+            knappeErgebnisse.add(knappesErgebnis);
+        }
+
+        return knappeErgebnisse;
+    }
+
 }

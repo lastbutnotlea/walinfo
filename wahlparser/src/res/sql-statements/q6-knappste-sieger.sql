@@ -98,21 +98,6 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
     AND k.partei_id = p.id
 
   ),
- /*
-    knappste_verlierer(wahljahr, kandidaten_id, partei_id, unterschied) AS (
-      SELECT
-        z.wahljahr,
-        z.kandidaten_id,
-        p.id,
-        s.maxErst - z.zweitmaxErst AS unterschied
-      FROM siegerErststimmen s, zweiterErststimmen z, parteien p, kandidaten k
-      WHERE
-        s.wahljahr = z.wahljahr
-        AND s.wahlkreis_id = z.wahlkreis_id
-        AND z.kandidaten_id = k.id
-        AND k.partei_id = p.id
-  ),
-  */
 
     siegerundverlierer(wahljahr, kandidaten_id, partei_id, unterschied, siegeroderverlierer) AS (
     (  SELECT ks.*, 's'
@@ -141,15 +126,16 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
   )
 
 SELECT
-   aux.siegeroderverlierer,
+  k.titel,
    k.name,
    k.vorname,
    k.namenszusatz,
    k.geburtsjahr,
    p.kuerzel,
    p.name,
-   aux.unterschied,
-  aux.wahljahr
+  p.farbe,
+  aux.siegeroderverlierer,
+   aux.unterschied
  FROM aux aux, parteien p, kandidaten k
  WHERE
    aux.anzahl_reihen <= 10

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import databuild.*;
 import org.springframework.web.bind.annotation.*;
 import sqlbuild.BundestagSQL;
+import sqlbuild.WahlanalysenSQL;
 import sqlbuild.WahlkreiseSQL;
 
 @RestController
@@ -133,33 +134,6 @@ public class ApplicationRestController {
         return null;
     }
 
-    /*
-    @RequestMapping("/wahlkreise/stimmenpropartei")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ArrayList<AnzahlStimmen> wkStimmenProPartei (
-            @RequestParam("jahr") int jahr,
-            @RequestParam("wknr") int wknr,
-            @RequestParam("modus") String modus) {
-
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            Statement statement = conn.createStatement();
-            String wkStimmenProParteiQuery = WahlkreiseSQL.getWkStimmenProParteiQuery(
-                    jahr,
-                    wknr,
-                    modus);
-            statement.execute(wkStimmenProParteiQuery);
-
-            return DataBuilder.getStimmenProPartei(statement.getResultSet());
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    */
-
     @RequestMapping("/wahlkreise/erststimmenpropartei")
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<AnzahlStimmen> wkErstStimmenProPartei (
@@ -206,31 +180,6 @@ public class ApplicationRestController {
         return null;
     }
 
-    /*
-    @RequestMapping("/wahlkreise/vergleichvorjahr")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ArrayList<StimmenVergleich> wkVergleichVorjahr (
-            @RequestParam("wknr") int wknr,
-            @RequestParam("modus") String modus) {
-
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            Statement statement = conn.createStatement();
-            String wkVergleichVorjahrQuery = WahlkreiseSQL.getWkVergleichVorjahrQuery(
-                    wknr,
-                    modus);
-            statement.execute(wkVergleichVorjahrQuery);
-
-            return DataBuilder.getStimmenVergleiche(statement.getResultSet());
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    */
-
     @RequestMapping("/wahlkreise/vergleichvorjahr/erststimmen")
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<StimmenVergleich> wkVergleichVorjahrErststimmen (
@@ -273,33 +222,6 @@ public class ApplicationRestController {
         return null;
     }
 
-    /*
-    @RequestMapping("/wahlkreise/siegererststimmen")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public Partei wkSiegerErststimmen (
-            @RequestParam("jahr") int jahr,
-            @RequestParam("wknr") int wknr,
-            @RequestParam("modus") String modus) {
-
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            Statement statement = conn.createStatement();
-            String wkSiegerErststimmen = WahlkreiseSQL.getWkSiegerErststimmenQuery(
-                    jahr,
-                    wknr,
-                    modus);
-            statement.execute(wkSiegerErststimmen);
-
-            return DataBuilder.getPartei(statement.getResultSet());
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    */
-
     @RequestMapping("/wahlkreise/siegerzweitstimmen")
     @CrossOrigin(origins = "http://localhost:4200")
     public Partei wkSiegerZweitstimmen (
@@ -339,6 +261,29 @@ public class ApplicationRestController {
             statement.execute(ueberhangmandateQuery);
 
             return DataBuilder.getUeberhangmandate(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/knappstesieger")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<KnappesErgebnis> knappsteSieger (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String knappsteSiegerQuery = WahlanalysenSQL.getKnappsteSiegerQuery(
+                    jahr,
+                    modus);
+            statement.execute(knappsteSiegerQuery);
+
+            return DataBuilder.getKnappeErgebnisse(statement.getResultSet());
         }
 
         catch (SQLException e) {
