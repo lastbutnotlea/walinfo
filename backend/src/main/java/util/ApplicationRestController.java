@@ -292,4 +292,25 @@ public class ApplicationRestController {
 
         return null;
     }
+
+    @RequestMapping("/wahlkreise/frauenquote")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Frauenanteil knappsteSieger (
+            @RequestParam("wknr") int wknr) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String frauenanteilSQL = WahlkreiseSQL.getWkFrauenanteil(
+                    wknr);
+            statement.execute(frauenanteilSQL);
+
+            return DataBuilder.getFrauenanteil(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

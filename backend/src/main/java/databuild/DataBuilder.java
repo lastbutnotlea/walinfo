@@ -208,4 +208,13 @@ public class DataBuilder {
         return knappeErgebnisse;
     }
 
+    public static Frauenanteil getFrauenanteil(ResultSet result) throws SQLException {
+        result.next();
+
+        return new Frauenanteil(
+                result.getInt(1),
+                result.getInt(2)
+        );
+    }
+
 }
