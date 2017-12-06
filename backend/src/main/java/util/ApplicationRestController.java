@@ -322,7 +322,7 @@ public class ApplicationRestController {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
-            String frauenbonusQuery = WahlanalysenSQL.getFrauenbonus(
+            String frauenbonusQuery = WahlanalysenSQL.getFrauenbonusQuery(
                     modus);
             statement.execute(frauenbonusQuery);
 
@@ -336,5 +336,31 @@ public class ApplicationRestController {
         }
 
         return 0.0;
+    }
+
+    @RequestMapping("/erststimmen")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<AnzahlStimmen> erststimmenBundesweit (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("modus") String modus) {
+
+        String verteilungErststimmenQuery = WahlanalysenSQL.getVerteilungErststimmenQuery(
+                jahr,
+                modus);
+
+        return wkStimmenProParteiAux(verteilungErststimmenQuery);
+    }
+
+    @RequestMapping("/zweitstimmen")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<AnzahlStimmen> zweitstimmenBundesweit (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("modus") String modus) {
+
+        String verteilungZweitstimmenQuery = WahlanalysenSQL.getVerteilungZweitstimmenQuery(
+                jahr,
+                modus);
+
+        return wkStimmenProParteiAux(verteilungZweitstimmenQuery);
     }
 }

@@ -155,7 +155,7 @@ public class WahlanalysenSQL {
                 ;
     }
 
-    public static String getFrauenbonus(String modus) {
+    public static String getFrauenbonusQuery(String modus) {
         return "WITH geschlechtGewaehlteKandidaten(wahljahr, geschlecht, anzahl) AS ( " +
                 "    SELECT " +
                 "      gk.wahljahr, " +
@@ -196,6 +196,39 @@ public class WahlanalysenSQL {
                 "  ) AS CHANCE_FRAUEN_GEWAEHLT_ZU_WERDEN " +
                 "FROM geschlechtGewaehlteKandidaten gk " +
                 "WHERE geschlecht = 'w';"
+                ;
+    }
+
+    public static String getVerteilungErststimmenQuery(int jahr, String modus) {
+        return "SELECT " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe, " +
+                "  sum(e.anzahl) as stimmen_absolut, " +
+                "  CAST(sum(e.anzahl) AS NUMERIC) / CAST( " +
+                "      (SELECT sum(anzahl) FROM " + getErststimmenTable(modus) + ") AS NUMERIC " +
+                "  ) as stimmen_relativ " +
+                "FROM parteien p, " + getErststimmenTable(modus) + " e, kandidaten k " +
+                "WHERE e.kandidaten_id = k.id " +
+                "AND k.partei_id = p.id " +
+                "AND p.wahljahr = " + jahr + " " +
+                "GROUP BY p.id, p.kuerzel, p.name"
+                ;
+    }
+
+    public static String getVerteilungZweitstimmenQuery(int jahr, String modus) {
+        return "SELECT " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe, " +
+                "  sum(z.anzahl) AS stimmen_absolut, " +
+                "  CAST(sum(z.anzahl) AS NUMERIC) / CAST( " +
+                "      (SELECT sum(anzahl) FROM " + getZweitstimmenTable(modus) + ") AS NUMERIC " +
+                "  ) as stimmen_relativ " +
+                "FROM parteien p, " + getZweitstimmenTable(modus) + " z " +
+                "WHERE z.partei_id = p.id " +
+                "AND p.wahljahr = " + jahr + " " +
+                "GROUP BY p.id, p.kuerzel, p.name"
                 ;
     }
 
