@@ -87,6 +87,7 @@ public class WahlkreiseSQL {
                 ";";
     }
 
+    /*
     public static String getWkStimmenProParteiQuery(int jahr, int wknr, String modus) {
         return "WITH stimmen_gesamt AS ( " +
                 "    SELECT " +
@@ -129,6 +130,77 @@ public class WahlkreiseSQL {
                 ";"
                 ;
     }
+    */
+
+    public static String getWkErststimmenProParteiQuery(int jahr, int wknr, String modus) {
+        return "WITH stimmen_gesamt AS ( " +
+                "    SELECT " +
+                "      sum(erst.anzahl) AS gesamtstimmen, " +
+                "      erst.wahlkreis_id, " +
+                "      k.wahljahr " +
+                "    FROM " + getErststimmenTable(modus) + " erst, kandidaten k " +
+                "    WHERE " +
+                "          k.id = erst.kandidaten_id " +
+                "          AND erst.kandidaten_id IS NOT NULL " +
+                "    GROUP BY erst.wahlkreis_id, k.wahljahr " +
+                ") " +
+                " " +
+                "SELECT " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe, " +
+                "  erst.anzahl AS anzahl_absolut, " +
+                "  CAST(erst.anzahl AS NUMERIC) / " +
+                "  (CAST(( " +
+                "          SELECT gesamtstimmen " +
+                "          FROM stimmen_gesamt sg " +
+                "          WHERE sg.wahljahr = p.wahljahr " +
+                "                AND sg.wahlkreis_id = erst.wahlkreis_id " +
+                "        ) AS NUMERIC))       AS anzahl_relativ " +
+                "FROM " + getErststimmenTable(modus) + " erst, kandidaten k, parteien p " +
+                "WHERE erst.wahlkreis_id = k.wahlkreis_id " +
+                "      AND erst.kandidaten_id = k.id " +
+                "      AND k.partei_id = p.id " +
+                "      AND erst.kandidaten_id IS NOT NULL " +
+                "      AND k.wahljahr = " + jahr + " " +
+                "      AND k.wahlkreis_id = " + wknr +
+                ";"
+                ;
+    }
+
+    public static String getWkZweitstimmenProParteiQuery(int jahr, int wknr, String modus) {
+        return "WITH stimmen_gesamt AS ( " +
+                "    SELECT " +
+                "      sum(zweit.anzahl) as zweitstimmen, " +
+                "      zweit.wahlkreis_id, " +
+                "      p.wahljahr " +
+                "    FROM " + getZweitstimmenTable(modus) + " zweit, parteien p " +
+                "    WHERE zweit.partei_id = p.id " +
+                "          AND zweit.partei_id IS NOT NULL " +
+                "    GROUP BY zweit.wahlkreis_id, p.wahljahr " +
+                ") " +
+                " " +
+                "SELECT " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe, " +
+                "  zweit.anzahl AS anzahl_absolut, " +
+                "  CAST(zweit.anzahl AS NUMERIC) / " +
+                "  (CAST(( " +
+                "          SELECT zweitstimmen " +
+                "          FROM stimmen_gesamt sg " +
+                "          WHERE sg.wahljahr = p.wahljahr " +
+                "                AND sg.wahlkreis_id = zweit.wahlkreis_id " +
+                "        ) AS NUMERIC))       AS anzahl_relativ " +
+                "FROM " + getZweitstimmenTable(modus) + " zweit, parteien p " +
+                "WHERE zweit.partei_id = p.id " +
+                "      AND zweit.partei_id IS NOT NULL " +
+                "      AND p.wahljahr = " + jahr + " " +
+                "      AND zweit.wahlkreis_id = " + wknr +
+                ";"
+                ;
+    }
+
 
     public static String getWkVergleichVorjahrQuery(int wknr, String modus) {
         return "WITH stimmen_partei AS ( " +

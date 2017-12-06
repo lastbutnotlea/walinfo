@@ -133,6 +133,7 @@ public class ApplicationRestController {
         return null;
     }
 
+    /*
     @RequestMapping("/wahlkreise/stimmenpropartei")
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<AnzahlStimmen> wkStimmenProPartei (
@@ -143,6 +144,57 @@ public class ApplicationRestController {
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
             String wkStimmenProParteiQuery = WahlkreiseSQL.getWkStimmenProParteiQuery(
+                    jahr,
+                    wknr,
+                    modus);
+            statement.execute(wkStimmenProParteiQuery);
+
+            return DataBuilder.getStimmenProPartei(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    */
+
+    @RequestMapping("/wahlkreise/erststimmenpropartei")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<AnzahlStimmen> wkErstStimmenProPartei (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkStimmenProParteiQuery = WahlkreiseSQL.getWkErststimmenProParteiQuery(
+                    jahr,
+                    wknr,
+                    modus);
+            statement.execute(wkStimmenProParteiQuery);
+
+            return DataBuilder.getStimmenProPartei(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/wahlkreise/zweitstimmenpropartei")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<AnzahlStimmen> wkZweitstimmenProPartei (
+            @RequestParam("jahr") int jahr,
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            String wkStimmenProParteiQuery = WahlkreiseSQL.getWkZweitstimmenProParteiQuery(
                     jahr,
                     wknr,
                     modus);
