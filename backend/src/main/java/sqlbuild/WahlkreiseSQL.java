@@ -239,6 +239,7 @@ public class WahlkreiseSQL {
                 ;
     }
 
+    /*
     public static String getWkSiegerErststimmenQuery(int jahr, int wknr, String modus){
         return "WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS ( " +
                 "    SELECT " +
@@ -266,6 +267,7 @@ public class WahlkreiseSQL {
                 ";"
                 ;
     }
+    */
 
     public static String getWkSiegerZweitstimmenQuery(int jahr, int wknr, String modus) {
         return "WITH maximaleZweitstimmen (wahljahr, wahlkreis_id, maxZweit) AS (  " +

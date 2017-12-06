@@ -233,6 +233,7 @@ public class ApplicationRestController {
         return null;
     }
 
+    /*
     @RequestMapping("/wahlkreise/siegererststimmen")
     @CrossOrigin(origins = "http://localhost:4200")
     public Partei wkSiegerErststimmen (
@@ -257,6 +258,7 @@ public class ApplicationRestController {
 
         return null;
     }
+    */
 
     @RequestMapping("/wahlkreise/siegerzweitstimmen")
     @CrossOrigin(origins = "http://localhost:4200")
