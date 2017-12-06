@@ -167,22 +167,12 @@ public class ApplicationRestController {
             @RequestParam("wknr") int wknr,
             @RequestParam("modus") String modus) {
 
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            Statement statement = conn.createStatement();
-            String wkStimmenProParteiQuery = WahlkreiseSQL.getWkErststimmenProParteiQuery(
-                    jahr,
-                    wknr,
-                    modus);
-            statement.execute(wkStimmenProParteiQuery);
+        String wkStimmenProParteiQuery = WahlkreiseSQL.getWkErststimmenProParteiQuery(
+                jahr,
+                wknr,
+                modus);
 
-            return DataBuilder.getStimmenProPartei(statement.getResultSet());
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return wkStimmenProParteiAux(wkStimmenProParteiQuery);
     }
 
     @RequestMapping("/wahlkreise/zweitstimmenpropartei")
@@ -192,13 +182,19 @@ public class ApplicationRestController {
             @RequestParam("wknr") int wknr,
             @RequestParam("modus") String modus) {
 
+        String wkStimmenProParteiQuery = WahlkreiseSQL.getWkZweitstimmenProParteiQuery(
+                jahr,
+                wknr,
+                modus);
+
+        return wkStimmenProParteiAux(wkStimmenProParteiQuery);
+    }
+
+    private ArrayList<AnzahlStimmen> wkStimmenProParteiAux (String query) {
+
         try (Connection conn = DatabaseConnection.getConnection()) {
             Statement statement = conn.createStatement();
-            String wkStimmenProParteiQuery = WahlkreiseSQL.getWkZweitstimmenProParteiQuery(
-                    jahr,
-                    wknr,
-                    modus);
-            statement.execute(wkStimmenProParteiQuery);
+            statement.execute(query);
 
             return DataBuilder.getStimmenProPartei(statement.getResultSet());
         }
@@ -210,6 +206,7 @@ public class ApplicationRestController {
         return null;
     }
 
+    /*
     @RequestMapping("/wahlkreise/vergleichvorjahr")
     @CrossOrigin(origins = "http://localhost:4200")
     public ArrayList<StimmenVergleich> wkVergleichVorjahr (
@@ -222,6 +219,49 @@ public class ApplicationRestController {
                     wknr,
                     modus);
             statement.execute(wkVergleichVorjahrQuery);
+
+            return DataBuilder.getStimmenVergleiche(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    */
+
+    @RequestMapping("/wahlkreise/vergleichvorjahr/erststimmen")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<StimmenVergleich> wkVergleichVorjahrErststimmen (
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        String wkVergleichVorjahrQuery = WahlkreiseSQL.getWkVergleichVorjahrErstQuery(
+                wknr,
+                modus);
+
+        return wkVergleichVorjahrAux(wkVergleichVorjahrQuery);
+    }
+
+    @RequestMapping("/wahlkreise/vergleichvorjahr/zweitstimmen")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<StimmenVergleich> wkVergleichVorjahrZweitstimmen (
+            @RequestParam("wknr") int wknr,
+            @RequestParam("modus") String modus) {
+
+        String wkVergleichVorjahrQuery = WahlkreiseSQL.getWkVergleichVorjahrZweitQuery(
+                wknr,
+                modus);
+
+        return wkVergleichVorjahrAux(wkVergleichVorjahrQuery);
+    }
+
+    private ArrayList<StimmenVergleich> wkVergleichVorjahrAux (String query) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            statement.execute(query);
 
             return DataBuilder.getStimmenVergleiche(statement.getResultSet());
         }
