@@ -31,4 +31,152 @@
     </div>
   </div>
 
+
+  <div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+          Knappster Sieger oder Verlierer
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-10">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th>Partei</th>
+                <th>Unterschied</th>
+                <th>Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let eintrag of knappsteSiegerFiltered">
+                <td><img class="avatar-img" style="width: 25px;" src="/assets/avatar.jpg"></td>
+                <td>{{eintrag.abgeordneter.titel || ''}}
+                  {{eintrag.abgeordneter.namneszusatz || ''}}
+                  {{eintrag.abgeordneter.vorname + ' ' + eintrag.abgeordneter.name}}</td>
+                <td>{{eintrag.abgeordneter.partei.kuerzel}}</td>
+                <td>{{eintrag.unterschied}}</td>
+                <td>{{eintrag.siegerOderVerlierer}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-2">
+            <p><strong>Filter</strong></p>
+            <table class="table table-hover table-sm">
+              <tbody>
+              <tr *ngFor="let partei of knappsterSiegerParteien">
+                <td (click)="onClickPartei(partei)" style="cursor: pointer;">{{partei}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="year === '2017'">
+  <div class="card-header" role="tab" id="headingThree">
+    <h5 class="mb-0">
+      <a data-toggle="collapse" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+        Vergleich der Frauenquote im Bundestag und allen Kandidaten
+      </a>
+    </h5>
+  </div>
+
+  <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+    <p><code>Frauenquote der Direktkandidaten im Bundestag / Frauenquote unter allen Direktkandidaten = </code>{{frauenBonus$ | async | percent}}</p>
+
+    <p>Ist der Wert kleiner als <var>{{1 | percent}}</var>, ist die Quote gesunken, sonst gestiegen.</p>
+
+    <div class="alert alert-warning" role="alert">
+      Es sollte beachtet werden, dass dies zwar den Anschein erwecken mag, als hätten weibliche Direktkandidaten geringere Chancen gewählt zu werden.
+      Allerdings ist in dieser Rechnung völlig außer acht gelassen worden, dass Wähler ihre Stimmen nicht wahllos vergeben, sondern damit eine Person und eine Partei wählen.
+      Die Aussage dieser Rechnung hat sommit keinen Wert, außer auszusagen, das die Quote gesunken ist. Z.B. weil die Frauenquote unter den Siegerparteien geringer ist, als unter allen Parteien betrachtet.
+    </div>
+  </div>
 </div>
+
+  <div class="card">
+    <div class="card-header" role="tab" id="headingFour">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+          Gesamtergebnis der Erststimmen
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
+      <!--canvas baseChart
+              [data]="erstStimmenData"
+              [labels]="erstStimmenLabels"
+              chartType="pie"></canvas-->
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Partei</th>
+          <th></th>
+          <th>Stimmen Absolut</th>
+          <th>Stimmen Relativ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let parteiMandat of erstStimmen$ | async">
+          <td>{{parteiMandat.partei.kuerzel}}</td>
+          <td>{{parteiMandat.partei.name}}</td>
+          <td>{{parteiMandat.anzahlAbsolut}}</td>
+          <td>{{parteiMandat.anzahlAbsolut / gesamtErst | percent}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" role="tab" id="headingFive">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+          Gesamtergebnis der Zweitstimmen
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive" data-parent="#accordion">
+      <!--canvas baseChart
+              [data]="zweitStimmenData"
+              [labels]="zweitStimmenLabels"
+              chartType="pie"></canvas-->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Partei</th>
+          <th></th>
+          <th>Stimmen Absolut</th>
+          <th>Stimmen Relativ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let parteiMandat of zweitStimmen$ | async">
+          <td>{{parteiMandat.partei.kuerzel}}</td>
+          <td>{{parteiMandat.partei.name}}</td>
+          <td>{{parteiMandat.anzahlAbsolut}}</td>
+          <td>{{parteiMandat.anzahlAbsolut / gesamtZweit | percent}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+

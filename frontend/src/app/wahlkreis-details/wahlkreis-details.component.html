@@ -9,35 +9,59 @@
 
   <p *ngIf="parteiSieger">Folgender Partei hat mit den Zweitstimmen gewonnen: {{parteiSieger.name}} ({{parteiSieger.kuerzel}})</p>
 
+  <div *ngIf="anzahlMaenner && anzahlKandidaten">
+    <strong>Vergleich der Geschlechter</strong>
+    <p>Frauenquote: {{((anzahlKandidaten - anzahlMaenner) / anzahlKandidaten) | percent}} <br />
+    Männerquote: {{(anzahlMaenner / anzahlKandidaten) | percent}} </p>
+  </div>
+
   <h5>Wahlergebnis für diesen Wahlkreis</h5>
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">Partei</th>
-      <th>Anzahl an Stimmen</th>
-      <th>Relative Anzahl</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let stimmenPartei of stimmenPartei$ | async">
-      <td>{{stimmenPartei.partei.name}}</td>
-      <td>{{stimmenPartei.anzahlAbsolut}}</td>
-      <td>{{stimmenPartei.anzahlRelativ | percent}}</td>
-    </tr>
-    </tbody>
-  </table>
+
+  <div class="row">
+
+    <div class="col-sm-6">
+      <strong>Erststimmen</strong>
+      <div *ngIf="erstStimmenPartei$ | async" style="display: block">
+        <canvas baseChart
+                [data]="erstStimmenParteiData"
+                [labels]="erstStimmenParteiLabels"
+                chartType="pie"></canvas>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <strong>Zweitstimmen</strong>
+      <div *ngIf="zweitStimmenPartei$ | async" style="display: block">
+        <canvas baseChart
+                [data]="zweitStimmenParteiData"
+                [labels]="zweitStimmenParteiLabels"
+                chartType="pie"></canvas>
+      </div>
+    </div>
+
+  </div>
 
   <div class="alert alert-info" role="alert" *ngIf="year !== '2017'">
     Vergleich mit dem Vorjahr nur im Jahr 2017 möglich!
   </div>
   <div *ngIf="year === '2017'">
     <h5>Vergleich mit dem Vorjahr</h5>
-    <div style="display: block" *ngIf="vergleichData">
-      <canvas baseChart
-              [datasets]="vergleichData"
-              [labels]="vergleichLabels"
-              [chartType]="vergleichChartType"
-              [legend]="vergleichLegend"></canvas>
+    <div class="row">
+      <div class="col-sm-8" style="display: block" *ngIf="vergleichErstData">
+        <strong>Erststimmen</strong>
+        <canvas baseChart
+                [datasets]="vergleichErstData"
+                [labels]="vergleichErstLabels"
+                [chartType]="vergleichChartType"
+                [legend]="vergleichLegend"></canvas>
+      </div>
+      <div class="col-sm-8" style="display: block" *ngIf="vergleichErstData">
+        <strong>Zweitstimmen</strong>
+        <canvas baseChart
+                [datasets]="vergleichZweitData"
+                [labels]="vergleichZweitLabels"
+                [chartType]="vergleichChartType"
+                [legend]="vergleichLegend"></canvas>
+      </div>
     </div>
   </div>
 </div>

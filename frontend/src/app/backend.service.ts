@@ -11,6 +11,8 @@ import StimmenPartei from './templates/StimmenPartei';
 import WahlkreisParteiVergleich from './templates/WahlkreisParteiVergleich';
 import Partei from './templates/Partei';
 import UeberhangMandateBundesland from './templates/UeberhangMandateBundesland';
+import FrauenMaennerQuote from './templates/FrauenMaennerQuote';
+import KnappsterSieger from './templates/KnappsterSieger';
 
 @Injectable()
 export class BackendService {
@@ -65,17 +67,29 @@ export class BackendService {
       '&modus=' + this.dataType);
   }
 
-  getStimmenProPartei(wknr: string): Observable<StimmenPartei[]> {
-    return this.http.get<StimmenPartei[]>('http://localhost:8080/wahlkreise/stimmenpropartei' +
+  getErstStimmenProPartei(wknr: string): Observable<StimmenPartei[]> {
+    return this.http.get<StimmenPartei[]>('http://localhost:8080/wahlkreise/erststimmenpropartei' +
       '?jahr=' + this.year +
       '&wknr=' + wknr +
       '&modus=' + this.dataType);
   }
 
-  getVergleichVorjahr(wknr: string): Observable<WahlkreisParteiVergleich[]> {
-    return this.http.get<WahlkreisParteiVergleich[]>('http://localhost:8080/wahlkreise/vergleichvorjahr' +
+  getZweitStimmenProPartei(wknr: string): Observable<StimmenPartei[]> {
+    return this.http.get<StimmenPartei[]>('http://localhost:8080/wahlkreise/zweitstimmenpropartei' +
       '?jahr=' + this.year +
       '&wknr=' + wknr +
+      '&modus=' + this.dataType);
+  }
+
+  getVergleich2017ErstVorjahr(wknr: string): Observable<WahlkreisParteiVergleich[]> {
+    return this.http.get<WahlkreisParteiVergleich[]>('http://localhost:8080/wahlkreise/vergleichvorjahr/erststimmen' +
+      '?wknr=' + wknr +
+      '&modus=' + this.dataType);
+  }
+
+  getVergleich2017ZweitVorjahr(wknr: string): Observable<WahlkreisParteiVergleich[]> {
+    return this.http.get<WahlkreisParteiVergleich[]>('http://localhost:8080/wahlkreise/vergleichvorjahr/zweitstimmen' +
+      '?wknr=' + wknr +
       '&modus=' + this.dataType);
   }
 
@@ -88,6 +102,36 @@ export class BackendService {
 
   getUeberhangsmandate(): Observable<UeberhangMandateBundesland[]> {
     return this.http.get<UeberhangMandateBundesland[]>('http://localhost:8080/bundestag/ueberhangmandate' +
+      '?jahr=' + this.year +
+      '&modus=' + this.dataType);
+  }
+
+  getFrauenMaennerQuote(wknr: string): Observable<FrauenMaennerQuote> {
+    return this.http.get<FrauenMaennerQuote>('http://localhost:8080/wahlkreise/frauenquote' +
+      '?jahr=' + this.year +
+      '&wknr=' + wknr +
+      '&modus=' + this.dataType);
+  }
+
+  getKnappsteSieger(): Observable<KnappsterSieger[]> {
+    return this.http.get<KnappsterSieger[]>('http://localhost:8080/knappstesieger' +
+      '?jahr=' + this.year +
+      '&modus=' + this.dataType);
+  }
+
+  getFrauenBonus2017(): Observable<number> {
+    return this.http.get<number>('http://localhost:8080/frauenbonus' +
+      '?modus=' + this.dataType);
+  }
+
+  getErststimmen(): Observable<ParteiMandate[]> {
+    return this.http.get<ParteiMandate[]>('http://localhost:8080/erststimmen' +
+      '?jahr=' + this.year +
+      '&modus=' + this.dataType);
+  }
+
+  getZweitstimmen(): Observable<ParteiMandate[]> {
+    return this.http.get<ParteiMandate[]>('http://localhost:8080/zweitstimmen' +
       '?jahr=' + this.year +
       '&modus=' + this.dataType);
   }

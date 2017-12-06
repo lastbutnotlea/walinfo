@@ -21,14 +21,27 @@ export class WahlkreisDetailsComponent implements OnInit {
   wahlkreis: Wahlkreis;
   direktkandidat: Kandidat;
   wahlbeteiligung: Wahlbeteiligung;
-  stimmenPartei$: Observable<StimmenPartei[]>;
+
+  zweitStimmenPartei$: Observable<StimmenPartei[]>;
+  zweitStimmenParteiLabels: string[] = ['12'];
+  zweitStimmenParteiData: number[] = [2];
+
+  erstStimmenPartei$: Observable<StimmenPartei[]>;
+  erstStimmenParteiLabels: string[] = ['12'];
+  erstStimmenParteiData: number[] = [2];
+
   parteiSieger: Partei;
 
-  vergleichLabels: string[] = [];
+  vergleichErstLabels: string[] = [];
+  vergleichZweitLabels: string[] = [];
   vergleichChartType = 'bar';
   vergleichLegend = true;
 
-  vergleichData: any[];
+  vergleichErstData: any[];
+  vergleichZweitData: any[];
+
+  anzahlMaenner: number;
+  anzahlKandidaten: number;
 
   constructor(private route: ActivatedRoute,
     private backendService: BackendService) { }
@@ -52,7 +65,33 @@ export class WahlkreisDetailsComponent implements OnInit {
         this.direktkandidat = res;
       });
 
-    this.stimmenPartei$ = this.backendService.getStimmenProPartei(this.wahlkreisNummer);
+    this.backendService.getFrauenMaennerQuote(this.wahlkreisNummer)
+      .subscribe(res => {
+        this.anzahlMaenner = res.anzahlMaenner;
+        this.anzahlKandidaten = res.gesamtAnzahl;
+      });
+
+    this.erstStimmenPartei$ = this.backendService.getErstStimmenProPartei(this.wahlkreisNummer);
+    this.erstStimmenPartei$.subscribe(res => {
+      let parteiMandat;
+      this.erstStimmenParteiData = [];
+      this.erstStimmenParteiLabels = [];
+      for (parteiMandat of res) {
+        this.erstStimmenParteiLabels.push(parteiMandat.partei.kuerzel);
+        this.erstStimmenParteiData.push(parteiMandat.anzahlAbsolut);
+      }
+    });
+
+    this.zweitStimmenPartei$ = this.backendService.getZweitStimmenProPartei(this.wahlkreisNummer);
+    this.zweitStimmenPartei$.subscribe(res => {
+      let parteiMandat;
+      this.zweitStimmenParteiData = [];
+      this.zweitStimmenParteiLabels = [];
+      for (parteiMandat of res) {
+        this.zweitStimmenParteiLabels.push(parteiMandat.partei.kuerzel);
+        this.zweitStimmenParteiData.push(parteiMandat.anzahlAbsolut);
+      }
+    });
 
     this.backendService.getWahlkreisSieger(this.wahlkreisNummer)
       .subscribe(res => {
@@ -60,7 +99,7 @@ export class WahlkreisDetailsComponent implements OnInit {
       });
 
     if (this.year === '2017') {
-      this.backendService.getVergleichVorjahr(this.wahlkreisNummer)
+      this.backendService.getVergleich2017ErstVorjahr(this.wahlkreisNummer)
         .subscribe(res => {
           const data2013 = [];
           const data2017 = [];
@@ -71,11 +110,28 @@ export class WahlkreisDetailsComponent implements OnInit {
             data2013.push(parteiVergleich.stimmen2013);
             data2017.push(parteiVergleich.stimmen2017);
           }
-          this.vergleichData = [
+          this.vergleichErstData = [
             {data: data2013, label: '2013'},
             {data: data2017, label: '2017'}
           ];
-          this.vergleichLabels = labels;
+          this.vergleichErstLabels = labels;
+        });
+      this.backendService.getVergleich2017ZweitVorjahr(this.wahlkreisNummer)
+        .subscribe(res => {
+          const data2013 = [];
+          const data2017 = [];
+          const labels: string[] = [];
+          let parteiVergleich;
+          for (parteiVergleich of res) {
+            labels.push(parteiVergleich.partei.kuerzel);
+            data2013.push(parteiVergleich.stimmen2013);
+            data2017.push(parteiVergleich.stimmen2017);
+          }
+          this.vergleichZweitData = [
+            {data: data2013, label: '2013'},
+            {data: data2017, label: '2017'}
+          ];
+          this.vergleichZweitLabels = labels;
         });
     }
   }
