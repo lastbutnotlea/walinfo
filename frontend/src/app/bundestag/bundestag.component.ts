@@ -22,10 +22,11 @@ export class BundestagComponent implements OnInit {
   pieChartData: number[] = [2];
   pieChartOption = {
     rotation: 1 * Math.PI,
-    circumference: 1 * Math.PI
+    circumference: 1 * Math.PI,
+    cutoutPercentage: 35
   };
   pieChartColors: any[] = [];
-  pieChartType = 'pie';
+  pieChartType = 'doughnut';
 
   constructor(private backendService: BackendService) {
     backendService.updatePage.subscribe(res => {

@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Walinformationssystem</a>
+  <a class="navbar-brand" href="/">
+    <img src="/assets/wahl-klein.png" width="40" height="40"  class="d-inline-block align-top" alt="">
+    Walinformationssystem
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse"
           data-target="#navbarNavAltMarkup"
           aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -14,11 +17,11 @@
       <a routerLink="/sonstiges" class="nav-item nav-link" routerLinkActive="active">Wahlanalysen</a>
     </div>
     <form class="form-inline my-2 my-lg-0">
-      <select #jahrDropDown class="form-control" (change)="jahrChanged(jahrDropDown.value)">
+      <select #jahrDropDown class="form-control menu-right" (change)="jahrChanged(jahrDropDown.value)">
         <option>2017</option>
         <option>2013</option>
       </select>
-      <select #typeDropDown class="form-control" (change)="typeChanged(typeDropDown.value)">
+      <select #typeDropDown class="form-control menu-right" (change)="typeChanged(typeDropDown.value)">
         <option value="aggr">Aggregierte Daten</option>
         <option value="roh">Einzelstimmen</option>
       </select>
