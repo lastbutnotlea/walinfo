@@ -119,7 +119,8 @@ public class WahlkreiseSQL {
                 "      AND erst.kandidaten_id IS NOT NULL " +
                 "      AND k.wahljahr = " + jahr + " " +
                 "      AND k.wahlkreis_id = wk.id " +
-                "      AND wk.nummer = "+ wknr +
+                "      AND wk.nummer = "+ wknr + " " +
+                "ORDER BY anzahl_absolut" +
                 ";"
                 ;
     }
@@ -153,7 +154,8 @@ public class WahlkreiseSQL {
                 "      AND zweit.partei_id IS NOT NULL " +
                 "      AND p.wahljahr = " + jahr + " " +
                 "      AND zweit.wahlkreis_id = wk.id " +
-                "      AND wk.nummer = " + wknr +
+                "      AND wk.nummer = " + wknr + " " +
+                "ORDER BY anzahl_absolut" +
                 ";"
                 ;
     }
