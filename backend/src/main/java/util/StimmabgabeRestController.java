@@ -1,8 +1,12 @@
 package util;
 
 import java.sql.*;
+import java.util.ArrayList;
+import databuild.DataBuilder;
+import databuild.Token;
 import org.springframework.web.bind.annotation.*;
 import sqlbuild.StimmabgabeSQL;
+import sqlbuild.WahlkreiseSQL;
 
 
 @RestController
@@ -23,8 +27,6 @@ public class StimmabgabeRestController {
                 PreparedStatement preparedStatement = conn.prepareStatement(tokenQuery);
                 preparedStatement.execute();
 
-                preparedStatement.getResultSet().next();
-
                 String insertTokeyQuery = StimmabgabeSQL.getInsertTokenQuery(
                         preparedStatement.getResultSet());
 
@@ -40,6 +42,25 @@ public class StimmabgabeRestController {
         System.out.println("done");
     }
 
+    @RequestMapping("/tokens/show")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<Token> getAllTokens(
+            @RequestParam(value="wknr") int wknr) {
 
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String getAllTokensQuery = StimmabgabeSQL.getAllTokensQuery();
+            PreparedStatement preparedStatement = conn.prepareStatement(getAllTokensQuery);
+            preparedStatement.setInt(1, wknr);
+            preparedStatement.execute();
+
+            return DataBuilder.getTokens(preparedStatement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }

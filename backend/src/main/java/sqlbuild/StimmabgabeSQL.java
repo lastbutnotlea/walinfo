@@ -9,7 +9,8 @@ public class StimmabgabeSQL {
         return "SELECT * " +
                 "FROM words " +
                 "ORDER BY random() " +
-                "limit 10;";
+                "limit 10;"
+                ;
     }
 
     public static String getInsertTokenQuery(ResultSet result) throws SQLException {
@@ -28,5 +29,12 @@ public class StimmabgabeSQL {
         System.out.println(stringBuilder.toString());
         return "INSERT INTO tokens (token, wahlkreis_nr, gueltig) VALUES " +
                 "  ('" + stringBuilder.toString() + "', ?, 'n');";
+    }
+
+    public static String getAllTokensQuery() {
+        return "SELECT token, gueltig " +
+                "FROM tokens " +
+                "WHERE wahlkreis_nr = ?;"
+                ;
     }
 }

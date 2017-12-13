@@ -1,5 +1,8 @@
 package databuild;
 
+import com.sun.corba.se.impl.oa.toa.TOA;
+
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -218,6 +221,21 @@ public class DataBuilder {
                 result.getInt(1),
                 result.getInt(2)
         );
+    }
+
+    public static ArrayList<Token> getTokens(ResultSet result) throws SQLException {
+        ArrayList<Token> tokens = new ArrayList<>();
+
+        while(result.next()) {
+            boolean used;
+            String gueltig = result.getString(2);
+            used = !gueltig.equals("n");
+
+            Token token = new Token(result.getString(1), used);
+            tokens.add(token);
+        }
+
+        return tokens;
     }
 
 }
