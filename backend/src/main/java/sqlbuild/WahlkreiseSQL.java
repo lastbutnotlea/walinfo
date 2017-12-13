@@ -111,7 +111,13 @@ public class WahlkreiseSQL {
                 "          FROM stimmen_gesamt sg " +
                 "          WHERE sg.wahljahr = p.wahljahr " +
                 "                AND sg.wahlkreis_id = erst.wahlkreis_id " +
-                "        ) AS NUMERIC))       AS anzahl_relativ " +
+                "        ) AS NUMERIC))       AS anzahl_relativ, " +
+                "   k.name, " +
+                "   k.vorname, " +
+                "   k.titel, " +
+                "   k.namenszusatz, " +
+                "   k.geburtsjahr, " +
+                "   k.geschlecht " +
                 "FROM " + getErststimmenTable(modus) + " erst, kandidaten k, parteien p, wahlkreise wk " +
                 "WHERE erst.wahlkreis_id = k.wahlkreis_id " +
                 "      AND erst.kandidaten_id = k.id " +

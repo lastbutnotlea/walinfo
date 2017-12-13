@@ -20,6 +20,12 @@ import { ChartsModule } from 'ng2-charts';
 import { WahlkreiseComponent } from './wahlkreise/wahlkreise.component';
 import { WahlkreisDetailsComponent } from './wahlkreis-details/wahlkreis-details.component';
 import { WeitereAnalysenComponent } from './weitere-analysen/weitere-analysen.component';
+import { StimmabgabeComponent } from './stimmabgabe/stimmabgabe.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { TokensComponent } from './tokens/tokens.component';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import { Stimmabgabe2Component } from './stimmabgabe2/stimmabgabe2.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +36,10 @@ import { WeitereAnalysenComponent } from './weitere-analysen/weitere-analysen.co
     BundestagComponent,
     WahlkreiseComponent,
     WahlkreisDetailsComponent,
-    WeitereAnalysenComponent
+    WeitereAnalysenComponent,
+    StimmabgabeComponent,
+    TokensComponent,
+    Stimmabgabe2Component
   ],
   imports: [
     BrowserModule,
@@ -43,7 +52,10 @@ import { WeitereAnalysenComponent } from './weitere-analysen/weitere-analysen.co
     MatListModule,
     HttpClientModule,
     MatGridListModule,
-    ChartsModule
+    ChartsModule,
+    NgbModule.forRoot(),
+    AngularFontAwesomeModule,
+    FormsModule
   ],
   providers: [BackendService],
   bootstrap: [AppComponent]

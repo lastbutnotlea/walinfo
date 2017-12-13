@@ -13,6 +13,9 @@ import Partei from './templates/Partei';
 import UeberhangMandateBundesland from './templates/UeberhangMandateBundesland';
 import FrauenMaennerQuote from './templates/FrauenMaennerQuote';
 import KnappsterSieger from './templates/KnappsterSieger';
+import 'rxjs/add/observable/of';
+import Token from './templates/Token';
+import StimmenKandidat from './templates/StimmenKandidat';
 
 @Injectable()
 export class BackendService {
@@ -43,14 +46,22 @@ export class BackendService {
   }
 
   getWahlkreise(): Observable<Wahlkreis[]> {
+    return this.getWahlkreiseYear(this.year);
+  }
+
+  getWahlkreiseYear(year: String): Observable<Wahlkreis[]> {
     return this.http.get<Wahlkreis[]>('http://localhost:8080/wahlkreise?jahr='
-      + this.year);
+      + year);
+  }
+
+  getWahlkreisYear(nummer: number, year: String): Observable<Wahlkreis> {
+    return this.http.get<Wahlkreis[]>('http://localhost:8080/wahlkreise/' + nummer + '?jahr='
+      + year )
+      .pipe(map(res => res[0]));
   }
 
   getWahlkreis(nummer: string): Observable<Wahlkreis> {
-    return this.http.get<Wahlkreis[]>('http://localhost:8080/wahlkreise/' + nummer + '?jahr='
-      + this.year )
-      .pipe(map(res => res[0]));
+    return this.getWahlkreisYear(Number.parseInt(nummer), this.year);
   }
 
   getWahlbeteiligung(wknr: string): Observable<Wahlbeteiligung> {
@@ -67,8 +78,8 @@ export class BackendService {
       '&modus=' + this.dataType);
   }
 
-  getErstStimmenProPartei(wknr: string): Observable<StimmenPartei[]> {
-    return this.http.get<StimmenPartei[]>('http://localhost:8080/wahlkreise/erststimmenpropartei' +
+  getErstStimmenProPartei(wknr: string): Observable<StimmenKandidat[]> {
+    return this.http.get<StimmenKandidat[]>('http://localhost:8080/wahlkreise/erststimmenproabgeordneter' +
       '?jahr=' + this.year +
       '&wknr=' + wknr +
       '&modus=' + this.dataType);
@@ -134,6 +145,22 @@ export class BackendService {
     return this.http.get<ParteiMandate[]>('http://localhost:8080/zweitstimmen' +
       '?jahr=' + this.year +
       '&modus=' + this.dataType);
+  }
+
+  getTokens2017(wknr: number): Observable<Token[]> {
+    return this.http.get<Token[]>('http://localhost:8080/tokens/show' +
+      '?wknr=' + wknr);
+  }
+
+  generateTokens(wknr: number, anzahl: number): Observable<Object> {
+    return this.http.get('http://localhost:8080/tokens/generate' +
+      '?wknr=' + wknr +
+      '&anzahl=' + anzahl);
+  }
+
+  checkToken(token: string): Observable<Token> {
+    return this.http.get<Token>('http://localhost:8080/waehlen/verify' +
+      '?token=' + token);
   }
 
   constructor(private http: HttpClient) { }

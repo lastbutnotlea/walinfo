@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top ">
+  <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
     <img src="/assets/wahl-klein.png" width="40" height="40"  class="d-inline-block align-top" alt="">
     Walinformationssystem
   </a>
@@ -11,20 +11,23 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <a routerLink="/home" class="nav-item nav-link" routerLinkActive="active">Start</a>
       <a routerLink="/btg" class="nav-item nav-link" routerLinkActive="active">Der Bundestag</a>
       <a routerLink="/wahlkreise" class="nav-item nav-link" routerLinkActive="active">Wahlkreise</a>
       <a routerLink="/sonstiges" class="nav-item nav-link" routerLinkActive="active">Wahlanalysen</a>
+      <form class="form-inline my-2 my-lg-0">
+        <select #jahrDropDown class="form-control menu-right" (change)="jahrChanged(jahrDropDown.value)">
+          <option>2017</option>
+          <option>2013</option>
+        </select>
+        <select #typeDropDown class="form-control menu-right" (change)="typeChanged(typeDropDown.value)" placement="bottom" ngbTooltip="Schnell beudeutet Berechnung mit aggregierten Daten, langsam mit Einzelstimmen">
+          <option value="aggr">Schnell</option>
+          <option value="roh">Langsam</option>
+        </select>
+      </form>
     </div>
-    <form class="form-inline my-2 my-lg-0">
-      <select #jahrDropDown class="form-control menu-right" (change)="jahrChanged(jahrDropDown.value)">
-        <option>2017</option>
-        <option>2013</option>
-      </select>
-      <select #typeDropDown class="form-control menu-right" (change)="typeChanged(typeDropDown.value)">
-        <option value="aggr">Aggregierte Daten</option>
-        <option value="roh">Einzelstimmen</option>
-      </select>
-    </form>
+    <div class="navbar-nav">
+      <a routerLink="/tokens" class="nav-item nav-link menu-right" routerLinkActive="active" placement="bottom" ngbTooltip="Dies ist nur für Wahllokale">Tokens</a>
+      <button type="button" class="btn btn-primary menu-right" routerLink="/stimmabgabe">Jetzt wählen 2017</button>
+    </div>
   </div>
 </nav>

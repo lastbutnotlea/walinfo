@@ -7,6 +7,7 @@ import Wahlbeteiligung from '../templates/Wahlbeteiligung';
 import Kandidat from '../templates/Kandidat';
 import StimmenPartei from '../templates/StimmenPartei';
 import Partei from '../templates/Partei';
+import StimmenKandidat from '../templates/StimmenKandidat';
 
 @Component({
   selector: 'app-wahlkreis-details',
@@ -26,7 +27,7 @@ export class WahlkreisDetailsComponent implements OnInit {
   zweitStimmenParteiLabels: string[] = ['12'];
   zweitStimmenParteiData: number[] = [2];
 
-  erstStimmenPartei$: Observable<StimmenPartei[]>;
+  erstStimmenPartei$: Observable<StimmenKandidat[]>;
   erstStimmenParteiLabels: string[] = ['12'];
   erstStimmenParteiData: number[] = [2];
 
@@ -77,7 +78,11 @@ export class WahlkreisDetailsComponent implements OnInit {
       this.erstStimmenParteiData = [];
       this.erstStimmenParteiLabels = [];
       for (parteiMandat of res) {
-        this.erstStimmenParteiLabels.push(parteiMandat.partei.kuerzel);
+        this.erstStimmenParteiLabels.push(
+          parteiMandat.abgeordneter.vorname + ' ' +
+          parteiMandat.abgeordneter.name +
+          (parteiMandat.abgeordneter.partei ? ' (' +
+          parteiMandat.abgeordneter.partei.kuerzel + ') ' : '') );
         this.erstStimmenParteiData.push(parteiMandat.anzahlAbsolut);
       }
     });
