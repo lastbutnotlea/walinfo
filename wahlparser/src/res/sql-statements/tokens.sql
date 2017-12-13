@@ -37,6 +37,7 @@ SELECT
 FROM kandidaten k, wahlkreise wk, parteien p
 WHERE k.wahlkreis_id = wk.id
   AND k.partei_id = p.id
+  AND k.wahljahr = 2017
 AND wk.nummer = ?;
 
 -- wählbare parteien
@@ -48,4 +49,5 @@ SELECT DISTINCT
   FROM parteien p, wahlkreise wk, zweitstimmenergebnisse z
 WHERE z.wahlkreis_id = wk.id
 AND z.partei_id = p.id
+  AND p.wahljahr = 2017
 AND wk.nummer = ?;
