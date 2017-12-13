@@ -98,3 +98,14 @@ INSERT INTO Dt_Bevoelkerung (bundesland, wahljahr, anzahl) VALUES
   ('BB', 2017, 2391746), ('BY', 2017, 11362245),
   ('ST', 2017, 2145671), ('BW', 2017, 9365001),
   ('BE', 2017, 2975745), ('SL', 2017, 899748);
+
+CREATE TABLE words (
+  word_id INT,
+  word VARCHAR(12)
+);
+
+CREATE TABLE tokens (
+  token VARCHAR(130),
+  wahlkreis_nr SMALLINT,
+  gueltig VARCHAR(1)
+);
