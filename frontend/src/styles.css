@@ -3,5 +3,17 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 h2 {
+
+}
+
+h1 {
+  color: darkcyan;
+}
+
+body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body, html {
+  height: 100%;
 }

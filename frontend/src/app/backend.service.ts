@@ -163,6 +163,23 @@ export class BackendService {
       '?token=' + token);
   }
 
+  getKandidatenWahlkreis(wknr: number): Observable<Kandidat[]> {
+    return this.http.get<Kandidat[]>('http://localhost:8080/waehlen/kandidaten' +
+      '?wknr=' + wknr);
+  }
+
+  getParteienWahlkreis(wknr: number): Observable<Partei[]> {
+    return this.http.get<Partei[]>('http://localhost:8080/waehlen/parteien' +
+      '?wknr=' + wknr);
+  }
+
+  stimmAbgabe(token: string, kandidatenid: number, parteiid: number): Observable<boolean> {
+    return this.http.get<boolean>('http://localhost:8080/waehlen/stimmabgabe' +
+      '?token=' + token +
+      '&kandidatenid=' + kandidatenid +
+      '&parteiid=' + parteiid);
+  }
+
   constructor(private http: HttpClient) { }
 
 }
