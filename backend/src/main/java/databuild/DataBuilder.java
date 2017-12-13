@@ -242,7 +242,21 @@ public class DataBuilder {
         return tokens;
     }
 
-    public static Token getTokenInfo(ResultSet result) throws SQLException {
-        return null;
+    public static Token getTokenInfo(ResultSet result, String token) throws SQLException {
+        if(!result.next()) {
+            return new Token(token, 0, false, false);
+        }
+        else {
+            boolean used;
+            String gueltig = result.getString(3);
+            used = !gueltig.equals("n");
+
+            return new Token(
+                    result.getString(1),
+                    result.getInt(2),
+                    used,
+                    true
+            );
+        }
     }
 }

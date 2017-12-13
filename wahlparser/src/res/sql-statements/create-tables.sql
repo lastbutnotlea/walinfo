@@ -101,5 +101,5 @@ CREATE TABLE words (
 CREATE TABLE tokens (
   token VARCHAR(130) UNIQUE,
   wahlkreis_nr SMALLINT,
-  gueltig VARCHAR(1)
+  verwendet VARCHAR(1)
 );

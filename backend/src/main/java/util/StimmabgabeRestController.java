@@ -61,19 +61,20 @@ public class StimmabgabeRestController {
 
         return null;
     }
-/*
+
     @RequestMapping("/waehlen/verify")
     @CrossOrigin(origins = "http://localhost:4200")
     public Token verifyToken(
             @RequestParam(value="token") String token) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String verifyTokenQuery = StimmabgabeSQL.getVerifyTokenQuery;
+            String verifyTokenQuery = StimmabgabeSQL.getVerifyTokenQuery();
             PreparedStatement preparedStatement = conn.prepareStatement(verifyTokenQuery);
             preparedStatement.setString(1, token);
             preparedStatement.execute();
 
-            return DataBuilder.getTokenInfo(preparedStatement.getResultSet());
+            System.out.println(preparedStatement.getResultSet());
+            return DataBuilder.getTokenInfo(preparedStatement.getResultSet(), token);
         }
 
         catch (SQLException e) {
@@ -82,6 +83,6 @@ public class StimmabgabeRestController {
 
         return null;
     }
-    */
+
 
 }

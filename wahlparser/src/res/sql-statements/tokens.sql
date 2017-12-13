@@ -18,4 +18,6 @@ FROM tokens
 WHERE wahlkreis_nr = ?;
 
 
-
+SELECT *
+FROM tokens
+WHERE token = ?;

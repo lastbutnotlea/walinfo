@@ -27,14 +27,21 @@ public class StimmabgabeSQL {
             }
         }
         System.out.println(stringBuilder.toString());
-        return "INSERT INTO tokens (token, wahlkreis_nr, gueltig) VALUES " +
+        return "INSERT INTO tokens (token, wahlkreis_nr, verwendet) VALUES " +
                 "  ('" + stringBuilder.toString() + "', ?, 'n');";
     }
 
     public static String getAllTokensQuery() {
-        return "SELECT token, gueltig " +
+        return "SELECT token, verwendet " +
                 "FROM tokens " +
                 "WHERE wahlkreis_nr = ?;"
+                ;
+    }
+
+    public static String getVerifyTokenQuery() {
+        return "SELECT * " +
+                "FROM tokens " +
+                "WHERE token = ?;"
                 ;
     }
 }
