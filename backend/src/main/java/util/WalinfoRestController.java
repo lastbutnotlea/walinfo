@@ -135,9 +135,9 @@ public class WalinfoRestController {
         return null;
     }
 
-    @RequestMapping("/wahlkreise/erststimmenpropartei")
+    @RequestMapping("/wahlkreise/erststimmenproabgeordneter")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ArrayList<AnzahlStimmen> wkErstStimmenProPartei (
+    public ArrayList<AnzahlStimmenAbgeordneter> wkErstStimmenProPartei (
             @RequestParam("jahr") int jahr,
             @RequestParam("wknr") int wknr,
             @RequestParam("modus") String modus) {
@@ -147,7 +147,7 @@ public class WalinfoRestController {
                 wknr,
                 modus);
 
-        return wkStimmenProParteiAux(wkStimmenProParteiQuery);
+        return wkStimmenProAbgeordneterAux(wkStimmenProParteiQuery);
     }
 
     @RequestMapping("/wahlkreise/zweitstimmenpropartei")
@@ -172,6 +172,22 @@ public class WalinfoRestController {
             statement.execute(query);
 
             return DataBuilder.getStimmenProPartei(statement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private ArrayList<AnzahlStimmenAbgeordneter> wkStimmenProAbgeordneterAux (String query) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Statement statement = conn.createStatement();
+            statement.execute(query);
+
+            return DataBuilder.getStimmenProAbgeordneter(statement.getResultSet());
         }
 
         catch (SQLException e) {

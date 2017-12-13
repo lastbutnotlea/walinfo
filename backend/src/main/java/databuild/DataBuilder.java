@@ -111,8 +111,43 @@ public class DataBuilder {
                     result.getString(2),
                     result.getString(3)
             );
+
             AnzahlStimmen anzahlStimmen = new AnzahlStimmen(
                     partei,
+                    result.getInt(4),
+                    result.getFloat(5)
+            );
+
+            stimmenProPartei.add(anzahlStimmen);
+        }
+
+        return stimmenProPartei;
+    }
+
+    public static ArrayList<AnzahlStimmenAbgeordneter> getStimmenProAbgeordneter(ResultSet result) throws SQLException {
+        ArrayList<AnzahlStimmenAbgeordneter> stimmenProPartei = new ArrayList<>();
+
+        while(result.next()) {
+            Partei partei = new Partei(
+                    result.getString(1),
+                    result.getString(2),
+                    result.getString(3)
+            );
+
+            if (partei.getName() == null) {
+                partei = null;
+            }
+
+            Abgeordneter abge = new Abgeordneter(0,
+                    result.getString(8),
+                    result.getString(6),
+                    result.getString(7),
+                    result.getString(9),
+                    result.getInt(10),
+                    partei);
+
+            AnzahlStimmenAbgeordneter anzahlStimmen = new AnzahlStimmenAbgeordneter(
+                    abge,
                     result.getInt(4),
                     result.getFloat(5)
             );
