@@ -30,10 +30,11 @@ $BODY$
 LANGUAGE plpgsql;
 
 CREATE TRIGGER neue_zweitstimme AFTER INSERT ON zweitstimmen
-  FOR EACH ROW EXECUTE PROCEDURE update_erststimmenerg();
+  FOR EACH ROW EXECUTE PROCEDURE update_zweitstimmenerg();
 
 
 -- DROP TRIGGER  neue_erststimme ON erststimmen;
+-- DROP TRIGGER  neue_zweitstimme ON zweitstimmen;
 
 
   ---------TEST-----------
@@ -45,3 +46,9 @@ CREATE TRIGGER neue_zweitstimme AFTER INSERT ON zweitstimmen
   SELECT * from erststimmenergebnisse
 WHERE kandidaten_id = 5981
 AND wahlkreis_id = 552;
+
+INSERT INTO zweitstimmen VALUES (18, 52);
+
+SELECT * FROM zweitstimmenergebnisse
+WHERE partei_id = 18
+AND wahlkreis_id = 52;
