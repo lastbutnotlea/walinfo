@@ -14,6 +14,7 @@ public class DataBuilder {
 
         while (result.next()) {
             Partei partei = new Partei(
+                    0,
                     result.getString(1),
                     result.getString(2),
                     result.getString(3)
@@ -28,11 +29,12 @@ public class DataBuilder {
         return sitzverteilung;
     }
 
-    public static ArrayList<Abgeordneter> getMitgliederList(ResultSet result) throws SQLException {
+    public static ArrayList<Abgeordneter> getAbgeordneteList(ResultSet result) throws SQLException {
         ArrayList<Abgeordneter> mitglieder = new ArrayList<>();
 
         while (result.next()) {
             Partei partei = new Partei(
+                    0,
                     result.getString(6),
                     result.getString(7),
                     result.getString(8)
@@ -87,6 +89,7 @@ public class DataBuilder {
         result.next();
 
         Partei partei = new Partei(
+                0,
                 result.getString(6),
                 result.getString(7),
                 result.getString(8)
@@ -107,6 +110,7 @@ public class DataBuilder {
 
         while(result.next()) {
             Partei partei = new Partei(
+                    0,
                     result.getString(1),
                     result.getString(2),
                     result.getString(3)
@@ -128,6 +132,7 @@ public class DataBuilder {
 
         while(result.next()) {
             Partei partei = new Partei(
+                    0,
                     result.getString(1),
                     result.getString(2),
                     result.getString(3)
@@ -148,6 +153,7 @@ public class DataBuilder {
         result.next();
 
         return new Partei(
+                0,
                 result.getString(1),
                 result.getString(2),
                 result.getString(3)
@@ -163,6 +169,7 @@ public class DataBuilder {
                     result.getString(2)
             );
             Partei partei = new Partei(
+                    0,
                     result.getString(3),
                     result.getString(4),
                     result.getString(5)
@@ -184,6 +191,7 @@ public class DataBuilder {
 
         while(result.next()) {
             Partei partei = new Partei(
+                    0,
                     result.getString(6),
                     result.getString(7),
                     result.getString(8)
@@ -258,5 +266,48 @@ public class DataBuilder {
                     true
             );
         }
+    }
+
+    public static ArrayList<Abgeordneter> getWaehlbareKandidaten(ResultSet result) throws SQLException {
+        ArrayList<Abgeordneter> kandidaten = new ArrayList<>();
+
+        while(result.next()) {
+            Partei partei = new Partei(
+                    result.getInt(7),
+                    result.getString(8),
+                    result.getString(9),
+                    result.getString(10)
+            );
+            Abgeordneter abgeordneter = new Abgeordneter(
+                    result.getInt(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4),
+                    result.getString(5),
+                    result.getInt(6),
+                    partei
+            );
+
+            kandidaten.add(abgeordneter);
+        }
+
+        return kandidaten;
+    }
+
+    public static ArrayList<Partei> getWaehlbareParteien(ResultSet result) throws SQLException {
+        ArrayList<Partei> parteien = new ArrayList<>();
+
+        while(result.next()) {
+            Partei partei = new Partei(
+                    result.getInt(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4)
+            );
+
+            parteien.add(partei);
+        }
+
+        return parteien;
     }
 }
