@@ -13,7 +13,7 @@ import sqlbuild.WahlanalysenSQL;
 import sqlbuild.WahlkreiseSQL;
 
 @RestController
-public class ApplicationRestController {
+public class WalinfoRestController {
 
     @RequestMapping("/bundestag/sitzverteilung")
     @CrossOrigin(origins = "http://localhost:4200")

@@ -65,12 +65,6 @@ CREATE TABLE Zweitstimmenergebnisse (
   UNIQUE (wahlkreis_id, partei_id)
 );
 
-CREATE TABLE Wahltoken (
-  token        VARCHAR(127) PRIMARY KEY,
-  benutzt      VARCHAR(1),
-  wahlkreis_id SMALLINT REFERENCES Wahlkreise (id)
-);
-
 -- Deutsche Bevölkerung
 CREATE TABLE Dt_Bevoelkerung (
   bundesland VARCHAR(2), -- REFERENCES Bundeslaender(kuerzel),
