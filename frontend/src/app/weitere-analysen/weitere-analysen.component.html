@@ -1,124 +1,86 @@
-<div id="accordion" role="tablist">
-  <div class="card">
-    <div class="card-header" role="tab" id="headingOne">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Überhangsmandate der Parteien pro Bundesland
-        </a>
-      </h5>
-    </div>
+<ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
+  <ngb-panel title="Überhangsmandate der Parteien pro Bundesland">
+    <ng-template ngbPanelContent>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Partei</th>
+          <th>Bundesland</th>
+          <th>Überhangsmandate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ueberhangsMandate of ueberhangsmandate$ | async">
+          <td>{{ueberhangsMandate.partei.kuerzel}}</td>
+          <td>{{ueberhangsMandate.bundesland.name}}</td>
+          <td>{{ueberhangsMandate.ueberhangmandate}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </ngb-panel>
 
-    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Partei</th>
-            <th>Bundesland</th>
-            <th>Überhangsmandate</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let ueberhangsMandate of ueberhangsmandate$ | async">
-            <td>{{ueberhangsMandate.partei.kuerzel}}</td>
-            <td>{{ueberhangsMandate.bundesland.name}}</td>
-            <td>{{ueberhangsMandate.ueberhangmandate}}</td>
-          </tr>
-          </tbody>
-        </table>
-
-      </div>
-    </div>
-  </div>
-
-
-  <div class="card">
-    <div class="card-header" role="tab" id="headingTwo">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
-          Knappster Sieger oder Verlierer
-        </a>
-      </h5>
-    </div>
-
-    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-10">
-            <table class="table">
-              <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th>Partei</th>
-                <th>Unterschied</th>
-                <th>Typ</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let eintrag of knappsteSiegerFiltered">
-                <td><img class="avatar-img" style="width: 25px;" src="/assets/avatar.jpg"></td>
-                <td>{{eintrag.abgeordneter.titel || ''}}
-                  {{eintrag.abgeordneter.namneszusatz || ''}}
-                  {{eintrag.abgeordneter.vorname + ' ' + eintrag.abgeordneter.name}}</td>
-                <td>{{eintrag.abgeordneter.partei.kuerzel}}</td>
-                <td>{{eintrag.unterschied}}</td>
-                <td>{{eintrag.siegerOderVerlierer}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-sm-2">
-            <p><strong>Filter</strong></p>
-            <table class="table table-hover table-sm">
-              <tbody>
-              <tr *ngFor="let partei of knappsterSiegerParteien">
-                <td (click)="onClickPartei(partei)" style="cursor: pointer;">{{partei}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+  <ngb-panel title="Knappster Sieger oder Verlierer">
+    <ng-template ngbPanelContent>
+      <div class="row">
+        <div class="col-sm-10">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th>Partei</th>
+              <th>Unterschied</th>
+              <th>Typ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let eintrag of knappsteSiegerFiltered">
+              <td><img class="avatar-img" style="width: 25px;" src="/assets/avatar.jpg"></td>
+              <td>{{eintrag.abgeordneter.titel || ''}}
+                {{eintrag.abgeordneter.namneszusatz || ''}}
+                {{eintrag.abgeordneter.vorname + ' ' + eintrag.abgeordneter.name}}</td>
+              <td>{{eintrag.abgeordneter.partei.kuerzel}}</td>
+              <td>{{eintrag.unterschied}}</td>
+              <td>{{eintrag.siegerOderVerlierer}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-2">
+          <p><strong>Filter</strong></p>
+          <table class="table table-hover table-sm">
+            <tbody>
+            <tr *ngFor="let partei of knappsterSiegerParteien">
+              <td (click)="onClickPartei(partei)" style="cursor: pointer;">{{partei}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-  </div>
+    </ng-template>
+  </ngb-panel>
 
-  <div class="card" *ngIf="year === '2017'">
-  <div class="card-header" role="tab" id="headingThree">
-    <h5 class="mb-0">
-      <a data-toggle="collapse" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-        Vergleich der Frauenquote im Bundestag und allen Kandidaten
-      </a>
-    </h5>
-  </div>
+  <ngb-panel title="Vergleich der Frauenquote im Bundestag mit der von allen Kandidaten">
+    <ng-template ngbPanelContent>
+      <p><code>Frauenquote der Direktkandidaten im Bundestag / Frauenquote unter allen Direktkandidaten = </code>{{frauenBonus$ | async | percent}}</p>
 
-  <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
-    <p><code>Frauenquote der Direktkandidaten im Bundestag / Frauenquote unter allen Direktkandidaten = </code>{{frauenBonus$ | async | percent}}</p>
+      <p>Ist der Wert kleiner als <var>{{1 | percent}}</var>, ist die Quote gesunken, sonst gestiegen.</p>
 
-    <p>Ist der Wert kleiner als <var>{{1 | percent}}</var>, ist die Quote gesunken, sonst gestiegen.</p>
+      <div class="alert alert-warning" role="alert">
+        Es sollte beachtet werden, dass dies zwar den Anschein erwecken mag, als hätten weibliche Direktkandidaten geringere Chancen gewählt zu werden.
+        Allerdings ist in dieser Rechnung völlig außer acht gelassen worden, dass Wähler ihre Stimmen nicht wahllos vergeben, sondern damit eine Person und eine Partei wählen.
+        Die Aussage dieser Rechnung hat sommit keinen Wert, außer auszusagen, das die Quote gesunken ist. Z.B. weil die Frauenquote unter den Siegerparteien geringer ist, als unter allen Parteien betrachtet.
+      </div>
+    </ng-template>
+  </ngb-panel>
 
-    <div class="alert alert-warning" role="alert">
-      Es sollte beachtet werden, dass dies zwar den Anschein erwecken mag, als hätten weibliche Direktkandidaten geringere Chancen gewählt zu werden.
-      Allerdings ist in dieser Rechnung völlig außer acht gelassen worden, dass Wähler ihre Stimmen nicht wahllos vergeben, sondern damit eine Person und eine Partei wählen.
-      Die Aussage dieser Rechnung hat sommit keinen Wert, außer auszusagen, das die Quote gesunken ist. Z.B. weil die Frauenquote unter den Siegerparteien geringer ist, als unter allen Parteien betrachtet.
-    </div>
-  </div>
-</div>
-
-  <div class="card">
-    <div class="card-header" role="tab" id="headingFour">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-          Gesamtergebnis der Erststimmen
-        </a>
-      </h5>
-    </div>
-
-    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
-      <!--canvas baseChart
+  <ngb-panel title="Gesamtergebnis der Erststimmen">
+    <ng-template ngbPanelContent>
+      <canvas baseChart
               [data]="erstStimmenData"
               [labels]="erstStimmenLabels"
-              chartType="pie"></canvas-->
+              chartType="pie"></canvas>
 
       <table class="table">
         <thead>
@@ -138,23 +100,15 @@
         </tr>
         </tbody>
       </table>
-    </div>
-  </div>
+    </ng-template>
+  </ngb-panel>
 
-  <div class="card">
-    <div class="card-header" role="tab" id="headingFive">
-      <h5 class="mb-0">
-        <a data-toggle="collapse" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-          Gesamtergebnis der Zweitstimmen
-        </a>
-      </h5>
-    </div>
-
-    <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive" data-parent="#accordion">
-      <!--canvas baseChart
+  <ngb-panel title="Gesamtergebnis der Zweitstimmen">
+    <ng-template ngbPanelContent>
+      <canvas baseChart
               [data]="zweitStimmenData"
               [labels]="zweitStimmenLabels"
-              chartType="pie"></canvas-->
+              chartType="pie"></canvas>
       <table class="table">
         <thead>
         <tr>
@@ -173,10 +127,8 @@
         </tr>
         </tbody>
       </table>
-    </div>
-  </div>
-
-</div>
-
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
 
 
