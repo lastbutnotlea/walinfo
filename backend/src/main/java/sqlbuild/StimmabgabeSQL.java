@@ -78,4 +78,47 @@ public class StimmabgabeSQL {
                 "AND wk.nummer = ?;"
                 ;
     }
+
+    public static String getTokenOkayQuery() {
+        return "SELECT wk.id " +
+                "FROM tokens, wahlkreise wk " +
+                "WHERE verwendet = 'n' " +
+                "AND tokens.wahlkreis_nr = wk.nummer " +
+                "AND wk.wahljahr = 2017 " +
+                "AND token = ?;"
+                ;
+    }
+
+    public static String getKandidateOkayQuery() {
+        return "SELECT * " +
+                "FROM kandidaten k " +
+                "WHERE k.wahlkreis_id = ? " +
+                "AND k.id = ?;"
+                ;
+    }
+
+    public static String getWaehleKandidatQuery() {
+        return "INSERT INTO erststimmen VALUES (?, ?);"
+                ;
+    }
+
+    public static String getParteiOkayQuery() {
+        return "SELECT * " +
+                "FROM parteien p, zweitstimmenergebnisse z " +
+                "WHERE z.partei_id = p.id " +
+                "AND z.wahlkreis_id = ? " +
+                "AND p.id = ?;"
+                ;
+    }
+
+    public static String getWaehleParteiQuery() {
+        return "INSERT INTO zweitstimmen VALUES(?, ?);"
+                ;
+    }
+
+    public static String getTokenVerwendetQuery() {
+        return "UPDATE tokens SET " +
+                "  verwendet = 'j' WHERE token = ?;"
+                ;
+    }
 }

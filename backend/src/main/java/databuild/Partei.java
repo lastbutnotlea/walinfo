@@ -14,6 +14,10 @@ public class Partei {
         this.farbe = farbe;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getKuerzel() {
         return kuerzel;
     }

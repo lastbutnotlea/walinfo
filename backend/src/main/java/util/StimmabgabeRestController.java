@@ -111,7 +111,7 @@ public class StimmabgabeRestController {
 
     @RequestMapping("/waehlen/parteien")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ArrayList<Partei> verifyToken(
+    public ArrayList<Partei> waehlbareParteien(
             @RequestParam(value="wknr") int wknr) {
 
         try (Connection conn = DatabaseConnection.getConnection()) {
@@ -120,7 +120,6 @@ public class StimmabgabeRestController {
             preparedStatement.setInt(1, wknr);
             preparedStatement.execute();
 
-            System.out.println(preparedStatement.getResultSet());
             return DataBuilder.getWaehlbareParteien(preparedStatement.getResultSet());
         }
 
@@ -138,28 +137,80 @@ public class StimmabgabeRestController {
             @RequestParam(value="kandidatenid") int kandidatenId,
             @RequestParam(value="parteiid") int parteiId) {
 
-        /*try (Connection conn = DatabaseConnection.getConnection()) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
             String tokenOkayQuery = StimmabgabeSQL.getTokenOkayQuery();
             PreparedStatement p1 = conn.prepareStatement(tokenOkayQuery);
             p1.setString(1, token);
             p1.execute();
 
+            if(p1.getResultSet().next()) {
+                int wkid = p1.getResultSet().getInt(1);
 
+                if(kandidatenId >= 0) {
+                    String kandidatOkayQuery = StimmabgabeSQL.getKandidateOkayQuery();
+                    PreparedStatement p2 = conn.prepareStatement(kandidatOkayQuery);
+                    p2.setInt(1, wkid);
+                    p2.setInt(2, kandidatenId);
+                    p2.execute();
 
+                    if(p2.getResultSet().next()) {
+                        String waehleKandidatQuery = StimmabgabeSQL.getWaehleKandidatQuery();
+                        PreparedStatement p3 = conn.prepareStatement(waehleKandidatQuery);
+                        p3.setInt(1, kandidatenId);
+                        p3.setInt(2, wkid);
+                        p3.execute();
+                    }
 
-            String waehlbareParteienQuery = StimmabgabeSQL.getWaehlbareParteienQuery();
-            PreparedStatement preparedStatement = conn.prepareStatement(waehlbareParteienQuery);
-            preparedStatement.setInt(1, wknr);
-            preparedStatement.execute();
+                    else return false;
+                }
+                else {
+                    String waehleKandidatQuery = StimmabgabeSQL.getWaehleKandidatQuery();
+                    PreparedStatement p4 = conn.prepareStatement(waehleKandidatQuery);
+                    p4.setString(1, null);
+                    p4.setInt(2, wkid);
+                    p4.execute();
+                }
 
-            System.out.println(preparedStatement.getResultSet());
-            return DataBuilder.getWaehlbareParteien(preparedStatement.getResultSet());
+                if(parteiId >= 0) {
+                    String parteiOkayQuery = StimmabgabeSQL.getParteiOkayQuery();
+                    PreparedStatement p5 = conn.prepareStatement(parteiOkayQuery);
+                    p5.setInt(1, wkid);
+                    p5.setInt(2, parteiId);
+                    p5.execute();
+
+                    if(p5.getResultSet().next()) {
+                        String waehleParteiQuery = StimmabgabeSQL.getWaehleParteiQuery();
+                        PreparedStatement p6 = conn.prepareStatement(waehleParteiQuery);
+                        p6.setInt(1, parteiId);
+                        p6.setInt(2, wkid);
+                        p6.execute();
+                    }
+
+                    else return false;
+                }
+                else {
+                    String waehleParteiQuery = StimmabgabeSQL.getWaehleParteiQuery();
+                    PreparedStatement p7 = conn.prepareStatement(waehleParteiQuery);
+                    p7.setString(1, null);
+                    p7.setInt(2, wkid);
+                    p7.execute();
+                }
+
+                // wenn Code bis hier ausgeführt wurde, wurde gewählt und Token verwendet
+                String tokenVerwendetQuery = StimmabgabeSQL.getTokenVerwendetQuery();
+                PreparedStatement p8 = conn.prepareStatement(tokenVerwendetQuery);
+                p8.setString(1, token);
+                p8.execute();
+
+                return true;
+
+            }
+            else return false;
         }
 
         catch (SQLException e) {
             e.printStackTrace();
-        }*/
-
+        }
 
         return false;
     }

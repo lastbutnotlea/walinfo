@@ -5,7 +5,9 @@ BEGIN
   UPDATE erststimmenergebnisse SET
     anzahl = anzahl + 1
     WHERE wahlkreis_id = NEW.wahlkreis_id
-    AND kandidaten_id = NEW.kandidaten_id;
+    AND (kandidaten_id = NEW.kandidaten_id OR
+         (kandidaten_id IS NULL AND NEW.kandidaten_id IS NULL)
+        );
   RETURN NEW;
 END;
 $BODY$
@@ -23,7 +25,9 @@ BEGIN
   UPDATE zweitstimmenergebnisse SET
     anzahl = anzahl + 1
     WHERE wahlkreis_id = NEW.wahlkreis_id
-    AND partei_id = NEW.partei_id;
+    AND (partei_id = NEW.partei_id OR
+          (partei_id IS NULL AND NEW.partei_id IS NULL)
+        );
   RETURN NEW;
 END;
 $BODY$
