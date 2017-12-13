@@ -16,3 +16,6 @@ DELETE FROM tokens;
 SELECT token, gueltig
 FROM tokens
 WHERE wahlkreis_nr = ?;
+
+
+

@@ -223,7 +223,7 @@ public class DataBuilder {
         );
     }
 
-    public static ArrayList<Token> getTokens(ResultSet result) throws SQLException {
+    public static ArrayList<Token> getTokens(ResultSet result, int wknr) throws SQLException {
         ArrayList<Token> tokens = new ArrayList<>();
 
         while(result.next()) {
@@ -231,11 +231,18 @@ public class DataBuilder {
             String gueltig = result.getString(2);
             used = !gueltig.equals("n");
 
-            Token token = new Token(result.getString(1), used);
+            Token token = new Token(
+                    result.getString(1),
+                    wknr,
+                    used,
+                    true);
             tokens.add(token);
         }
 
         return tokens;
     }
 
+    public static Token getTokenInfo(ResultSet result) throws SQLException {
+        return null;
+    }
 }

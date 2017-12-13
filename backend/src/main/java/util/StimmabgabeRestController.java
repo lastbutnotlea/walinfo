@@ -6,7 +6,6 @@ import databuild.DataBuilder;
 import databuild.Token;
 import org.springframework.web.bind.annotation.*;
 import sqlbuild.StimmabgabeSQL;
-import sqlbuild.WahlkreiseSQL;
 
 
 @RestController
@@ -53,7 +52,7 @@ public class StimmabgabeRestController {
             preparedStatement.setInt(1, wknr);
             preparedStatement.execute();
 
-            return DataBuilder.getTokens(preparedStatement.getResultSet());
+            return DataBuilder.getTokens(preparedStatement.getResultSet(), wknr);
         }
 
         catch (SQLException e) {
@@ -62,5 +61,27 @@ public class StimmabgabeRestController {
 
         return null;
     }
+/*
+    @RequestMapping("/waehlen/verify")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Token verifyToken(
+            @RequestParam(value="token") String token) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String verifyTokenQuery = StimmabgabeSQL.getVerifyTokenQuery;
+            PreparedStatement preparedStatement = conn.prepareStatement(verifyTokenQuery);
+            preparedStatement.setString(1, token);
+            preparedStatement.execute();
+
+            return DataBuilder.getTokenInfo(preparedStatement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    */
 
 }
