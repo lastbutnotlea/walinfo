@@ -35,6 +35,7 @@ public class DataBuilder {
                     result.getString(8)
             );
             Abgeordneter abgeordneter = new Abgeordneter(
+                    0,
                     result.getString(1),
                     result.getString(2),
                     result.getString(3),
@@ -88,6 +89,7 @@ public class DataBuilder {
                 result.getString(8)
         );
         return new Abgeordneter(
+                0,
                 result.getString(1),
                 result.getString(2),
                 result.getString(3),
@@ -184,6 +186,7 @@ public class DataBuilder {
                     result.getString(8)
             );
             Abgeordneter abgeordneter = new Abgeordneter(
+                    0,
                     result.getString(1),
                     result.getString(2),
                     result.getString(3),
