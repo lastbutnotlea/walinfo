@@ -132,7 +132,7 @@ public class DataBuilder {
         ArrayList<AnzahlStimmenAbgeordneter> stimmenProPartei = new ArrayList<>();
 
         while(result.next()) {
-            Partei partei = new Partei(
+            Partei partei = new Partei(0,
                     result.getString(1),
                     result.getString(2),
                     result.getString(3)
