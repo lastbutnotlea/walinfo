@@ -44,4 +44,36 @@ public class StimmabgabeSQL {
                 "WHERE token = ?;"
                 ;
     }
+
+    public static String getWaehlbareKandidatenQuery() {
+        return "SELECT " +
+                "  k.id, " +
+                "  k.titel, " +
+                "  k.name, " +
+                "  k.vorname, " +
+                "  k.namenszusatz, " +
+                "  k.geburtsjahr, " +
+                "  p.id, " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe " +
+                "FROM kandidaten k, wahlkreise wk, parteien p " +
+                "WHERE k.wahlkreis_id = wk.id " +
+                "  AND k.partei_id = p.id " +
+                "AND wk.nummer = ?;"
+                ;
+    }
+
+    public static String getWaehlbareParteienQuery() {
+        return "SELECT DISTINCT  " +
+                "  p.id, " +
+                "  p.kuerzel, " +
+                "  p.name, " +
+                "  p.farbe " +
+                "  FROM parteien p, wahlkreise wk, zweitstimmenergebnisse z " +
+                "WHERE z.wahlkreis_id = wk.id " +
+                "AND z.partei_id = p.id " +
+                "AND wk.nummer = ?;"
+                ;
+    }
 }

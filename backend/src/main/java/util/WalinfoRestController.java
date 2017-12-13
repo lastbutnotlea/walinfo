@@ -47,7 +47,7 @@ public class WalinfoRestController {
             String mitgliederQuery = BundestagSQL.getBundestagQuery(jahr, modus);
             statement.execute(mitgliederQuery);
 
-            return DataBuilder.getMitgliederList(statement.getResultSet());
+            return DataBuilder.getAbgeordneteList(statement.getResultSet());
         }
 
         catch (SQLException e) {

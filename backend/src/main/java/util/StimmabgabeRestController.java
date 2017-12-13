@@ -2,7 +2,10 @@ package util;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+import databuild.Abgeordneter;
 import databuild.DataBuilder;
+import databuild.Partei;
 import databuild.Token;
 import org.springframework.web.bind.annotation.*;
 import sqlbuild.StimmabgabeSQL;
@@ -84,5 +87,47 @@ public class StimmabgabeRestController {
         return null;
     }
 
+    @RequestMapping("/waehlen/kandidaten")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<Abgeordneter> waehlbareKandidaten(
+            @RequestParam(value="wknr") int wknr) {
 
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String waehlbareKandidatenQuery = StimmabgabeSQL.getWaehlbareKandidatenQuery();
+            PreparedStatement preparedStatement = conn.prepareStatement(waehlbareKandidatenQuery);
+            preparedStatement.setInt(1, wknr);
+            preparedStatement.execute();
+
+            System.out.println(preparedStatement.getResultSet());
+            return DataBuilder.getWaehlbareKandidaten(preparedStatement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/waehlen/parteien")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ArrayList<Partei> verifyToken(
+            @RequestParam(value="wknr") int wknr) {
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String waehlbareParteienQuery = StimmabgabeSQL.getWaehlbareParteienQuery();
+            PreparedStatement preparedStatement = conn.prepareStatement(waehlbareParteienQuery);
+            preparedStatement.setInt(1, wknr);
+            preparedStatement.execute();
+
+            System.out.println(preparedStatement.getResultSet());
+            return DataBuilder.getWaehlbareParteien(preparedStatement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
