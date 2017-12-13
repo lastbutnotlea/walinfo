@@ -130,4 +130,37 @@ public class StimmabgabeRestController {
 
         return null;
     }
+
+    @RequestMapping("/waehlen/stimmabgabe")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public boolean stimmabgabe(
+            @RequestParam(value="token") String token,
+            @RequestParam(value="kandidatenid") int kandidatenId,
+            @RequestParam(value="parteiid") int parteiId) {
+
+        /*try (Connection conn = DatabaseConnection.getConnection()) {
+            String tokenOkayQuery = StimmabgabeSQL.getTokenOkayQuery();
+            PreparedStatement p1 = conn.prepareStatement(tokenOkayQuery);
+            p1.setString(1, token);
+            p1.execute();
+
+
+
+
+            String waehlbareParteienQuery = StimmabgabeSQL.getWaehlbareParteienQuery();
+            PreparedStatement preparedStatement = conn.prepareStatement(waehlbareParteienQuery);
+            preparedStatement.setInt(1, wknr);
+            preparedStatement.execute();
+
+            System.out.println(preparedStatement.getResultSet());
+            return DataBuilder.getWaehlbareParteien(preparedStatement.getResultSet());
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+
+
+        return false;
+    }
 }
