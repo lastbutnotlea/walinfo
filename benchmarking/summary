@@ -1,0 +1,285 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,Latency,IdleTime,Connect
+1512734102138,47,q3.2 direktmandat,200,,User Group 1-7,text,true,,334,171,10,10,47,0,2
+1512734102407,56,q3.1 wahlbeteiligung,200,,User Group 1-5,text,true,,194,174,10,10,55,0,1
+1512734102569,53,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-2,text,true,,227,180,10,10,53,0,1
+1512734102613,40,q3.2 direktmandat,200,,User Group 1-10,text,true,,334,171,10,10,40,0,0
+1512734102751,131,q6 knappstesieger,200,,User Group 1-6,text,true,,54239,153,10,10,131,0,1
+1512734102700,602,q1 sitzverteilung,200,,User Group 1-1,text,true,,891,163,10,10,602,0,0
+1512734103420,114,q3.4 vergleichvorjahr zweit,200,,User Group 1-3,text,true,,1863,178,10,10,114,0,1
+1512734103573,146,q6 knappstesieger,200,,User Group 1-4,text,true,,54239,153,10,10,145,0,1
+1512734103784,129,q6 knappstesieger,200,,User Group 1-9,text,true,,54239,153,10,10,129,0,1
+1512734103718,336,q5 ueberhangmandate,200,,User Group 1-8,text,true,,2371,168,10,10,336,0,1
+1512734106510,51,q3.3 zweitstimmenpropartei,200,,User Group 1-5,text,true,,3355,180,10,10,50,0,1
+1512734107206,74,q3.3 erststimmenpropartei,200,,User Group 1-7,text,true,,1077,179,10,10,74,0,1
+1512734107862,93,q3.4 vergleichvorjahr zweit,200,,User Group 1-10,text,true,,1863,178,10,10,92,0,0
+1512734107591,646,q1 sitzverteilung,200,,User Group 1-6,text,true,,891,163,10,10,646,0,1
+1512734108566,19,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-4,text,true,,227,180,10,10,19,0,0
+1512734108348,310,q5 ueberhangmandate,200,,User Group 1-2,text,true,,2371,168,10,10,310,0,0
+1512734108941,12,q3.3 erststimmenpropartei,200,,User Group 1-1,text,true,,1077,179,10,10,12,0,0
+1512734107812,1255,q3.4 vergleichvorjahr,200,,User Group 1-3,text,true,,896,177,10,10,1255,0,0
+1512734109634,503,q1 sitzverteilung,200,,User Group 1-9,text,true,,891,163,10,10,503,0,0
+1512734113031,25,q3.3 zweitstimmenpropartei,200,,User Group 1-7,text,true,,3355,180,10,10,25,0,0
+1512734113850,37,q3.3 zweitstimmenpropartei,200,,User Group 1-3,text,true,,3355,180,10,10,37,0,0
+1512734113600,343,q6 knappstesieger,200,,User Group 1-6,text,true,,54239,153,10,10,342,0,0
+1512734113931,40,q3.3 zweitstimmenpropartei,200,,User Group 1-10,text,true,,3355,180,10,10,40,0,0
+1512734114160,56,q3.1 wahlbeteiligung,200,,User Group 1-1,text,true,,194,174,10,10,56,0,0
+1512734112469,2218,q3.4 vergleichvorjahr,200,,User Group 1-5,text,true,,896,177,10,10,2218,0,0
+1512734115752,2356,q3.4 vergleichvorjahr,200,,User Group 1-9,text,true,,896,177,10,10,2356,0,0
+1512734118623,120,q3.4 vergleichvorjahr zweit,200,,User Group 1-7,text,true,,1863,178,10,10,120,0,0
+1512734119253,125,q3.4 vergleichvorjahr zweit,200,,User Group 1-6,text,true,,1863,178,10,10,125,0,0
+1512734119367,136,q3.4 vergleichvorjahr zweit,200,,User Group 1-5,text,true,,1863,178,10,10,136,0,0
+1512734119442,157,q3.4 vergleichvorjahr zweit,200,,User Group 1-1,text,true,,1863,178,10,10,157,0,0
+1512734119704,17,q3.2 direktmandat,200,,User Group 1-3,text,true,,334,171,10,10,17,0,0
+1512734119793,2366,q3.4 vergleichvorjahr,200,,User Group 1-10,text,true,,896,177,10,10,2366,0,0
+1512734122817,17,q3.2 direktmandat,200,,User Group 1-9,text,true,,334,171,10,10,17,0,0
+1512734123570,27,q3.1 wahlbeteiligung,200,,User Group 1-7,text,true,,194,174,10,10,27,0,0
+1512734124497,22,q3.3 erststimmenpropartei,200,,User Group 1-6,text,true,,1077,179,10,10,22,0,0
+1512734124844,17,q3.2 direktmandat,200,,User Group 1-5,text,true,,334,171,10,10,17,0,0
+1512734125331,29,q3.3 erststimmenpropartei,200,,User Group 1-3,text,true,,1077,179,10,10,29,0,0
+1512734125383,22,q3.3 zweitstimmenpropartei,200,,User Group 1-1,text,true,,3355,180,10,10,22,0,0
+1512734126172,22,q3.3 erststimmenpropartei,200,,User Group 1-10,text,true,,1077,179,10,10,22,0,0
+1512734127629,25,q3.1 wahlbeteiligung,200,,User Group 1-9,text,true,,194,174,10,10,25,0,0
+1512734108216,19607,q2 mitglieder bundestag,200,,User Group 1-8,text,true,,128593,159,10,10,19605,0,0
+1512734129070,23,q3.3 zweitstimmenpropartei,200,,User Group 1-6,text,true,,3355,180,10,10,23,0,0
+1512734129234,36,q3.3 erststimmenpropartei,200,,User Group 1-5,text,true,,1077,179,10,10,36,0,0
+1512734130382,33,q3.1 wahlbeteiligung,200,,User Group 1-10,text,true,,194,174,10,10,33,0,0
+1512734130416,36,q3.1 wahlbeteiligung,200,,User Group 1-3,text,true,,194,174,10,10,36,0,0
+1512734128541,2271,q3.4 vergleichvorjahr,200,,User Group 1-7,text,true,,896,177,10,10,2271,0,0
+1512734131119,23,q3.2 direktmandat,200,,User Group 1-1,text,true,,334,171,10,10,23,0,0
+1512734132196,32,q3.3 erststimmenpropartei,200,,User Group 1-9,text,true,,1077,179,10,10,32,0,1
+1512734132919,21,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-8,text,true,,227,180,10,10,21,0,0
+1512734133289,1452,q1 sitzverteilung,200,,User Group 1-5,text,true,,891,163,10,10,1452,0,0
+1512734134832,2271,q1 sitzverteilung,200,,User Group 1-7,text,true,,891,163,10,10,2271,0,1
+1512734137866,97,q3.3 zweitstimmenpropartei,200,,User Group 1-9,text,true,,3355,180,10,10,97,0,0
+1512734138035,482,q6 knappstesieger,200,,User Group 1-8,text,true,,54239,153,10,10,481,0,0
+1512734112659,26573,q2 mitglieder bundestag,200,,User Group 1-2,text,true,,128593,159,10,10,26571,0,0
+1512734135505,3748,q1 sitzverteilung,200,,User Group 1-10,text,true,,891,163,10,10,3748,0,1
+1512734135968,3379,q1 sitzverteilung,200,,User Group 1-3,text,true,,891,163,10,10,3379,0,1
+1512734139343,27,q3.3 erststimmenpropartei,200,,User Group 1-5,text,true,,1077,179,10,10,27,0,0
+1512734113293,26163,q2 mitglieder bundestag,200,,User Group 1-4,text,true,,128593,159,10,10,26162,0,0
+1512734134931,4601,q3.4 vergleichvorjahr,200,,User Group 1-6,text,true,,896,177,10,10,4601,0,1
+1512734136250,3639,q3.4 vergleichvorjahr,200,,User Group 1-1,text,true,,896,177,10,10,3639,0,2
+1512734141104,251,q6 knappstesieger,200,,User Group 1-7,text,true,,54239,153,10,10,251,0,1
+1512734142173,127,q3.4 vergleichvorjahr zweit,200,,User Group 1-9,text,true,,1863,178,10,10,127,0,1
+1512734143035,790,q1 sitzverteilung,200,,User Group 1-8,text,true,,891,163,10,10,790,0,1
+1512734143888,185,q6 knappstesieger,200,,User Group 1-10,text,true,,54239,153,10,10,184,0,1
+1512734143959,541,q5 ueberhangmandate,200,,User Group 1-4,text,true,,2371,168,10,10,541,0,1
+1512734144690,27,q3.1 wahlbeteiligung,200,,User Group 1-6,text,true,,194,174,10,10,27,0,1
+1512734144681,76,q3.4 vergleichvorjahr zweit,200,,User Group 1-3,text,true,,1863,178,10,10,76,0,0
+1512734143972,1426,q3.4 vergleichvorjahr,200,,User Group 1-5,text,true,,896,177,10,10,1425,0,1
+1512734145493,97,q6 knappstesieger,200,,User Group 1-1,text,true,,54239,153,10,10,96,0,1
+1512734146360,735,q1 sitzverteilung,200,,User Group 1-7,text,true,,891,163,10,10,735,0,1
+1512734148886,24,q3.3 erststimmenpropartei,200,,User Group 1-10,text,true,,1077,179,10,10,24,0,1
+1512734149420,133,q3.4 vergleichvorjahr zweit,200,,User Group 1-5,text,true,,1863,178,10,10,132,0,1
+1512734149617,180,q6 knappstesieger,200,,User Group 1-4,text,true,,54239,153,10,10,179,0,1
+1512734149906,18,q3.2 direktmandat,200,,User Group 1-6,text,true,,334,171,10,10,18,0,1
+1512734150190,39,q3.1 wahlbeteiligung,200,,User Group 1-3,text,true,,194,174,10,10,39,0,1
+1512734150969,18,q3.2 direktmandat,200,,User Group 1-1,text,true,,334,171,10,10,18,0,1
+1512734149507,2613,q3.4 vergleichvorjahr,200,,User Group 1-8,text,true,,896,177,10,10,2613,0,1
+1512734152178,271,q6 knappstesieger,200,,User Group 1-7,text,true,,54239,153,10,10,270,0,1
+1512734153958,18,q3.2 direktmandat,200,,User Group 1-10,text,true,,334,171,10,10,18,0,1
+1512734154246,38,q3.1 wahlbeteiligung,200,,User Group 1-5,text,true,,194,174,10,10,38,0,5
+1512734154267,156,q3.4 vergleichvorjahr zweit,200,,User Group 1-6,text,true,,1863,178,10,10,156,0,1
+1512734154523,254,q6 knappstesieger,200,,User Group 1-4,text,true,,54239,153,10,10,249,0,0
+1512734155671,37,q3.3 zweitstimmenpropartei,200,,User Group 1-3,text,true,,3355,180,10,10,37,0,1
+1512734156311,28,q3.3 erststimmenpropartei,200,,User Group 1-1,text,true,,1077,179,10,10,28,0,1
+1512734157547,18,q3.2 direktmandat,200,,User Group 1-7,text,true,,334,171,10,10,18,0,1
+1512734157923,19,q3.2 direktmandat,200,,User Group 1-8,text,true,,334,171,10,10,19,0,1
+1512734158828,40,q3.3 zweitstimmenpropartei,200,,User Group 1-5,text,true,,3355,180,10,10,40,0,0
+1512734158998,69,q3.3 erststimmenpropartei,200,,User Group 1-6,text,true,,1077,179,10,10,69,0,1
+1512734159479,34,q3.3 zweitstimmenpropartei,200,,User Group 1-10,text,true,,3355,180,10,10,34,0,0
+1512734159894,63,q3.3 erststimmenpropartei,200,,User Group 1-3,text,true,,1077,179,10,10,63,0,0
+1512734162043,32,q3.1 wahlbeteiligung,200,,User Group 1-1,text,true,,194,174,10,10,32,0,0
+1512734162204,144,q3.4 vergleichvorjahr zweit,200,,User Group 1-7,text,true,,1863,178,10,10,144,0,1
+1512734163288,24,q3.3 zweitstimmenpropartei,200,,User Group 1-8,text,true,,3355,180,10,10,24,0,0
+1512734163992,135,q3.4 vergleichvorjahr zweit,200,,User Group 1-10,text,true,,1863,178,10,10,135,0,0
+1512734164185,27,q3.2 direktmandat,200,,User Group 1-5,text,true,,334,171,10,10,27,0,1
+1512734164576,28,q3.1 wahlbeteiligung,200,,User Group 1-6,text,true,,194,174,10,10,28,0,1
+1512734165740,20,q3.2 direktmandat,200,,User Group 1-3,text,true,,334,171,10,10,20,0,1
+1512734166603,49,q3.1 wahlbeteiligung,200,,User Group 1-7,text,true,,194,174,10,10,49,0,1
+1512734144877,23055,q2 mitglieder bundestag,200,,User Group 1-2,text,true,,128593,159,10,10,23053,0,0
+1512734166335,2496,q3.4 vergleichvorjahr,200,,User Group 1-1,text,true,,896,177,10,10,2496,0,1
+1512734168910,35,q3.1 wahlbeteiligung,200,,User Group 1-8,text,true,,194,174,10,10,35,0,1
+1512734168307,2298,q3.4 vergleichvorjahr,200,,User Group 1-10,text,true,,896,177,10,10,2298,0,1
+1512734169113,1631,q1 sitzverteilung,200,,User Group 1-5,text,true,,891,163,10,10,1631,0,1
+1512734171050,42,q3.3 erststimmenpropartei,200,,User Group 1-7,text,true,,1077,179,10,10,42,0,1
+1512734170022,2796,q3.4 vergleichvorjahr,200,,User Group 1-6,text,true,,896,177,10,10,2796,0,1
+1512734172208,946,q5 ueberhangmandate,200,,User Group 1-2,text,true,,2371,168,10,10,946,0,1
+1512734173220,139,q3.4 vergleichvorjahr zweit,200,,User Group 1-8,text,true,,1863,178,10,10,139,0,1
+1512734170596,2892,q3.4 vergleichvorjahr,200,,User Group 1-3,text,true,,896,177,10,10,2892,0,1
+1512734147856,26358,q2 mitglieder bundestag,200,,User Group 1-9,text,true,,128593,159,10,10,26356,0,1
+1512734174597,16,q3.3 zweitstimmenpropartei,200,,User Group 1-1,text,true,,3355,180,10,10,16,0,1
+1512734175452,19,q3.3 zweitstimmenpropartei,200,,User Group 1-7,text,true,,3355,180,10,10,19,0,1
+1512734175458,27,q3.1 wahlbeteiligung,200,,User Group 1-10,text,true,,194,174,10,10,27,0,1
+1512734176421,93,q6 knappstesieger,200,,User Group 1-5,text,true,,54239,153,10,10,92,0,0
+1512734177738,15,q3.2 direktmandat,200,,User Group 1-6,text,true,,334,171,10,10,15,0,0
+1512734178235,668,q1 sitzverteilung,200,,User Group 1-3,text,true,,891,163,10,10,668,0,0
+1512734178982,15,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-2,text,true,,227,180,10,10,15,0,1
+1512734179047,15,q3.3 erststimmenpropartei,200,,User Group 1-8,text,true,,1077,179,10,10,15,0,0
+1512734179633,350,q5 ueberhangmandate,200,,User Group 1-9,text,true,,2371,168,10,10,350,0,1
+1512734180473,145,q3.4 vergleichvorjahr zweit,200,,User Group 1-1,text,true,,1863,178,10,10,145,0,0
+1512734180213,927,q1 sitzverteilung,200,,User Group 1-10,text,true,,891,163,10,10,927,0,0
+1512734182285,24,q3.3 zweitstimmenpropartei,200,,User Group 1-6,text,true,,3355,180,10,10,24,0,0
+1512734180335,2114,q3.4 vergleichvorjahr,200,,User Group 1-7,text,true,,896,177,10,10,2114,0,0
+1512734181526,1022,q1 sitzverteilung,200,,User Group 1-5,text,true,,891,163,10,10,1022,0,0
+1512734159645,22996,q2 mitglieder bundestag,200,,User Group 1-4,text,true,,128593,159,10,10,22994,0,1
+1512734184335,181,q6 knappstesieger,200,,User Group 1-3,text,true,,54239,153,10,10,180,0,0
+1512734184819,25,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-9,text,true,,227,180,10,10,25,0,1
+1512734183394,1543,q3.4 vergleichvorjahr,200,,User Group 1-8,text,true,,896,177,10,10,1543,0,0
+1512734185220,684,q1 sitzverteilung,200,,User Group 1-1,text,true,,891,163,10,10,684,0,1
+1512734186548,269,q6 knappstesieger,200,,User Group 1-10,text,true,,54239,153,10,10,268,0,1
+1512734186803,159,q3.4 vergleichvorjahr zweit,200,,User Group 1-5,text,true,,1863,178,10,10,159,0,0
+1512734186998,797,q5 ueberhangmandate,200,,User Group 1-4,text,true,,2371,168,10,10,797,0,0
+1512734186440,1434,q1 sitzverteilung,200,,User Group 1-6,text,true,,891,163,10,10,1434,0,1
+1512734186874,1248,q1 sitzverteilung,200,,User Group 1-7,text,true,,891,163,10,10,1248,0,1
+1512734189025,677,q1 sitzverteilung,200,,User Group 1-3,text,true,,891,163,10,10,677,0,1
+1512734189971,106,q6 knappstesieger,200,,User Group 1-9,text,true,,54239,153,10,10,105,0,1
+1512734190325,18,q3.1 wahlbeteiligung,200,,User Group 1-1,text,true,,194,174,10,10,18,0,1
+1512734190499,17,q3.3 zweitstimmenpropartei,200,,User Group 1-8,text,true,,3355,180,10,10,17,0,1
+1512734191632,15,q3.2 direktmandat,200,,User Group 1-5,text,true,,334,171,10,10,15,0,1
+1512734192630,20,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-4,text,true,,227,180,10,10,20,0,1
+1512734192658,24,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-10,text,true,,227,180,10,10,24,0,1
+1512734193658,225,q6 knappstesieger,200,,User Group 1-6,text,true,,54239,153,10,10,224,0,1
+1512734194034,18,q3.2 direktmandat,200,,User Group 1-7,text,true,,334,171,10,10,17,0,1
+1512734194120,23,q3.2 direktmandat,200,,User Group 1-3,text,true,,334,171,10,10,23,0,1
+1512734194606,18,q3.1 wahlbeteiligung,200,,User Group 1-8,text,true,,194,174,10,10,18,0,1
+1512734195206,23,q3.3 zweitstimmenpropartei,200,,User Group 1-1,text,true,,3355,180,10,10,23,0,1
+1512734196168,29,q3.3 erststimmenpropartei,200,,User Group 1-5,text,true,,1077,179,10,10,29,0,1
+1512734195091,1452,q3.4 vergleichvorjahr,200,,User Group 1-9,text,true,,896,177,10,10,1452,0,1
+1512734197421,1149,q1 sitzverteilung,200,,User Group 1-4,text,true,,891,163,10,10,1149,0,1
+1512734199130,130,q3.4 vergleichvorjahr zweit,200,,User Group 1-8,text,true,,1863,178,10,10,130,0,1
+1512734199598,23,q3.3 zweitstimmenpropartei,200,,User Group 1-7,text,true,,3355,180,10,10,23,0,1
+1512734199910,35,q3.3 zweitstimmenpropartei,200,,User Group 1-3,text,true,,3355,180,10,10,35,0,1
+1512734199214,776,q5 ueberhangmandate,200,,User Group 1-6,text,true,,2371,168,10,10,776,0,1
+1512734200126,146,q3.4 vergleichvorjahr zweit,200,,User Group 1-1,text,true,,1863,178,10,10,146,0,1
+1512734183017,17789,q2 mitglieder bundestag,200,,User Group 1-2,text,true,,128593,159,10,10,17788,0,1
+1512734201602,23,q3.3 zweitstimmenpropartei,200,,User Group 1-5,text,true,,3355,180,10,10,23,0,1
+1512734202089,13,q3.2 direktmandat,200,,User Group 1-9,text,true,,334,171,10,10,13,0,0
+1512734203678,17,q3.3 zweitstimmenpropartei,200,,User Group 1-4,text,true,,3355,180,10,10,17,0,1
+1512734203834,13,q3.2 direktmandat,200,,User Group 1-8,text,true,,334,171,10,10,13,0,1
+1512734204615,16,q3.1 wahlbeteiligung,200,,User Group 1-3,text,true,,194,174,10,10,16,0,1
+1512734205263,30,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-6,text,true,,227,180,10,10,30,0,1
+1512734205075,507,q5 ueberhangmandate,200,,User Group 1-2,text,true,,2371,168,10,10,507,0,1
+1512734207174,62,q3.3 erststimmenpropartei,200,,User Group 1-9,text,true,,1077,179,10,10,62,0,1
+1512734205512,1774,q3.4 vergleichvorjahr,200,,User Group 1-7,text,true,,896,177,10,10,1774,0,1
+1512734206058,2209,q3.4 vergleichvorjahr,200,,User Group 1-1,text,true,,896,177,10,10,2209,0,1
+1512734206812,2018,q3.4 vergleichvorjahr,200,,User Group 1-5,text,true,,896,177,10,10,2018,0,1
+1512734209023,67,q3.4 vergleichvorjahr zweit,200,,User Group 1-4,text,true,,1863,178,10,10,67,0,0
+1512734209735,14,q3.3 erststimmenpropartei,200,,User Group 1-8,text,true,,1077,179,10,10,14,0,0
+1512734210932,38,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-2,text,true,,227,180,10,10,38,0,0
+1512734211466,118,q3.4 vergleichvorjahr zweit,200,,User Group 1-9,text,true,,1863,178,10,10,118,0,1
+1512734212027,27,q3.3 erststimmenpropartei,200,,User Group 1-7,text,true,,1077,179,10,10,27,0,1
+1512734210618,1557,q3.4 vergleichvorjahr,200,,User Group 1-3,text,true,,896,177,10,10,1557,0,1
+1512734214132,21,q3.3 erststimmenpropartei,200,,User Group 1-1,text,true,,1077,179,10,10,21,0,1
+1512734214367,30,q3.1 wahlbeteiligung,200,,User Group 1-5,text,true,,194,174,10,10,30,0,1
+1512734214405,32,q3.1 wahlbeteiligung,200,,User Group 1-4,text,true,,194,174,10,10,32,0,1
+1512734214391,992,q1 sitzverteilung,200,,User Group 1-8,text,true,,891,163,10,10,991,0,1
+1512734197825,17820,q2 mitglieder bundestag,200,,User Group 1-10,text,true,,128593,159,10,10,17818,0,1
+1512734216321,34,q3.3 erststimmenpropartei,200,,User Group 1-3,text,true,,1077,179,10,10,34,0,0
+1512734215835,805,q1 sitzverteilung,200,,User Group 1-2,text,true,,891,163,10,10,805,0,0
+1512734216732,19,q3.3 zweitstimmenpropartei,200,,User Group 1-9,text,true,,3355,180,10,10,19,0,0
+1512734217272,28,q3.1 wahlbeteiligung,200,,User Group 1-7,text,true,,194,174,10,10,28,0,0
+1512734218919,105,q6 knappstesieger,200,,User Group 1-5,text,true,,54239,153,10,10,104,0,0
+1512734219004,24,q3.3 erststimmenpropartei,200,,User Group 1-4,text,true,,1077,179,10,10,24,0,1
+1512734219858,13,q3.2 direktmandat,200,,User Group 1-1,text,true,,334,171,10,10,13,0,0
+1512734220206,31,q3.1 wahlbeteiligung,200,,User Group 1-8,text,true,,194,174,10,10,31,0,0
+1512734220480,343,q5 ueberhangmandate,200,,User Group 1-10,text,true,,2371,168,10,10,343,0,0
+1512734221124,62,q3.4 vergleichvorjahr zweit,200,,User Group 1-3,text,true,,1863,178,10,10,62,0,0
+1512734221932,17,q3.1 wahlbeteiligung,200,,User Group 1-9,text,true,,194,174,10,10,17,0,0
+1512734222066,15,q3.3 zweitstimmenpropartei,200,,User Group 1-2,text,true,,3355,180,10,10,15,0,0
+1512734223103,62,q3.4 vergleichvorjahr zweit,200,,User Group 1-7,text,true,,1863,178,10,10,62,0,0
+1512734224758,209,q6 knappstesieger,200,,User Group 1-5,text,true,,54239,153,10,10,208,0,0
+1512734223501,1636,q3.4 vergleichvorjahr,200,,User Group 1-4,text,true,,896,177,10,10,1636,0,0
+1512734226110,175,q3.4 vergleichvorjahr zweit,200,,User Group 1-8,text,true,,1863,178,10,10,175,0,0
+1512734226342,433,q3.4 vergleichvorjahr zweit,200,,User Group 1-2,text,true,,1863,178,10,10,433,0,0
+1512734225154,1924,q1 sitzverteilung,200,,User Group 1-10,text,true,,891,163,10,10,1924,0,0
+1512734225428,1869,q1 sitzverteilung,200,,User Group 1-1,text,true,,891,163,10,10,1869,0,0
+1512734226148,1309,q5 ueberhangmandate,200,,User Group 1-3,text,true,,2371,168,10,10,1309,0,0
+1512734226452,1402,q1 sitzverteilung,200,,User Group 1-9,text,true,,891,163,10,10,1402,0,1
+1512734228186,158,q6 knappstesieger,200,,User Group 1-7,text,true,,54239,153,10,10,157,0,0
+1512734210912,17940,q2 mitglieder bundestag,200,,User Group 1-6,text,true,,128593,159,10,10,17939,0,0
+1512734229141,807,q1 sitzverteilung,200,,User Group 1-5,text,true,,891,163,10,10,807,0,2
+1512734230446,21,q3.2 direktmandat,200,,User Group 1-4,text,true,,334,171,10,10,21,0,1
+1512734231412,61,q3.3 zweitstimmenpropartei,200,,User Group 1-8,text,true,,3355,180,10,10,61,0,1
+1512734232539,30,q3.3 erststimmenpropartei,200,,User Group 1-2,text,true,,1077,179,10,10,30,0,1
+1512734232471,471,q5 ueberhangmandate,200,,User Group 1-9,text,true,,2371,168,10,10,471,0,1
+1512734233119,49,q3.3 erststimmenpropartei,200,,User Group 1-1,text,true,,1077,179,10,10,49,0,2
+1512734233070,203,q3.4 vergleichvorjahr zweit,200,,User Group 1-10,text,true,,1863,178,10,10,203,0,2
+1512734233567,109,q6 knappstesieger,200,,User Group 1-6,text,true,,54239,153,10,10,108,0,0
+1512734233825,777,q1 sitzverteilung,200,,User Group 1-7,text,true,,891,163,10,10,777,0,0
+1512734235025,60,q3.4 vergleichvorjahr zweit,200,,User Group 1-5,text,true,,1863,178,10,10,60,0,0
+1512734236026,29,q3.3 erststimmenpropartei,200,,User Group 1-8,text,true,,1077,179,10,10,29,0,0
+1512734236379,101,q6 knappstesieger,200,,User Group 1-4,text,true,,54239,153,10,10,99,0,0
+1512734236636,18,q3.1 wahlbeteiligung,200,,User Group 1-2,text,true,,194,174,10,10,18,0,0
+1512734237722,16,q3.2 direktmandat,200,,User Group 1-1,text,true,,334,171,10,10,16,0,0
+1512734237538,1501,q3.4 vergleichvorjahr,200,,User Group 1-10,text,true,,896,177,10,10,1501,0,0
+1512734239103,25,q3.3 zweitstimmenpropartei,200,,User Group 1-7,text,true,,3355,180,10,10,24,0,0
+1512734239149,21,q3.2 direktmandat,200,,User Group 1-5,text,true,,334,171,10,10,21,0,0
+1512734239526,950,q1 sitzverteilung,200,,User Group 1-6,text,true,,891,163,10,10,950,0,0
+1512734241047,170,q6 knappstesieger,200,,User Group 1-4,text,true,,54239,153,10,10,170,0,0
+1512734241354,28,q3.2 direktmandat,200,,User Group 1-8,text,true,,334,171,10,10,28,0,0
+1512734241881,17,q3.2 direktmandat,200,,User Group 1-2,text,true,,334,171,10,10,17,0,0
+1512734243295,15,q3.3 zweitstimmenpropartei,200,,User Group 1-5,text,true,,3355,180,10,10,15,0,0
+1512734243377,60,q3.4 vergleichvorjahr zweit,200,,User Group 1-1,text,true,,1863,178,10,10,60,0,0
+1512734244867,25,q3.1 wahlbeteiligung,200,,User Group 1-10,text,true,,194,174,10,10,25,0,0
+1512734245123,22,q3.2 direktmandat,200,,User Group 1-7,text,true,,334,171,10,10,22,0,0
+1512734245571,16,q3.2 direktmandat,200,,User Group 1-6,text,true,,334,171,10,10,16,0,0
+1512734246133,279,q3.4 vergleichvorjahr zweit,200,,User Group 1-4,text,true,,1863,178,10,10,279,0,0
+1512734247907,32,q3.3 erststimmenpropartei,200,,User Group 1-5,text,true,,1077,179,10,10,32,0,0
+1512734245725,2645,q3.4 vergleichvorjahr,200,,User Group 1-8,text,true,,896,177,10,10,2645,0,0
+1512734245928,2635,q3.4 vergleichvorjahr,200,,User Group 1-2,text,true,,896,177,10,10,2635,0,0
+1512734248997,25,q3.1 wahlbeteiligung,200,,User Group 1-1,text,true,,194,174,10,10,25,0,0
+1512734249633,119,q3.4 vergleichvorjahr zweit,200,,User Group 1-7,text,true,,1863,178,10,10,119,0,0
+1512734250305,20,q3.3 erststimmenpropartei,200,,User Group 1-10,text,true,,1077,179,10,10,20,0,0
+1512734250623,20,q3.3 erststimmenpropartei,200,,User Group 1-6,text,true,,1077,179,10,10,20,0,0
+1512734233398,17781,q2 mitglieder bundestag,200,,User Group 1-3,text,true,,128593,159,10,10,17780,0,1
+1512734252108,22,q3.3 erststimmenpropartei,200,,User Group 1-4,text,true,,1077,179,10,10,22,0,0
+1512734253352,30,q3.1 wahlbeteiligung,200,,User Group 1-5,text,true,,194,174,10,10,30,0,1
+1512734254343,39,q3.3 zweitstimmenpropartei,200,,User Group 1-10,text,true,,3355,180,10,10,39,0,0
+1512734254182,769,q5 ueberhangmandate,200,,User Group 1-2,text,true,,2371,168,10,10,769,0,0
+1512734253741,1435,q1 sitzverteilung,200,,User Group 1-8,text,true,,891,163,10,10,1435,0,0
+1512734255540,150,q3.4 vergleichvorjahr zweit,200,,User Group 1-6,text,true,,1863,178,10,10,150,0,1
+1512734254287,2311,q3.4 vergleichvorjahr,200,,User Group 1-7,text,true,,896,177,10,10,2311,0,0
+1512734256720,22,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-3,text,true,,227,180,10,10,21,0,1
+1512734238082,18671,q2 mitglieder bundestag,200,,User Group 1-9,text,true,,128593,159,10,10,18669,0,0
+1512734253767,2995,q3.4 vergleichvorjahr,200,,User Group 1-1,text,true,,896,177,10,10,2995,0,0
+1512734257571,64,q3.3 zweitstimmenpropartei,200,,User Group 1-4,text,true,,3355,180,10,10,64,0,2
+1512734259316,73,q3.2 direktmandat,200,,User Group 1-10,text,true,,334,171,10,10,73,0,1
+1512734259364,37,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-2,text,true,,227,180,10,10,37,0,3
+1512734259326,1333,q3.4 vergleichvorjahr,200,,User Group 1-5,text,true,,896,177,10,10,1333,0,2
+1512734260814,180,q6 knappstesieger,200,,User Group 1-8,text,true,,54239,153,10,10,179,0,0
+1512734261493,20,q4 wahlkreissiegerzweitstimmen,200,,User Group 1-9,text,true,,227,180,10,10,20,0,0
+1512734262148,26,q3.1 wahlbeteiligung,200,,User Group 1-7,text,true,,194,174,10,10,26,0,0
+1512734260703,1605,q3.4 vergleichvorjahr,200,,User Group 1-6,text,true,,896,177,10,10,1605,0,2
+1512734262333,16,q3.3 zweitstimmenpropartei,200,,User Group 1-1,text,true,,3355,180,10,10,16,0,0
+1512734261764,743,q1 sitzverteilung,200,,User Group 1-3,text,true,,891,163,10,10,743,0,0
+1512734263442,56,q3.2 direktmandat,200,,User Group 1-4,text,true,,334,171,10,10,56,0,1
+1512734264013,129,q6 knappstesieger,200,,User Group 1-10,text,true,,54239,153,10,10,128,0,1
+1512734266403,30,q3.2 direktmandat,200,,User Group 1-8,text,true,,334,171,10,10,30,0,1
+1512734266884,179,q6 knappstesieger,200,,User Group 1-9,text,true,,54239,153,10,10,178,0,0
+1512734267232,127,q6 knappstesieger,200,,User Group 1-1,text,true,,54239,153,10,10,126,0,0
+1512734267468,169,q3.4 vergleichvorjahr zweit,200,,User Group 1-3,text,true,,1863,178,10,10,169,0,0
+1512734267751,41,q3.1 wahlbeteiligung,200,,User Group 1-6,text,true,,194,174,10,10,41,0,0
+1512734267793,48,q3.3 erststimmenpropartei,200,,User Group 1-7,text,true,,1077,179,10,10,48,0,0
+1512734269083,25,q3.1 wahlbeteiligung,200,,User Group 1-10,text,true,,194,174,10,10,25,0,0
+1512734267626,2568,q3.4 vergleichvorjahr,200,,User Group 1-4,text,true,,896,177,10,10,2568,0,1
+1512734270568,39,q3.1 wahlbeteiligung,200,,User Group 1-8,text,true,,194,174,10,10,38,0,0
+1512734271779,20,q3.2 direktmandat,200,,User Group 1-3,text,true,,334,171,10,10,20,0,0
+1512734272522,25,q3.3 erststimmenpropartei,200,,User Group 1-9,text,true,,1077,179,10,10,25,0,0
+1512734272665,24,q3.3 zweitstimmenpropartei,200,,User Group 1-6,text,true,,3355,180,10,10,24,0,0
+1512734272545,780,q1 sitzverteilung,200,,User Group 1-1,text,true,,891,163,10,10,780,0,0
+1512734273277,187,q6 knappstesieger,200,,User Group 1-7,text,true,,54239,153,10,10,186,0,0
+1512734273667,22,q3.3 erststimmenpropartei,200,,User Group 1-10,text,true,,1077,179,10,10,22,0,0
+1512734275631,26,q3.3 erststimmenpropartei,200,,User Group 1-8,text,true,,1077,179,10,10,26,0,0
+1512734275754,26,q3.1 wahlbeteiligung,200,,User Group 1-4,text,true,,194,174,10,10,26,0,0
+1512734276877,18,q3.2 direktmandat,200,,User Group 1-9,text,true,,334,171,10,10,18,0,0
+1512734277463,86,q3.3 zweitstimmenpropartei,200,,User Group 1-9,text,true,,3355,180,10,10,86,0,0
+1512734277463,399,q3.4 vergleichvorjahr zweit,200,,User Group 1-8,text,true,,1863,178,9,9,399,0,0
+1512734277463,423,q3.4 vergleichvorjahr zweit,200,,User Group 1-10,text,true,,1863,178,8,8,423,0,0
+1512734277462,542,q6 knappstesieger,200,,User Group 1-7,text,true,,54239,153,7,7,542,0,0
+1512734277463,1555,q5 ueberhangmandate,200,,User Group 1-1,text,true,,2371,168,6,6,1555,0,0
+1512734277463,1819,q1 sitzverteilung,200,,User Group 1-4,text,true,,891,163,5,5,1819,0,0
+1512734277145,2208,q1 sitzverteilung,200,,User Group 1-6,text,true,,891,163,4,4,2207,0,0
+1512734277291,2616,q3.4 vergleichvorjahr,200,,User Group 1-3,text,true,,896,177,3,3,2616,0,0
+1512734265053,18916,q2 mitglieder bundestag,200,,User Group 1-2,text,true,,128593,159,2,2,18914,0,0
+1512734264695,19899,q2 mitglieder bundestag,200,,User Group 1-5,text,true,,128593,159,1,1,19898,0,1
