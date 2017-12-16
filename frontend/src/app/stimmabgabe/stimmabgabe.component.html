@@ -1,0 +1,17 @@
+<div>
+  <h1>WALAUTOMAT - die neue Art zu wählen</h1>
+
+  <br />
+
+    <div class="form-group">
+      <label for="inputToken">Sobald du Dein individuelles Waltoken bekommen hast, gib es hier ein und drücke auf 'Weiter'.</label>
+      <input #tokenInput type="text" class="form-control" id="inputToken" placeholder="Dein Token, z.B. kopf-erde-laufen...">
+    </div>
+    <div *ngIf="ungueltig" class="alert alert-danger" role="alert">
+      Du hast kein gültiges Waltoken <i class="fa fa-copyright" aria-hidden="true"></i> eingegeben. Bitte achte auf Tippfehler.
+    </div>
+    <div *ngIf="bereitsVerbraucht" class="alert alert-danger" role="alert">
+      Du hast bereits gewählt.
+    </div>
+    <button type="submit" class="btn btn-outline-primary"  (click)="handleTokenSubmit(tokenInput.value)" >Weiter</button>
+</div>

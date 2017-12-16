@@ -1,0 +1,82 @@
+<h1>WALAUTOMAT - die neue Art zu wählen</h1>
+<div *ngIf="!success && !error">
+
+  <br/>
+
+  <div class="row">
+    <div *ngIf="wahlkreis" class="col-sm-5">
+      Du bist für folgenden Wahlkreis registriert
+
+      <table class="table table-striped table-sm">
+        <tbody>
+        <tr>
+          <td>Nummer</td>
+          <td>{{wahlkreis.nummer}}</td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>{{wahlkreis.name}}</td>
+        </tr>
+        <tr>
+          <td>Bundesland</td>
+          <td>{{wahlkreis.bundesland.name}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p>Hier kannst du deine Erst- und deine Zweitstimme abgeben.</p>
+  <div class="row">
+
+    <div class="col-sm-6 form-check">
+      <h4>Deine Erststimme</h4>
+
+      <label class="custom-control custom-radio">
+        <input [(ngModel)]="ausgewaehlteErststimme" [value]="-1" name="radioErst" type="radio"
+               class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Keine Stimme ausgewählt</span>
+      </label>
+      <div *ngFor="let kandidat of kandidates">
+        <label class="custom-control custom-radio">
+          <input [(ngModel)]="ausgewaehlteErststimme" [value]="kandidat.id" name="radioErst" type="radio"
+                 class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">{{kandidat.titel}} {{kandidat.namneszusatz}} {{kandidat.vorname}} {{kandidat.name}} ({{kandidat.partei.kuerzel}})</span>
+        </label>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <h4>Deine Zweitstimme</h4>
+      <label class="custom-control custom-radio">
+        <input [(ngModel)]="ausgewaehlteZweitstimme" [value]="-1" name="radioZweit" type="radio"
+               class="custom-control-input">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">Keine Stimme ausgewählt</span>
+      </label>
+      <div *ngFor="let partei of parteien">
+        <label class="custom-control custom-radio">
+          <input [(ngModel)]="ausgewaehlteZweitstimme" [value]="partei.id" name="radioZweit" type="radio"
+                 class="custom-control-input">
+          <span class="custom-control-indicator"></span>
+          <span class="custom-control-description">{{partei.kuerzel}}: {{partei.name}}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-outline-primary" (click)="handleWahl()">Wählen</button>
+
+</div>
+
+<div *ngIf="success" class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Deine Stimme wurde gespeichert!</h4>
+  Du kannst jetzt zurück zur Übersicht gehen.
+</div>
+
+<div *ngIf="error" class="alert alert-danger " role="alert">
+  <h4 class="alert-heading">Fehler</h4>
+  Etwas ist schief gelaufen, versuche es bitte erneut.
+</div>
+
