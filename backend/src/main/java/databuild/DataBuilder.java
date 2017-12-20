@@ -66,8 +66,7 @@ public class DataBuilder {
 
             int correspondingWk = -1;
 
-            if(corrWkResult != null) {
-                corrWkResult.next();
+            if(corrWkResult != null && corrWkResult.next()) {
                 correspondingWk = corrWkResult.getInt(1);
             }
 
