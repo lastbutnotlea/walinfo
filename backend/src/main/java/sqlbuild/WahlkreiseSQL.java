@@ -260,4 +260,14 @@ public class WahlkreiseSQL {
                 "GROUP BY w.wahljahr, w.id, k.geschlecht;"
                 ;
     }
+
+    public static String getCorrespondingWknr(int wknr, int jahr) {
+        return "SELECT wk2.nummer " +
+                "FROM wahlkreise wk1, wahlkreise wk2 " +
+                "WHERE wk1.wahljahr = " + jahr + " " +
+                "AND wk2.wahljahr <> " + jahr + " " +
+                "AND wk1.nummer = " + wknr + " " +
+                "AND wk1.name = wk2.name;"
+                ;
+    }
 }
