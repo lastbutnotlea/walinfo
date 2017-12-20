@@ -53,9 +53,9 @@ export class Stimmabgabe2Component implements OnInit {
 
   handleWahl(): void {
     if ((this.ausgewaehlteErststimme > 0 && this.ausgewaehlteZweitstimme > 0)
-      || confirm('Sie haben bei der Erst- oder Zweitstimme nichts ausgewählt, ' +
-        'wenn sie jetzt abgeben wird die entsprechende Erst- oder Zweitstimme ' +
-        'als ungültig erklärt.')) {
+      || confirm('Sie haben bei der Erst- oder Zweitstimme nichts ausgewählt. ' +
+        'Wenn Sie jetzt bestätigen, wird die entsprechende Erst- oder Zweitstimme ' +
+        'als ungültig gespeichert.')) {
       this.backendService.stimmAbgabe(this.token, this.ausgewaehlteErststimme, this.ausgewaehlteZweitstimme)
         .subscribe(success => {
           if (success) {

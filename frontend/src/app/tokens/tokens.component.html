@@ -2,7 +2,7 @@
   <h2>Admin View - Tokens</h2>
 
   <select [(ngModel)]="wahlkreis" class="custom-select" (change)="wahlkreiseSelected()" title="Einen Wahlkreis auswählen">
-    <option [value]="undefined">Einen Wahlkreis auswählen</option>
+    <option [value]="undefined">Wahlkreis auswählen</option>
     <option *ngFor="let wk of wahlkreise$ | async" [ngValue]="wk">{{wk.nummer}} - {{wk.name}}</option>
   </select>
 
@@ -12,7 +12,7 @@
   <div *ngIf="wahlkreis">
     <h4>Tokens für Wahlkreis {{wahlkreis.nummer}} ({{wahlkreis.name}})</h4>
 
-    <button type="submit" class="btn btn-outline-primary"  (click)="handleGenerate()" >Generiere 10 Neue Tokens</button>
+    <button type="submit" class="btn btn-outline-primary"  (click)="handleGenerate()" >Generiere 10 neue Tokens</button>
 
     <br />
     <br />

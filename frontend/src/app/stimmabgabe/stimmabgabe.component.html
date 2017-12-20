@@ -4,14 +4,14 @@
   <br />
 
     <div class="form-group">
-      <label for="inputToken">Sobald du Dein individuelles Waltoken bekommen hast, gib es hier ein und drücke auf 'Weiter'.</label>
-      <input #tokenInput type="text" class="form-control" id="inputToken" placeholder="Dein Token, z.B. kopf-erde-laufen...">
+      <label for="inputToken">Sobald Sie Ihr individuelles Waltoken bekommen haben, geben Sie es hier ein und drücken auf 'Weiter'.</label>
+      <input #tokenInput type="text" class="form-control" id="inputToken" placeholder="Ihr Token, z.B. Kopf-Erde-Schlittschuh...">
     </div>
     <div *ngIf="ungueltig" class="alert alert-danger" role="alert">
-      Du hast kein gültiges Waltoken <i class="fa fa-copyright" aria-hidden="true"></i> eingegeben. Bitte achte auf Tippfehler.
+      Sie haben kein gültiges Waltoken <i class="fa fa-copyright" aria-hidden="true"></i> eingegeben. Bitte achten Sie auf Tippfehler.
     </div>
     <div *ngIf="bereitsVerbraucht" class="alert alert-danger" role="alert">
-      Du hast bereits gewählt.
+      Sie haben bereits gewählt.
     </div>
     <button type="submit" class="btn btn-outline-primary"  (click)="handleTokenSubmit(tokenInput.value)" >Weiter</button>
 </div>

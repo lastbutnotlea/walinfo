@@ -7,7 +7,7 @@
 
   <p *ngIf="direktkandidat">Folgender Direktkandiat hat gewonnen: {{direktkandidat.titel}} {{direktkandidat.namneszusatz}} {{direktkandidat.vorname}} {{direktkandidat.name}} ({{direktkandidat.partei.kuerzel}})</p>
 
-  <p *ngIf="parteiSieger">Folgende Partei hat mittels Zweitstimmen gewonnen: {{parteiSieger.name}} ({{parteiSieger.kuerzel}})</p>
+  <p *ngIf="parteiSieger">Folgende Partei hat die meisten Zweitstimmen erhalten: {{parteiSieger.name}} ({{parteiSieger.kuerzel}})</p>
 
   <div *ngIf="anzahlMaenner && anzahlKandidaten">
     <strong>Vergleich der Geschlechter</strong>

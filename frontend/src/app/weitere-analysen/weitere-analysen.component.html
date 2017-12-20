@@ -1,12 +1,12 @@
 <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="ngb-panel-0">
-  <ngb-panel title="Überhangsmandate der Parteien pro Bundesland">
+  <ngb-panel title="Überhangmandate der Parteien pro Bundesland">
     <ng-template ngbPanelContent>
       <table class="table">
         <thead>
         <tr>
           <th>Partei</th>
           <th>Bundesland</th>
-          <th>Überhangsmandate</th>
+          <th>Überhangmandate</th>
         </tr>
         </thead>
         <tbody>
@@ -61,16 +61,16 @@
     </ng-template>
   </ngb-panel>
 
-  <ngb-panel title="Vergleich der Frauenquote im Bundestag mit der von allen Kandidaten">
+  <ngb-panel title="Vergleich der Frauenquote im Bundestag mit der aller Kandidaten">
     <ng-template ngbPanelContent>
-      <p><code>Frauenquote der Direktkandidaten im Bundestag / Frauenquote unter allen Direktkandidaten = </code>{{frauenBonus$ | async | percent}}</p>
+      <p><code>Frauenquote der Direktkandidaten im Bundestag / Frauenquote aller Direktkandidaten = </code>{{frauenBonus$ | async | percent}}</p>
 
-      <p>Ist der Wert kleiner als <var>{{1 | percent}}</var>, ist die Quote gesunken, sonst gestiegen.</p>
+      <p>Ist der Wert kleiner als <var>{{1 | percent}}</var>, ist die Frauenquote bei Vergabe der Mandate gesunken, sonst gestiegen.</p>
 
       <div class="alert alert-warning" role="alert">
-        Es sollte beachtet werden, dass dies zwar den Anschein erwecken mag, als hätten weibliche Direktkandidaten geringere Chancen gewählt zu werden.
-        Allerdings ist in dieser Rechnung völlig außer acht gelassen worden, dass Wähler ihre Stimmen nicht wahllos vergeben, sondern damit eine Person und eine Partei wählen.
-        Die Aussage dieser Rechnung hat sommit keinen Wert, außer auszusagen, das die Quote gesunken ist. Z.B. weil die Frauenquote unter den Siegerparteien geringer ist, als unter allen Parteien betrachtet.
+        Es sollte beachtet werden, dass dies zwar den Anschein erweckt, als hätten weibliche Direktkandidaten geringere Chancen, gewählt zu werden.
+        Allerdings wird bei dieser Rechnung die Parteizugehörigkeit der Kandidaten außer Acht gelassen. Da Wähler ihre Stimme an konkrete Parteien und Personen
+        vergeben, kann hier keine Aussage darüber gemacht werden, ob sich die Chance, gewählt zu werden, mit dem Geschlecht verändert.
       </div>
     </ng-template>
   </ngb-panel>
@@ -87,8 +87,8 @@
         <tr>
           <th scope="col">Partei</th>
           <th></th>
-          <th>Stimmen Absolut</th>
-          <th>Stimmen Relativ</th>
+          <th>Stimmen absolut</th>
+          <th>Stimmen relativ</th>
         </tr>
         </thead>
         <tbody>
@@ -114,8 +114,8 @@
         <tr>
           <th scope="col">Partei</th>
           <th></th>
-          <th>Stimmen Absolut</th>
-          <th>Stimmen Relativ</th>
+          <th>Stimmen absolut</th>
+          <th>Stimmen relativ</th>
         </tr>
         </thead>
         <tbody>
