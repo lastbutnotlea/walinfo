@@ -50,6 +50,8 @@ export class WeitereAnalysenComponent implements OnInit {
 
     this.year = this.backendService.year;
 
+    this.knappsteSiegerFiltered = [];
+    this.knappsterSiegerParteien = [];
     this.backendService.getKnappsteSieger().subscribe(eintraege => {
       let eintrag;
       const parteien = [];
@@ -63,6 +65,7 @@ export class WeitereAnalysenComponent implements OnInit {
       this.onClickPartei(parteien[0]);
     });
 
+    this.erstStimmenData = undefined;
     this.erstStimmen$ = this.backendService.getErststimmen();
     this.erstStimmen$.subscribe(parteien => {
       this.gesamtErst = 0;
@@ -78,6 +81,7 @@ export class WeitereAnalysenComponent implements OnInit {
       this.erstStimmenData = erstStimmenData;
     });
 
+    this.zweitStimmenData = undefined;
     this.zweitStimmen$ = this.backendService.getZweitstimmen();
     this.zweitStimmen$.subscribe(parteien => {
       this.gesamtZweit = 0;

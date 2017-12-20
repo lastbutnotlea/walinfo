@@ -69,6 +69,13 @@ export class WahlkreisDetailsComponent implements OnInit {
   ngOnInit() {
     this.wahlkreisNummer =  this.route.snapshot.paramMap.get('nummer');
     this.year = this.backendService.year;
+    this.vergleichErstData = undefined;
+    this.vergleichZweitData = undefined;
+    this.wahlbeteiligung = undefined;
+    this.direktkandidat = undefined;
+    this.parteiSieger = undefined;
+    this.anzahlKandidaten = undefined;
+    this.anzahlMaenner = undefined;
     this.reload();
   }
 

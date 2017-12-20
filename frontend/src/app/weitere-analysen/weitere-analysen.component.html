@@ -77,10 +77,12 @@
 
   <ngb-panel title="Gesamtergebnis der Erststimmen">
     <ng-template ngbPanelContent>
+      <div *ngIf="erstStimmenData">
       <canvas baseChart
               [data]="erstStimmenData"
               [labels]="erstStimmenLabels"
               chartType="pie"></canvas>
+      </div>
 
       <table class="table">
         <thead>
@@ -105,10 +107,11 @@
 
   <ngb-panel title="Gesamtergebnis der Zweitstimmen">
     <ng-template ngbPanelContent>
+      <div *ngIf="zweitStimmenData">
       <canvas baseChart
               [data]="zweitStimmenData"
               [labels]="zweitStimmenLabels"
-              chartType="pie"></canvas>
+              chartType="pie"></canvas></div>
       <table class="table">
         <thead>
         <tr>

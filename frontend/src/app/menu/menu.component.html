@@ -20,7 +20,7 @@
           <option>2017</option>
           <option>2013</option>
         </select>
-        <select #typeDropDown class="form-control menu-right" (change)="typeChanged(typeDropDown.value)" placement="bottom" ngbTooltip="Schnell beudeutet Berechnung mit aggregierten Daten, langsam mit Einzelstimmen">
+        <select #typeDropDown class="form-control menu-right" (change)="typeChanged(typeDropDown.value)" placement="bottom" ngbTooltip="Schnell beudeutet Berechnung mit aggregierten Daten, Langsam mit Einzelstimmen (2017). Für 2013 bedeutet Langsam einfach nur eine langsame Anfrage auf aggregierten Daten.">
           <option value="aggr">Schnell</option>
           <option value="roh">Langsam</option>
         </select>
