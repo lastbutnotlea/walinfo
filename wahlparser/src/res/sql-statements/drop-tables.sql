@@ -8,7 +8,7 @@ DROP TABLE kandidaten;
 DROP TABLE parteien;
 DROP TABLE wahlkreise;
 DROP TABLE bundeslaender ;
-DROP TABLE dt_bevölkerung;
+DROP TABLE dt_bevoelkerung;
 
 
 
