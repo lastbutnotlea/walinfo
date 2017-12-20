@@ -75,7 +75,15 @@ public class WalinfoRestController {
             String wahlkreisQuery = WahlkreiseSQL.getWahlkreisQuery(jahr, wknr);
             statement.execute(wahlkreisQuery);
 
-            return DataBuilder.getWahlkreisList(statement.getResultSet());
+            if(wknr != null) {
+                Statement statement2 = conn.createStatement();
+                String corrWkQuery = WahlkreiseSQL.getCorrespondingWknr(wknr, jahr);
+                statement2.execute(corrWkQuery);
+
+                return DataBuilder.getWahlkreisList(statement.getResultSet(), statement2.getResultSet());
+            }
+
+            return DataBuilder.getWahlkreisList(statement.getResultSet(), null);
         }
 
         catch (SQLException e) {

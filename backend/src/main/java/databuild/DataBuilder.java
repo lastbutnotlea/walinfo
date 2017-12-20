@@ -55,7 +55,7 @@ public class DataBuilder {
         return mitglieder;
     }
 
-    public static ArrayList<Wahlkreis> getWahlkreisList(ResultSet result) throws SQLException {
+    public static ArrayList<Wahlkreis> getWahlkreisList(ResultSet result, ResultSet corrWkResult) throws SQLException {
         ArrayList<Wahlkreis> wahlkreise = new ArrayList<>();
 
         while (result.next()) {
@@ -63,9 +63,18 @@ public class DataBuilder {
                     result.getString(4),
                     result.getString(5)
             );
+
+            int correspondingWk = -1;
+
+            if(corrWkResult != null) {
+                corrWkResult.next();
+                correspondingWk = corrWkResult.getInt(1);
+            }
+
             Wahlkreis wahlkreis = new Wahlkreis(
                     result.getInt(1),
                     result.getInt(2),
+                    correspondingWk,
                     result.getString(3),
                     bundesland
             );
