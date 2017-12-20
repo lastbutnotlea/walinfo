@@ -18,7 +18,7 @@ apply plugin: 'org.springframework.boot'
 sourceCompatibility = 1.8
 
 jar {
-    baseName = 'gs-rest-service'
+    baseName = 'walinfo-backend'
     version =  '0.1.0'
 }
 

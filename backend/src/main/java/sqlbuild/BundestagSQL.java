@@ -70,7 +70,7 @@ public class BundestagSQL {
                 "      anzahl," +
                 "      cast(anzahl AS NUMERIC) / 0.5," +
                 "      wahljahr" +
-                "    FROM dt_bevölkerung" +
+                "    FROM dt_bevoelkerung" +
                 "  )" +
                 "  UNION ALL" +
                 "  (" +

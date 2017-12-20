@@ -166,7 +166,7 @@ public class StimmabgabeRestController {
                 else {
                     String waehleKandidatQuery = StimmabgabeSQL.getWaehleKandidatQuery();
                     PreparedStatement p4 = conn.prepareStatement(waehleKandidatQuery);
-                    p4.setString(1, null);
+                    p4.setNull(1, java.sql.Types.INTEGER);
                     p4.setInt(2, wkid);
                     p4.execute();
                 }
@@ -191,7 +191,7 @@ public class StimmabgabeRestController {
                 else {
                     String waehleParteiQuery = StimmabgabeSQL.getWaehleParteiQuery();
                     PreparedStatement p7 = conn.prepareStatement(waehleParteiQuery);
-                    p7.setString(1, null);
+                    p7.setNull(1, java.sql.Types.INTEGER);
                     p7.setInt(2, wkid);
                     p7.execute();
                 }
