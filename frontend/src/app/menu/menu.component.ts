@@ -8,6 +8,8 @@ import {BackendService} from '../backend.service';
 })
 export class MenuComponent implements OnInit {
 
+  show: boolean;
+
   constructor(private backendService: BackendService) { }
 
   ngOnInit() {
@@ -19,5 +21,9 @@ export class MenuComponent implements OnInit {
 
   jahrChanged(value: String) {
     this.backendService.changeYear(value);
+  }
+
+  toggleNavbar(): void {
+    this.show = !this.show;
   }
 }

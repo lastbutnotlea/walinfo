@@ -5,4 +5,5 @@ export default class Wahlkreis {
   nummer: number;
   name: string;
   bundesland: Bundesland;
+  corrNummer: number;
 }

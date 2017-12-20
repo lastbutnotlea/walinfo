@@ -16,6 +16,5 @@
     <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.postgresql:postgresql:unknown" level="project" />
-    <orderEntry type="module" module-name="backend" />
   </component>
 </module>

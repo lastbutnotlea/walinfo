@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {BackendService} from '../backend.service';
 import Wahlkreis from '../templates/Wahlkreis';
-import Bundesland from '../templates/Bundesland';
 import Kandidat from '../templates/Kandidat';
 import Partei from '../templates/Partei';
 
@@ -26,7 +25,8 @@ export class Stimmabgabe2Component implements OnInit {
   private error = false;
 
 
-  constructor(private route: ActivatedRoute, private backendService: BackendService) { }
+  constructor(private route: ActivatedRoute, private backendService: BackendService) {
+  }
 
   ngOnInit() {
     this.token = this.route.snapshot.paramMap.get('token');
@@ -52,14 +52,17 @@ export class Stimmabgabe2Component implements OnInit {
   }
 
   handleWahl(): void {
-    this.backendService.stimmAbgabe(this.token, this.ausgewaehlteErststimme, this.ausgewaehlteZweitstimme)
-      .subscribe(success => {
-        if (success) {
-          this.success = true;
-        } else {
-          this.error = true;
-        }
-      });
-    console.log(this.ausgewaehlteErststimme + ' ' + this.ausgewaehlteZweitstimme);
+    if ((this.ausgewaehlteErststimme > 0 && this.ausgewaehlteZweitstimme > 0)
+      || confirm('Sie haben bei der Erst- oder Zweitstimme nichts ausgewählt, wenn sie jetzt abgeben wird die entsprechende Erst- oder Zweitstimme als ungültig erklärt.')) {
+      this.backendService.stimmAbgabe(this.token, this.ausgewaehlteErststimme, this.ausgewaehlteZweitstimme)
+        .subscribe(success => {
+          if (success) {
+            this.success = true;
+          } else {
+            this.error = true;
+          }
+        });
+      console.log(this.ausgewaehlteErststimme + ' ' + this.ausgewaehlteZweitstimme);
+    }
   }
 }

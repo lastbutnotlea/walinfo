@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'btg', component: BundestagComponent },
   { path: 'wahlkreise', component: WahlkreiseComponent},
-  { path: 'wahlkreis/:year/:nummer', component: WahlkreisDetailsComponent},
+  { path: 'wahlkreis/:nummer', component: WahlkreisDetailsComponent},
   { path: 'sonstiges', component: WeitereAnalysenComponent },
   { path: 'stimmabgabe', component: StimmabgabeComponent },
   { path: 'tokens', component: TokensComponent },

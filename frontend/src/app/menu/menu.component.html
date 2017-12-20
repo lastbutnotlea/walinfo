@@ -4,12 +4,13 @@
     Walinformationssystem
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse"
-          data-target="#navbarNavAltMarkup"
+          data-target="#navbarNavAltMarkupsss"
           aria-controls="navbarNavAltMarkup" aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+  (click)="toggleNavbar()">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <div class="collapse navbar-collapse" [class.show]="show">
     <div class="navbar-nav mr-auto mt-2 mt-lg-0">
       <a routerLink="/btg" class="nav-item nav-link" routerLinkActive="active">Der Bundestag</a>
       <a routerLink="/wahlkreise" class="nav-item nav-link" routerLinkActive="active">Wahlkreise</a>

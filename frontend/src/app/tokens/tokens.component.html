@@ -18,7 +18,7 @@
     <br />
 
     <ul class="list-group">
-      <li *ngFor="let token of tokens$ | async" class="list-group-item">{{token.token}} {{token.used ? ' - verbraucht' : ''}}</li>
+      <li *ngFor="let token of tokens$ | async" class="list-group-item"><s *ngIf="token.used">{{token.token}}</s><div *ngIf="!token.used">{{token.token}}</div></li>
     </ul>
   </div>
 </div>

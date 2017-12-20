@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BackendService} from '../backend.service';
 import {Observable} from 'rxjs/Observable';
 import Wahlkreis from '../templates/Wahlkreis';
@@ -17,7 +17,7 @@ import StimmenKandidat from '../templates/StimmenKandidat';
 export class WahlkreisDetailsComponent implements OnInit {
 
   wahlkreisNummer: string;
-  year: string;
+  year: String;
 
   wahlkreis: Wahlkreis;
   direktkandidat: Kandidat;
@@ -45,12 +45,34 @@ export class WahlkreisDetailsComponent implements OnInit {
   anzahlKandidaten: number;
 
   constructor(private route: ActivatedRoute,
-    private backendService: BackendService) { }
+    private router: Router,
+  private backendService: BackendService) {
+    this.backendService.updatePage.subscribe(res => {
+      if (this.backendService.year !== this.year) {
+        if (this.wahlkreis.corrNummer >= 0) {
+          this.wahlkreisNummer = this.wahlkreis.corrNummer.toString();
+          this.year = this.backendService.year;
+          this.reload();
+        } else {
+          if (this.router.isActive('wahlkreis', false)) {
+            this.router.navigate(['wahlkreise']);
+            alert('Für diesen Wahlkreis konnte kein Vergleich im Jahr ' + this.backendService.year + ' gefunden werden.');
+          }
+        }
+      } else {
+        this.ngOnInit();
+      }
+    });
+  }
+
 
   ngOnInit() {
     this.wahlkreisNummer =  this.route.snapshot.paramMap.get('nummer');
-    this.year = this.route.snapshot.paramMap.get('year');
+    this.year = this.backendService.year;
+    this.reload();
+  }
 
+  reload() {
     this.backendService.getWahlkreis(this.wahlkreisNummer)
       .subscribe(res => {
         this.wahlkreis = res;
