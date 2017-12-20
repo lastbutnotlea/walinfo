@@ -212,7 +212,8 @@ public class WahlanalysenSQL {
                 "WHERE e.kandidaten_id = k.id " +
                 "AND k.partei_id = p.id " +
                 "AND p.wahljahr = " + jahr + " " +
-                "GROUP BY p.id, p.kuerzel, p.name"
+                "GROUP BY p.id, p.kuerzel, p.name " +
+                "ORDER BY stimmen_absolut"
                 ;
     }
 
@@ -228,7 +229,8 @@ public class WahlanalysenSQL {
                 "FROM parteien p, " + getZweitstimmenTable(modus) + " z " +
                 "WHERE z.partei_id = p.id " +
                 "AND p.wahljahr = " + jahr + " " +
-                "GROUP BY p.id, p.kuerzel, p.name"
+                "GROUP BY p.id, p.kuerzel, p.name " +
+                "ORDER BY stimmen_absolut"
                 ;
     }
 
