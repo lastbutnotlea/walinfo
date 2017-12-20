@@ -5,3 +5,5 @@ UPDATE Parteien SET farbe = '#32A460' WHERE kuerzel = 'GRÜNE';
 UPDATE Parteien SET farbe = '#36C3D5' WHERE kuerzel = 'AfD';
 UPDATE Parteien SET farbe = '#CA57C7' WHERE kuerzel = 'DIE LINKE';
 UPDATE Parteien SET farbe = '#CF0000' WHERE kuerzel = 'SPD';
+
+UPDATE wahlkreise SET name = replace(name, '–', '-');
