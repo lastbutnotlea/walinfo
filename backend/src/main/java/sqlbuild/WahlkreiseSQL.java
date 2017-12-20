@@ -118,10 +118,11 @@ public class WahlkreiseSQL {
                 "   k.namenszusatz, " +
                 "   k.geburtsjahr, " +
                 "   k.geschlecht " +
-                "FROM " + getErststimmenTable(modus) + " erst, kandidaten k, parteien p, wahlkreise wk " +
+                "FROM " + getErststimmenTable(modus) + " erst, " +
+                "(kandidaten k left join parteien p on k.partei_id = p.id), " +
+                "wahlkreise wk " +
                 "WHERE erst.wahlkreis_id = k.wahlkreis_id " +
                 "      AND erst.kandidaten_id = k.id " +
-                "      AND k.partei_id = p.id " +
                 "      AND erst.kandidaten_id IS NOT NULL " +
                 "      AND k.wahljahr = " + jahr + " " +
                 "      AND k.wahlkreis_id = wk.id " +
