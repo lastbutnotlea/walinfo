@@ -1,3 +1,6 @@
+-- VIEWS
+
+
 -- View für die Rohdaten der Erstimmen
 
 CREATE OR REPLACE VIEW erststimmenergebnisse_view (kandidaten_id, wahlkreis_id, anzahl) AS (

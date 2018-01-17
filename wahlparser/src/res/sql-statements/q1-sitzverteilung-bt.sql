@@ -1,3 +1,6 @@
+-- SITZVERTEILUNG BUNDESTAG
+
+
 -- höchstzahlverfahren für sitzkontingente der länder (1. oberverteilung)
 WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis, wahljahr) AS (
   (
@@ -52,29 +55,6 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
   ),
 
   -- anzahl der direktmandate pro partei und wahljahr pro bundesland
-  /*
-      anzahldirektmandate_land (partei_id, bundesland, wahljahr, anzahldirkan) AS (
-        SELECT
-          p.id,
-          wk.bundesland,
-          p.wahljahr,
-          count(DISTINCT k.id)
-        FROM parteien p, erststimmenergebnisse e, kandidaten k, wahlkreise wk
-        WHERE p.id = k.partei_id
-              AND k.id = e.kandidaten_id
-              AND k.wahljahr = p.wahljahr
-              AND e.wahlkreis_id = wk.id
-              AND e.anzahl = (
-          SELECT max(anzahl)
-          FROM erststimmenergebnisse e2, kandidaten k2
-          WHERE e2.kandidaten_id = k2.id
-                AND k.wahljahr = k2.wahljahr
-                AND e.wahlkreis_id = e2.wahlkreis_id
-        )
-        GROUP BY p.id, wk.bundesland, p.wahljahr
-    ),
-    */
-
     anzahldirektmandate_land (partei_id, bundesland, wahljahr, anzahldirkan) AS (
       SELECT
         p.id,

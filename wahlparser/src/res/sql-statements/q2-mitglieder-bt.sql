@@ -1,3 +1,6 @@
+-- MITGLIEDER BUNDESTAG
+
+
 -- höchstzahlverfahren für sitzkontingente der länder (1. oberverteilung)
 WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis, wahljahr) AS (
   (

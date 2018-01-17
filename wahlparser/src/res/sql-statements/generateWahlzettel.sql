@@ -1,7 +1,11 @@
--- generate Wahlzettel
+-- GENERATE WAHLZETTEL
+
+
+-- hilfstabelle
 with placeholder1(nummer) AS (
   SELECT * from generate_series(1, (select max(anzahl) from erststimmenergebnisse))
 )
+  -- erzeuge einzelstimmen für alle erststimmen
   INSERT INTO erststimmen(kandidaten_id, wahlkreis_id)
     SELECT e.kandidaten_id , e.wahlkreis_id
     FROM erststimmenergebnisse e, placeholder1 p1, wahlkreise w
@@ -10,9 +14,11 @@ with placeholder1(nummer) AS (
       and w.wahljahr = 2017;
 ;
 
+-- hilfstabelle
 with placeholder2(nummer) AS (
     SELECT * from generate_series(1, (select max(anzahl) from zweitstimmenergebnisse))
 )
+  -- erzeuge einzelnstimmen für alle zweitstimmen
   INSERT INTO zweitstimmen(partei_id, wahlkreis_id)
     SELECT e.partei_id, e.wahlkreis_id
     FROM zweitstimmenergebnisse e, placeholder2 p2, wahlkreise w
@@ -20,10 +26,6 @@ with placeholder2(nummer) AS (
       and w.id = e.wahlkreis_id
       and w.wahljahr = 2017
 ;
-
-delete from zweitstimmen;
-
-select count(*) from zweitstimmen;
 
 -- add foreign keys
 /*

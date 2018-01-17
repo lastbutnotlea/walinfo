@@ -1,3 +1,6 @@
+-- CREATE TABLE STATEMENTS
+
+
 CREATE TABLE Bundeslaender (
   kuerzel VARCHAR(2) PRIMARY KEY,
   name    VARCHAR(22)
@@ -42,13 +45,13 @@ CREATE TABLE Listenplaetze (
 );
 
 CREATE TABLE Erststimmen (
-  kandidaten_id SMALLINT, -- REFERENCES Kandidaten(id),
-  wahlkreis_id  SMALLINT-- REFERENCES Wahlkreise(nummer),
+  kandidaten_id SMALLINT,
+  wahlkreis_id  SMALLINT
 );
 
 CREATE TABLE Zweitstimmen (
-  partei_id    SMALLINT, --REFERENCES Parteien(id),
-  wahlkreis_id SMALLINT -- REFERENCES Wahlkreise(nummer),
+  partei_id    SMALLINT,
+  wahlkreis_id SMALLINT
 );
 
 CREATE TABLE Erststimmenergebnisse (
@@ -65,9 +68,8 @@ CREATE TABLE Zweitstimmenergebnisse (
   UNIQUE (wahlkreis_id, partei_id)
 );
 
--- Deutsche Bevölkerung
 CREATE TABLE Dt_Bevoelkerung (
-  bundesland VARCHAR(2), -- REFERENCES Bundeslaender(kuerzel),
+  bundesland VARCHAR(2),
   wahljahr   SMALLINT,
   anzahl     INT,
   PRIMARY KEY (bundesland, wahljahr)
