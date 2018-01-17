@@ -56,7 +56,7 @@ export class WahlkreisDetailsComponent implements OnInit {
         } else {
           if (this.router.isActive('wahlkreis', false)) {
             this.router.navigate(['wahlkreise']);
-            alert('Für diesen Wahlkreis konnte kein Vergleich im Jahr ' + this.backendService.year + ' gefunden werden.');
+            alert('Diesen Wahlkreis gab es im Jahr ' + this.backendService.year + ' nicht.');
           }
         }
       } else {
