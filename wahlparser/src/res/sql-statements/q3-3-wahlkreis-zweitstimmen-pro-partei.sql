@@ -1,3 +1,6 @@
+-- ZWEITSTIMEN PRO PARTEI AUF WAHLKREISEBENE
+
+
 WITH stimmen_gesamt AS (
     SELECT
       sum(zweit.anzahl) as zweitstimmen,

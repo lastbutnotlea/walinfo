@@ -1,3 +1,7 @@
+-- TRIGGER
+
+
+-- update funktion für aggregierte erststimmen
 CREATE OR REPLACE FUNCTION update_erststimmenerg()
   RETURNS TRIGGER AS
 $BODY$
@@ -14,10 +18,12 @@ $BODY$
 LANGUAGE plpgsql;
 
 
+-- trigger für aggregierte erststimmen
 CREATE TRIGGER neue_erststimme AFTER INSERT ON erststimmen
 FOR EACH ROW EXECUTE PROCEDURE update_erststimmenerg();
 
 
+-- update funktion für aggregierte zweitstimmen
 CREATE OR REPLACE FUNCTION update_zweitstimmenerg()
   RETURNS TRIGGER AS
 $BODY$
@@ -33,6 +39,8 @@ END;
 $BODY$
 LANGUAGE plpgsql;
 
+
+-- trigger für aggregierte zweitstimmen
 CREATE TRIGGER neue_zweitstimme AFTER INSERT ON zweitstimmen
   FOR EACH ROW EXECUTE PROCEDURE update_zweitstimmenerg();
 

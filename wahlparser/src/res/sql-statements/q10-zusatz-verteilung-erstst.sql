@@ -1,4 +1,7 @@
--- Verteilung Erststimmen auf Deutschlandebene
+-- ZUSATZANFRAGE VERTEILUNG DER ERSTSTIMMEN/ZWEITSTIMMEN AUF DEUTSCHLANDEBENE
+
+
+-- Verteilung Erststimmen
 SELECT
   p.kuerzel,
   p.name,
@@ -12,7 +15,7 @@ WHERE e.kandidaten_id = k.id
 AND k.partei_id = p.id
 GROUP BY p.id, p.kuerzel, p.name;
 
--- Verteilung Zweitstimmen auf Deutschlandebene
+-- Verteilung Zweitstimmen
 SELECT
   p.kuerzel,
   p.name,

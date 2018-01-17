@@ -1,3 +1,6 @@
+-- WAHLKREIS WAHLBETEILIGUNG
+
+
 WITH waehler_pro_wahlkreis_erststimmen AS (
     SELECT
       ee.wahlkreis_id,
@@ -19,6 +22,7 @@ WITH waehler_pro_wahlkreis_erststimmen AS (
   )
 
 SELECT
+  -- berechne maximum an erstimmen wählern und zweitstimmen wählern
   greatest(werst.summe_erststimmen, wzweit.summe_zweitstimmen) as anzahl_waehler,
   wk.anzahl_wahlberechtigte
 FROM wahlkreise wk, waehler_pro_wahlkreis_erststimmen werst,

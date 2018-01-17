@@ -1,5 +1,5 @@
--- WAHLKREISMAPPING FEHLT NOCH!
--- vielleicht so: ID Nummer Nummer ID
+-- VERGLEICH MIT DEM VORJAHR AUF WAHLKREISEBENE (ERSTSTIMMEN)
+-- Wahlkreismapping fehlt hier noch, ist aber im Java Code eingebaut
 
 WITH stimmen_partei AS (
     SELECT erst.anzahl as gesamtstimmen,

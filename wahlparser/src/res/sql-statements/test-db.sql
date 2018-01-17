@@ -1,3 +1,5 @@
+-- for testing only
+
 with test(bezeichnung, ist , soll) as (
   SELECT
     'Gültige Erststimmen 2017' ,

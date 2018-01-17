@@ -1,5 +1,9 @@
---(Frauenquote gewählte Direktkandidaten) / (Frauenquote Direktkandidaten) 
+-- ZUSATZANFRAGE 'FRAUENBONUS'
+
+
+--(Frauenquote gewählte Direktkandidaten) / (Frauenquote Direktkandidaten)
 -- => Ist dieser Wert größer als 1 => „Frauenbonus“, sonst: „Männerbonus“
+
 WITH geschlechtGewaehlteKandidaten(wahljahr, geschlecht, anzahl) AS (
     SELECT
       gk.wahljahr,

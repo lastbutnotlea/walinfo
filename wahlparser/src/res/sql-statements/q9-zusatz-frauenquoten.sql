@@ -1,5 +1,7 @@
--- Anteile Frauen/Männer in den einzelnen Wahlkreisen
+-- ZUSATZANFRAGE 'FRAUENQUOTE'
 
+
+-- Anteile Frauen/Männer in den einzelnen Wahlkreisen
 SELECT
   count(*) as anzahl_maenner,
   (SELECT count(*)

@@ -1,3 +1,6 @@
+-- DIREKTMANDATE PRO WAHLKREIS
+
+
 WITH maximaleStimmenWahlkreis (wahljahr, wahlkreis_id, maximal) AS (
     SELECT
       w.wahljahr,

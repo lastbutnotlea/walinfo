@@ -1,3 +1,5 @@
+-- for testing only
+
 SELECT wk2.nummer
 FROM wahlkreise wk1, wahlkreise wk2
 WHERE wk1.wahljahr = 2013

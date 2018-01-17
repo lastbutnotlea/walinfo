@@ -1,3 +1,6 @@
+-- SIEGER IN DEN ZWEITSTIMMEN AUF WAHLKREISEBENE
+
+
 WITH maximaleZweitstimmen (wahljahr, wahlkreis_id, maxZweit) AS (
       SELECT
         w.wahljahr,

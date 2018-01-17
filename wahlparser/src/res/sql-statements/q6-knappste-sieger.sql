@@ -1,3 +1,7 @@
+-- KNAPPSTE SIEGER UND KNAPPSTE VERLIERER
+
+
+-- maximale anzahl an erststimmen pro wahlkreis
 WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
     SELECT
       w.wahljahr,
@@ -8,6 +12,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
     GROUP BY w.wahljahr, w.id
 ),
 
+    -- sieger in den erststimmen pro wahlkreis
     siegerErststimmen (wahljahr, wahlkreis_id, kandidaten_id, maxErst) AS (
       SELECT
         k.wahljahr,
@@ -22,6 +27,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
             AND k.wahlkreis_id = e.wahlkreis_id
   ),
 
+    -- kandidaten ohne erststimmensieger
     ohneSieger (wahljahr, wahlkreis_id, kandidaten_id) AS (
     (
       SELECT
@@ -40,6 +46,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
     )
   ),
 
+    -- zweit maximale anzahl an erststimmen pro wahlkreis
     zweitmaximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
       SELECT
         w.wahljahr,
@@ -51,6 +58,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
       GROUP BY w.wahljahr, w.id
   ),
 
+    -- zweitplatzierter in den erststimmen pro wahlkreis
     zweiterErststimmen (wahljahr, wahlkreis_id, kandidaten_id, zweitmaxErst) AS (
       SELECT
         os.wahljahr,
@@ -69,6 +77,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
   ORDER BY p.kuerzel
   ),
 
+    -- knappste sieger (= abstand zwischen sieger und zweitplatzierter am kleinsten)
     knappste_sieger (wahljahr, kandidaten_id, partei_id, unterschied) AS (
       SELECT
         z.wahljahr,
@@ -83,6 +92,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
         AND k1.partei_id = p.id
   ),
 
+    -- knappste verlierer
     knappste_verlierer(wahljahr, kandidaten_id, partei_id, unterschied) AS (
       SELECT
         p.wahljahr,
@@ -99,6 +109,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
 
   ),
 
+    -- vereint sieger und verlierer
     siegerundverlierer(wahljahr, kandidaten_id, partei_id, unterschied, siegeroderverlierer) AS (
     (  SELECT ks.*, 's'
     FROM knappste_sieger ks )
@@ -110,6 +121,7 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
     )
   ),
 
+  -- hilfstabelle
   aux (wahljahr, kandidaten_id, partei_id, unterschied, anzahl_reihen, siegeroderverlierer) AS (
     SELECT
       wahljahr,
@@ -125,6 +137,9 @@ WITH maximaleErststimmen (wahljahr, wahlkreis_id, maxErst) AS (
     FROM siegerundverlierer
   )
 
+
+-- selektiert die ersten 10 einträge pro partei -> es wird mit verlierern aufgefüllt,
+-- wenn nicht genügend sieger pro partei vorhanden
 SELECT
   k.titel,
    k.name,
@@ -144,72 +159,6 @@ SELECT
 
 
 
--------------- alter code
-/*
-    knappste_sieger_aux (wahljahr, kandidaten_id, partei_id, unterschied, anzahl_reihen, siegeroderverlierer) AS (
-      SELECT
-        wahljahr,
-        kandidaten_id,
-        partei_id,
-        unterschied,
-        ROW_NUMBER()
-        OVER (
-          PARTITION BY
-            partei_id, wahljahr
-          ORDER BY unterschied ASC ) AS anzahl_reihen,
-        's'
-      FROM knappste_sieger
-  ),
-
-    knappste_verlierer_aux (wahljahr, kandidaten_id, partei_id, unterschied, anzahl_reihen, siegeroderverlierer) AS (
-      SELECT
-        wahljahr,
-        kandidaten_id,
-        partei_id,
-        unterschied,
-        ROW_NUMBER()
-        OVER (
-          PARTITION BY
-            partei_id, wahljahr
-          ORDER BY unterschied ASC ) AS anzahl_reihen,
-        'v'
-      FROM knappste_verlierer
-  )
-
-(SELECT
-   ks.siegeroderverlierer,
-   k.name,
-   k.vorname,
-   k.namenszusatz,
-   k.geburtsjahr,
-   p.kuerzel,
-   p.name,
-   ks.unterschied
- FROM knappste_sieger_aux ks, parteien p, kandidaten k
- WHERE
-   ks.anzahl_reihen <= 10
-   AND ks.kandidaten_id = k.id
-   AND ks.partei_id = p.id)
-
-UNION ALL
-(
-  SELECT
-    kv.siegeroderverlierer,
-    k.name,
-    k.vorname,
-    k.namenszusatz,
-    k.geburtsjahr,
-    p.kuerzel,
-    p.name,
-    kv.unterschied
-  FROM knappste_verlierer_aux kv, parteien p, kandidaten k
-  WHERE
-    kv.anzahl_reihen <= 10
-    AND kv.kandidaten_id = k.id
-    AND kv.partei_id = p.id
-);
-
-*/
 
 
 

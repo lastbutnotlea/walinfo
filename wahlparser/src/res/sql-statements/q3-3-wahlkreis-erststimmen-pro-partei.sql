@@ -1,3 +1,6 @@
+-- ERSTIMMEN PRO PARTEI AUF WAHLKREISEBENE
+
+
 WITH stimmen_gesamt AS (
     SELECT
       sum(erst.anzahl) AS gesamtstimmen,

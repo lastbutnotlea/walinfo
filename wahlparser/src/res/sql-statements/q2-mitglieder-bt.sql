@@ -55,29 +55,6 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
   ),
 
   -- anzahl der direktmandate pro partei und wahljahr pro bundesland
-  /*
-      anzahldirektmandate_land (partei_id, bundesland, wahljahr, anzahldirkan) AS (
-        SELECT
-          p.id,
-          wk.bundesland,
-          p.wahljahr,
-          count(DISTINCT k.id)
-        FROM parteien p, erststimmenergebnisse e, kandidaten k, wahlkreise wk
-        WHERE p.id = k.partei_id
-              AND k.id = e.kandidaten_id
-              AND k.wahljahr = p.wahljahr
-              AND e.wahlkreis_id = wk.id
-              AND e.anzahl = (
-          SELECT max(anzahl)
-          FROM erststimmenergebnisse e2, kandidaten k2
-          WHERE e2.kandidaten_id = k2.id
-                AND k.wahljahr = k2.wahljahr
-                AND e.wahlkreis_id = e2.wahlkreis_id
-        )
-        GROUP BY p.id, wk.bundesland, p.wahljahr
-    ),
-    */
-
     anzahldirektmandate_land (partei_id, bundesland, wahljahr, anzahldirkan) AS (
       SELECT
         p.id,
@@ -343,6 +320,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
       )
   ),
 
+  -- rekursives hochzählverfahren umd den bundestag zu berechnen
     bundestag_hoechstzahlverfahren (kandidat_id, partei_id, bundesland, faktor, max_stimmen, anzahl, counterErst, counterListe, wahljahr) AS (
     (
       SELECT
@@ -356,7 +334,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
                     AND dc.counter = 1
                     AND dc.wahljahr = zp.wahljahr
             ),
-            -- oder einen Listenkanidaten
+            -- oder einen Listenkanidaten, wenn es keinen direktkandidaten gibt
             (
               SELECT kl.kandidaten_id
               FROM kandidaten_liste_partei_land kl
@@ -369,9 +347,9 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
         bundesland,
         0.5,
         stimmen,
-        -- im ersten durchlauf ist die prio immer maximal
+        -- im ersten durchlauf ist die priorität immer maximal
         CAST(stimmen AS NUMERIC) / 0.5,
-        -- wähle Direktkandidaten hoch
+        -- initialisiere den counter für direktkandidaten mit 2 (wenn verfügbar), sonst 1
         CASE WHEN EXISTS(
             SELECT dc.kandidat_id
             FROM direktkandidaten_bt_parteiland_counter dc
@@ -382,7 +360,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
         )
           THEN 2
         ELSE 1 END,
-        -- oder Listenkandidaten
+        -- der counter für listenkandidaten ist umgekehrt zu dem conter zu direktkandidaten
         CASE WHEN EXISTS(
             SELECT dc.kandidat_id
             FROM direktkandidaten_bt_parteiland_counter dc
@@ -458,7 +436,7 @@ WITH RECURSIVE sitzeproland_aux (bundesland, faktor, anzahl, aktuelles_ergebnis,
     )
   ),
 
-  -- nur um die row number zu bekommen
+  -- dies aux funktion wird nur benötigt um die row number zu bekommen
     bundestag_aux (kandidat_id, partei_id, bundesland, wahljahr, rownum) AS (
       SELECT
         kandidat_id,
