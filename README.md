@@ -1,7 +1,3 @@
 # Walinformationssystem
 
-### SQL Dateien
-Alle verwendeten SQL Anfragen wurden unter [SQL-Statements](wahlparser/src/res/sql-statements) entwickelt und entsprechen zum Großteil den finalen Queries.
-Allerdings werden diese Dateien nicht ausgeführt. Die finalen SQL-Statements werden im [Java Backend](backend/src/main/java/sqlbuild) zusammen gebaut.
-
-Das dynamische Erstellen der Queries ist aus performance Gründen erforderlich. In einer früheren Version haben wir mit Views und einem Flag in der Datenbank gearbeitet. Allerdings hat Postgres dann Anfragen nicht mehr optimiert bekommen und sie waren viel zu langsam.
+This application visualizes the results of Germany's 2017 Federal Election. It displays rich analyses of 50 million votes in real-time, including distribution of seats as well as election turnouts at federal, provincial, and district levels. Users can explore information on candidates and compare the results from 2017 against the outcome of the 2013 election.
